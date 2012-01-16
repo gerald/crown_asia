@@ -1,0 +1,9 @@
+<h1>Update <%= @unit_of_measure.name %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @unit_of_measure} %>
+
+<%= form_for @unit_of_measure do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p><%= submit_tag "Submit" %></p>
+<% end %>

@@ -1,0 +1,9 @@
+<h1>New Raw Material</h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @raw_material} %>
+
+<%= form_for @raw_material do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p><%= submit_tag "Submit" %></p>
+<% end %>

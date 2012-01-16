@@ -1,0 +1,13 @@
+<% if @reference_type == "TOS" %>
+  $('#sender_select').html('<%= select_tag("raw_material_transaction[sender_id]", []) %>');
+  <% Department.all. each do |department| %>
+    $('#raw_material_transaction_sender_id').append("<option value='<%= department.id %>'><%= department.name %></option>")
+  <% end %>
+  $('#sender_select').append('<%= hidden_field_tag("raw_material_transaction[sender_type]", "Department") %>');
+<% else %>
+  $('#sender_select').html('<%= select_tag("raw_material_transaction[sender_id]", []) %>');
+  <% Supplier.all. each do |supplier| %>
+    $('#raw_material_transaction_sender_id').append("<option value='<%= supplier.id %>'><%= supplier.name %></option>")
+  <% end %>
+  $('#sender_select').append('<%= hidden_field_tag("raw_material_transaction[sender_type]", "Supplier") %>');
+<% end %>

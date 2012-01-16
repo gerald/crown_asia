@@ -1,0 +1,16 @@
+<h1>New Transaction for <%= @raw_material.name %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @raw_material_transaction} %>
+
+<%= form_for @raw_material_transaction do |f| %>
+  <%= f.hidden_field :raw_material_id %>
+  <%= f.hidden_field :transaction_type %>
+  
+  <% if @raw_material_transaction.transaction_type == "add" %>
+    <%= render :partial => "add_form", :locals =>{:f => f} %>
+  <% else %>
+    <%= render :partial => "sub_form", :locals =>{:f => f} %>
+  <% end %>
+  
+  <p><%= submit_tag "Submit" %></p>
+<% end %>

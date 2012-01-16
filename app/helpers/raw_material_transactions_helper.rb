@@ -1,0 +1,2 @@
+module RawMaterialTransactionsHelper
+end

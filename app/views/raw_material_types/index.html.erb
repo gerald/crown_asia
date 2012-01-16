@@ -1,0 +1,31 @@
+<h1>Raw Material Types</h1>
+
+<%= link_to "Create Raw Material Type", new_raw_material_type_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @raw_material_types %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Description</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @raw_material_types.each do |raw_material_type| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= raw_material_type.name %></td>
+      <td><%= raw_material_type.code %></td>
+      <td><%= raw_material_type.description %></td>
+      <td>
+        <%= link_to "Edit", edit_raw_material_type_path(raw_material_type), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", raw_material_type_path(raw_material_type), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

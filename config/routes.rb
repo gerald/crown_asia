@@ -1,4 +1,22 @@
 CrownAsia::Application.routes.draw do
+  resources :raw_material_transactions do
+    post 'update_sender', :on => :collection
+  end
+
+  resources :raw_materials
+
+  resources :raw_material_types
+
+  resources :departments
+
+  resources :unit_of_measures
+
+  resources :customers
+
+  resources :suppliers
+
+  devise_for :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +66,7 @@ CrownAsia::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 

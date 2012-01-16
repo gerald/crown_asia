@@ -1,0 +1,29 @@
+<h1>Departments</h1>
+
+<%= link_to "Create Department", new_department_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @departments %>
+
+<table>
+  <thead>
+    <tr>
+      <th width="40%">Name</th>
+      <th width="30%">Code</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @departments.each do |department| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= department.name %></td>
+      <td><%= department.code %></td>
+      <td>
+        <%= link_to "Edit", edit_department_path(department), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", department_path(department), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

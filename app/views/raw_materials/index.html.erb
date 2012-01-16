@@ -1,0 +1,45 @@
+<h1>Raw Materials</h1>
+
+<%= link_to "Create Raw Material", new_raw_material_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @raw_materials %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Description</th>
+      <th>Type</th>
+      <th>UOM</th>
+      <th>Supplier</th>
+      <th>Local?</th>
+      <th>Quantity</th>
+      <th>Comments</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @raw_materials.each do |raw_material| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= raw_material.name %></td>
+      <td><%= raw_material.code %></td>
+      <td><%= simple_format(raw_material.description) %></td>
+      <td><%= raw_material.raw_material_type.name %></td>
+      <td><%= raw_material.unit_of_measure.name %></td>
+      <td><%= raw_material.supplier.name %></td>
+      <td><%= raw_material.local ? "L" : "I" %></td>
+      <td><%= raw_material.quantity_on_hand %></td>
+      <td><%= simple_format(raw_material.comments) %></td>
+      <td>
+        <%= link_to "Edit", edit_raw_material_path(raw_material), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", raw_material_path(raw_material), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %> <br/>
+        <%= link_to "Add", new_raw_material_transaction_path(:raw_material_id => raw_material, :transaction_type => "add"), :class => "create_link" %> &nbsp;&nbsp;
+        <%= link_to "Deduct", new_raw_material_transaction_path(:raw_material_id => raw_material, :transaction_type => "sub"), :class => "delete_link" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

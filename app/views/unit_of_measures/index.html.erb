@@ -1,0 +1,31 @@
+<h1>Unit of Measures</h1>
+
+<%= link_to "Create Unit of Measure", new_unit_of_measure_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @unit_of_measures %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Description</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @unit_of_measures.each do |unit_of_measure| %>  
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= unit_of_measure.name %></td>
+      <td><%= unit_of_measure.code %></td>
+      <td><%= simple_format(unit_of_measure.description) %></td>
+      <td>
+        <%= link_to "Edit", edit_unit_of_measure_path(unit_of_measure), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", unit_of_measure_path(unit_of_measure), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

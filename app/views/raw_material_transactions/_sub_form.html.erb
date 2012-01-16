@@ -1,0 +1,31 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :mirs_number %></dd>
+    <dd><%= f.text_field :mirs_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :transaction_date %></dd>
+    <dd><%= f.date_select :transaction_date %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :issued_department, "Issued To" %></dd>
+    <dd><%= f.select :issued_department_id, Department.all.collect{|d| [d.name, d.id]}, {:include_blank => true} %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :quantity %></dd>
+    <dd><%= f.text_field :quantity %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :lot_number %></dd>
+    <dd><%= f.text_field :lot_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
+</fieldset>

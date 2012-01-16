@@ -1,0 +1,27 @@
+<h1>Customers</h1>
+
+<%= link_to "Create Customer", new_customer_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @customers %>
+
+<table>
+  <thead>
+    <tr>
+      <th width="70%">Name</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @customers.each do |customer| %>  
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= customer.name %></td>
+      <td>
+        <%= link_to "Edit", edit_customer_path(customer), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", customer_path(customer), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

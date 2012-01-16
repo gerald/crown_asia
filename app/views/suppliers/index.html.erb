@@ -1,0 +1,27 @@
+<h1>Suppliers</h1>
+
+<%= link_to "Create Supplier", new_supplier_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @suppliers %>
+
+<table>
+  <thead>
+    <tr>
+      <th width="70%">Name</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @suppliers.each do |supplier| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= supplier.name %></td>
+      <td>
+        <%= link_to "Edit", edit_supplier_path(supplier), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", supplier_path(supplier), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

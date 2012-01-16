@@ -1,0 +1,9 @@
+<h1>Update <%= @raw_material_type.name %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @raw_material_type} %>
+
+<%= form_for @raw_material_type do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p><%= submit_tag "Submit" %></p>
+<% end %>
