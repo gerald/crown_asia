@@ -17,6 +17,8 @@
       <th>Supplier</th>
       <th>Local?</th>
       <th>Quantity</th>
+      <th>Last Transaction</th>
+      <th>Classification</th>
       <th>Comments</th>
       <th>&nbsp;</th>
     </tr>
@@ -32,12 +34,15 @@
       <td><%= raw_material.supplier.name %></td>
       <td><%= raw_material.local ? "L" : "I" %></td>
       <td><%= raw_material.quantity_on_hand %></td>
+      <td><%= raw_material.last_transaction_date.strftime("%m/%d/%Y") if raw_material.last_transaction_date %></td>
+      <td><%= raw_material.classification %></td>
       <td><%= simple_format(raw_material.comments) %></td>
       <td>
         <%= link_to "Edit", edit_raw_material_path(raw_material), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", raw_material_path(raw_material), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %> <br/>
         <%= link_to "Add", new_raw_material_transaction_path(:raw_material_id => raw_material, :transaction_type => "add"), :class => "create_link" %> &nbsp;&nbsp;
-        <%= link_to "Deduct", new_raw_material_transaction_path(:raw_material_id => raw_material, :transaction_type => "sub"), :class => "delete_link" %>
+        <%= link_to "Deduct", new_raw_material_transaction_path(:raw_material_id => raw_material, :transaction_type => "sub"), :class => "delete_link" %> &nbsp;&nbsp;
+        <%= link_to "History", transactions_raw_material_path(raw_material), :class => "history_link" %>
       </td>
     </tr>
   <% end %>

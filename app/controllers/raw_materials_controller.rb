@@ -41,4 +41,9 @@ class RawMaterialsController < ApplicationController
     redirect_to raw_materials_path
   end
   
+  def transactions
+    @raw_material = RawMaterial.find(params[:id])
+    @transactions = @raw_material.raw_material_transactions.paginate(:per_page => 20, :page => params[:page], :order => "transaction_date DESC")
+  end
+  
 end

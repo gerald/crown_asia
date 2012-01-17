@@ -5,6 +5,8 @@ namespace :users do
     u.username = "s.leevillanueva"
     u.password = "passw0rd"
     u.email = "pipay04@yahoo.com"
+    u.first_name = "Stephanie"
+    u.last_name = "Lee Vilanueva"
     u.save!
   end
 end

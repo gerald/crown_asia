@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115180412) do
+ActiveRecord::Schema.define(:version => 20120117182305) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(:version => 20120115180412) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
   end
 
   create_table "raw_material_types", :force => true do |t|
@@ -94,6 +96,8 @@ ActiveRecord::Schema.define(:version => 20120115180412) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

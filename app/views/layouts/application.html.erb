@@ -20,7 +20,7 @@
         
         <div class="fl_right">
           <% if user_signed_in? %>
-            <p>Welcome, <%= current_user.username %>. <%= link_to "Logout", destroy_user_session_path, :method => :delete  %></p>
+            <p>Welcome, <%= current_user.name %>. <%= link_to "Logout", destroy_user_session_path, :method => :delete  %></p>
           <% end %>
         </div>
         <div id="topnav">
