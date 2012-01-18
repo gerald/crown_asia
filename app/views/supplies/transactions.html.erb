@@ -1,0 +1,57 @@
+<h1>Transactions for <%= @supply.name %></h1>
+
+<%= will_paginate @transactions %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Supplier</th>
+      <th>Usage</th>
+      <th>RR #</th>
+      <th>PRE #</th>
+      <th>MIRS #</th>
+      <th>Lot #</th>
+      <th>Issued To Department</th>
+      <th>Issued To User</th>
+      <th>Creator</th>
+      <th>Updater</th>
+      <th>Comments</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @transactions.each do |transaction| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td>
+        <% if transaction.transaction_type == "add" %>
+          <span class="positive">Add</span>
+        <% else %>
+          <span class="negative">Deduct</span>
+        <% end %>
+      </td>
+      <td><%= transaction.transaction_date.strftime("%m/%d/%Y") if transaction.transaction_date %></td>
+      <td><%= transaction.quantity %></td>
+      <td><%= transaction.unit_price %></td>
+      <td><%= transaction.supplier_name %></td>
+      <td><%= transaction.usage %></td>
+      <td><%= transaction.rr_number %></td>
+      <td><%= transaction.pre_number %></td>
+      <td><%= transaction.mirs_number %></td>
+      <td><%= transaction.lot_number %></td>
+      <td><%= transaction.issued_department.name if transaction.issued_department %></td>
+      <td><%= transaction.issued_user.name if transaction.issued_user %></td>
+      <td><%= transaction.creator.name if transaction.creator %></td>
+      <td><%= transaction.updater.name if transaction.updater %></td>
+      <td><%= simple_format(transaction.comments) %></td>
+      <td>
+        <%= link_to "Edit", edit_supply_transaction_path(transaction), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", supply_transaction_path(transaction), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

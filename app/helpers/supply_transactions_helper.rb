@@ -1,0 +1,2 @@
+module SupplyTransactionsHelper
+end

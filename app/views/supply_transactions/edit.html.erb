@@ -1,0 +1,13 @@
+<h1>Edit Transaction for <%= @supply.name %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @supply_transaction} %>
+
+<%= form_for @supply_transaction do |f| %>
+  <% if @supply_transaction.transaction_type == "add" %>
+    <%= render :partial => "add_form", :locals =>{:f => f} %>
+  <% else %>
+    <%= render :partial => "sub_form", :locals =>{:f => f} %>
+  <% end %>
+  
+  <p><%= submit_tag "Submit" %></p>
+<% end %>

@@ -1,0 +1,31 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :supply_type %></dd>
+    <dd><%= f.select :supply_type, supply_type_options, {:include_blank => true} %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :name %></dd>
+    <dd><%= f.text_field :name %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :code %></dd>
+    <dd><%= f.text_field :code %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :description %></dd>
+    <dd><%= f.text_area :description %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :unit_of_measure %></dd>
+    <dd><%= f.select :unit_of_measure_id, UnitOfMeasure.all.collect{|u| [u.name, u.id]}, {:include_blank => true} %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
+</fieldset>

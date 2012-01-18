@@ -1,0 +1,46 @@
+<h1>Supplies</h1>
+
+<%= link_to "Create Supply", new_supply_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @supplies %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Description</th>
+      <th>UOM</th>
+      <th>Quantity</th>
+      <th>Last Transaction</th>
+      <th>Last Price</th>
+      <th>Comments</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @supplies.each do |supply| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= supply.supply_type %></td>
+      <td><%= supply.name %></td>
+      <td><%= supply.code %></td>
+      <td><%= simple_format(supply.description) %></td>
+      <td><%= supply.unit_of_measure.name %></td>
+      <td><%= supply.quantity_on_hand %></td>
+      <td><%= supply.last_transaction_date.strftime("%m/%d/%Y") if supply.last_transaction_date %></td>
+      <td><%= supply.last_price if supply.last_price %></td>
+      <td><%= simple_format(supply.comments) %></td>
+      <td>
+        <%= link_to "Edit", edit_supply_path(supply), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", supply_path(supply), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %> <br/>
+        <%= link_to "Add", new_supply_transaction_path(:supply_id => supply, :transaction_type => "add"), :class => "create_link" %> &nbsp;&nbsp;
+        <%= link_to "Deduct", new_supply_transaction_path(:supply_id => supply, :transaction_type => "sub"), :class => "delete_link" %> &nbsp;&nbsp;
+        <%= link_to "History", transactions_supply_path(supply), :class => "history_link" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

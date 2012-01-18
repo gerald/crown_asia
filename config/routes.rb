@@ -1,4 +1,10 @@
 CrownAsia::Application.routes.draw do
+  resources :supply_transactions
+
+  resources :supplies do
+    get 'transactions', :on => :member
+  end
+
   resources :raw_material_transactions do
     post 'update_sender', :on => :collection
   end
