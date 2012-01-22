@@ -1,0 +1,56 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :dr_number, "DR Number" %></dd>
+    <dd><%= f.text_field :dr_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :si_number, "SI Number" %></dd>
+    <dd><%= f.text_field :si_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :transaction_date %></dd>
+    <dd><%= f.date_select :transaction_date %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :quantity %></dd>
+    <dd><%= f.text_field :quantity %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :lot_number %></dd>
+    <dd>
+      <%= f.select :lot_number, lot_number_options, {:include_blank => true}, {:onchange => "update_bags()"} %>
+      <%= loader %>
+    </dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :removed_bags, "Bags" %></dd>
+    <dd id="bag_selection"></dd>
+  </dl>
+</fieldset>
+
+<%= javascript_tag :defer => "defer" do %>
+  function update_bags() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_bags_finished_good_transactions_path %>',
+      data: 'lot_number=' + $('#finished_good_transaction_lot_number').val(),
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+
+  $(document).ready(function() {
+    update_bags();
+  });
+
+<% end %>

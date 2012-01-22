@@ -1,0 +1,7 @@
+$('#bag_selection').html('');
+$('#bag_selection').append('<table id="bags_table"></table>');
+$('#bags_table').append('<thead><tr><th></th><th>Bag #</th><th>Quantity</th></tr></thead>');
+
+<% @bags.each do |bag| %>
+  $('#bags_table').append('<tr class="<%= cycle("light", "dark") %>"><td><%= check_box_tag "finished_good_transaction[removed_bag_ids][]", bag.id, false %></td><td><%= bag.bag_number %></td><td><%= bag.quantity %></td></tr>');
+<% end %>

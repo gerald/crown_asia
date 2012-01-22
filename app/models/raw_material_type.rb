@@ -2,6 +2,6 @@ class RawMaterialType < ActiveRecord::Base
   
   has_many :raw_materials
   
-  validates_presence_of :name, :code
+  validates :name, :code, :presence => true
 
 end

@@ -6,14 +6,14 @@ class RawMaterialTransaction < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :updater, :class_name => "User"
   
-  validates_presence_of :transaction_date, :quantity, :lot_number
-  validates_presence_of :reference_type, :reference_number, :po_number, :sender, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
-  validates_format_of :reference_number, :po_number, :with => /[0-9]+/, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :transaction_date, :quantity, :lot_number, :presence => true
+  validates :reference_type, :reference_number, :po_number, :sender, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :reference_number, :po_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   
-  validates_presence_of :mirs_number, :issued_department, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
-  validates_format_of :mirs_number, :with => /[0-9]+/, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :mirs_number, :issued_department, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
+  validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   
-  validates_numericality_of :quantity
+  validates :quantity, :numericality => true
   
   acts_as_paranoid
 

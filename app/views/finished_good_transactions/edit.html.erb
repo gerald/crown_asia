@@ -1,0 +1,13 @@
+<h1>Edit Transaction for <%= @finished_good.name %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @finished_good_transaction} %>
+
+<%= form_for @finished_good_transaction do |f| %>
+  <% if @finished_good_transaction.transaction_type == "add" %>
+    <%= render :partial => "add_form", :locals =>{:f => f} %>
+  <% else %>
+    <%= render :partial => "sub_form", :locals =>{:f => f} %>
+  <% end %>
+  
+  <p><%= submit_tag "Submit" %></p>
+<% end %>

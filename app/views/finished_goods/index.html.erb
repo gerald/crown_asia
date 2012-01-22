@@ -1,0 +1,48 @@
+<h1>Finished Goods</h1>
+
+<%= link_to "Create Finished Good", new_finished_good_path, :class => "create_link" %>
+
+<br/><br/>
+
+<%= will_paginate @finished_goods %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Description</th>
+      <th>UOM</th>
+      <th>Customer</th>
+      <th>Local?</th>
+      <th>Quantity</th>
+      <th>Last Transaction</th>
+      <th>Classification</th>
+      <th>Comments</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @finished_goods.each do |finished_good| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= finished_good.name %></td>
+      <td><%= finished_good.code %></td>
+      <td><%= simple_format(finished_good.description) %></td>
+      <td><%= finished_good.unit_of_measure.name %></td>
+      <td><%= finished_good.customer.name %></td>
+      <td><%= finished_good.local ? "L" : "I" %></td>
+      <td><%= finished_good.quantity_on_hand %></td>
+      <td><%= finished_good.last_transaction_date.strftime("%m/%d/%Y") if finished_good.last_transaction_date %></td>
+      <td><%= finished_good.classification %></td>
+      <td><%= simple_format(finished_good.comments) %></td>
+      <td>
+        <%= link_to "Edit", edit_finished_good_path(finished_good), :class => "edit_link" %> &nbsp;&nbsp;
+        <%= link_to "Delete", finished_good_path(finished_good), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %> <br/>
+        <%= link_to "Add", new_finished_good_transaction_path(:finished_good_id => finished_good, :transaction_type => "add"), :class => "create_link" %> &nbsp;&nbsp;
+        <%= link_to "Deduct", new_finished_good_transaction_path(:finished_good_id => finished_good, :transaction_type => "sub"), :class => "delete_link" %> &nbsp;&nbsp;
+        <%= link_to "History", transactions_finished_good_path(finished_good), :class => "history_link" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

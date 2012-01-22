@@ -1,6 +1,6 @@
 class Supplier < ActiveRecord::Base
 
-  validates_presence_of :name
+  validates :name, :presence => true
   
   has_many :raw_materials
   has_many :raw_material_transactions, :as => :sender

@@ -5,8 +5,8 @@ class RawMaterial < ActiveRecord::Base
   
   has_many :raw_material_transactions, :dependent => :destroy
   
-  validates_presence_of :name, :code, :raw_material_type, :unit_of_measure, :supplier
-  validates_uniqueness_of :code
+  validates :name, :code, :raw_material_type, :unit_of_measure, :supplier, :presence => true
+  validates :code, :uniqueness => true
   
   acts_as_paranoid
   

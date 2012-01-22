@@ -1,0 +1,66 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :reference_type %></dd>
+    <dd><%= f.select :reference_type, [["TOS", "TOS"], ["RR", "RR"]], {}, {:onchange => "update_sender()"} %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <%= f.label :sender, "Received From" %>
+      <%= loader %>
+    </dd>
+    <dd id="sender_select"></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :reference_number %></dd>
+    <dd><%= f.text_field :reference_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :transaction_date %></dd>
+    <dd><%= f.date_select :transaction_date %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :quantity %></dd>
+    <dd><%= f.text_field :quantity %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :lot_number %></dd>
+    <dd><%= f.text_field :lot_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :start_bag_number %></dd>
+    <dd><%= f.text_field :start_bag_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :end_bag_number %></dd>
+    <dd><%= f.text_field :end_bag_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
+</fieldset>
+
+<%= javascript_tag :defer => "defer" do %>
+  function update_sender() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_sender_finished_good_transactions_path %>',
+      data: 'reference_type=' + $('#finished_good_transaction_reference_type').val(),
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+
+  $(document).ready(function() {
+    update_sender();
+  });
+
+<% end %>

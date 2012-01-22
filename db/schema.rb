@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120118173454) do
+ActiveRecord::Schema.define(:version => 20120121170721) do
+
+  create_table "bags", :force => true do |t|
+    t.integer  "bag_number"
+    t.integer  "adding_transaction_id"
+    t.integer  "removing_transaction_id"
+    t.integer  "finished_good_id"
+    t.float    "quantity"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -21,6 +32,41 @@ ActiveRecord::Schema.define(:version => 20120118173454) do
   create_table "departments", :force => true do |t|
     t.string   "name"
     t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "finished_good_transactions", :force => true do |t|
+    t.string   "transaction_type"
+    t.string   "reference_type"
+    t.string   "reference_number"
+    t.date     "transaction_date"
+    t.float    "quantity"
+    t.string   "lot_number"
+    t.string   "dr_number"
+    t.string   "si_number"
+    t.integer  "start_bag_number"
+    t.integer  "end_bag_number"
+    t.integer  "finished_good_id"
+    t.integer  "sender_id"
+    t.string   "sender_type"
+    t.text     "comments"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "finished_goods", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.text     "description"
+    t.integer  "unit_of_measure_id"
+    t.integer  "customer_id"
+    t.boolean  "local"
+    t.text     "comments"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
