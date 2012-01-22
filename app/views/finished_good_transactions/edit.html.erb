@@ -11,3 +11,8 @@
   
   <p><%= submit_tag "Submit" %></p>
 <% end %>
+
+<script type="text/javascript">
+  Date.format = 'mm/dd/yyyy';
+  $('#finished_good_transaction_transaction_date').datePicker({clickInput:true, startDate:'01/01/2000'});
+</script>
