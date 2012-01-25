@@ -21,6 +21,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   validates :quantity, :numericality => true
   
   after_create :create_bags
+  before_validation :set_quantity
   
   acts_as_paranoid
 
@@ -36,9 +37,17 @@ class FinishedGoodTransaction < ActiveRecord::Base
   protected
     def create_bags
       return if self.transaction_type != "add"
-      q = self.quantity/((self.end_bag_number - self.start_bag_number) + 1)
+      total = self.quantity
+      per_bag = self.quantity_per_bag
       self.start_bag_number.upto(self.end_bag_number) do |i|
-        Bag.create(:bag_number => i, :adding_transaction => self, :finished_good => self.finished_good, :quantity => q)
+        Bag.create(:bag_number => i, :adding_transaction => self, :finished_good => self.finished_good, :quantity => per_bag)
+        total -= per_bag
       end
+      Bag.create(:bag_number => 0, :adding_transaction => self, :finished_good => self.finished_good, :quantity => total) if total > 0
+    end
+    
+    def set_quantity
+      return if self.transaction_type != "sub"
+      self.quantity = Bag.sum("quantity", :conditions => ["ID IN(?)", self.removed_bag_ids])
     end
 end

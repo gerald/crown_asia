@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120121170721) do
+ActiveRecord::Schema.define(:version => 20120125112719) do
 
   create_table "bags", :force => true do |t|
     t.integer  "bag_number"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20120121170721) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "quantity_per_bag"
   end
 
   create_table "finished_goods", :force => true do |t|

@@ -48,6 +48,6 @@ class FinishedGoodTransactionsController < ApplicationController
   end
   
   def update_bags
-    @bags = Bag.all(:include => [:adding_transaction], :conditions => ["finished_good_transactions.lot_number = ?", params[:lot_number]])
+    @bags = Bag.all(:include => [:adding_transaction], :conditions => ["finished_good_transactions.lot_number = ? AND removing_transaction_id IS NULL", params[:lot_number]])
   end
 end

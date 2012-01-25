@@ -17,11 +17,6 @@
   <br class="clear"/>
   
   <dl>
-    <dd><%= f.label :quantity %></dd>
-    <dd><%= f.text_field :quantity %></dd>
-  </dl>
-  
-  <dl>
     <dd><%= f.label :lot_number %></dd>
     <dd>
       <%= f.select :lot_number, lot_number_options, {:include_blank => true}, {:onchange => "update_bags()"} %>
