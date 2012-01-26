@@ -16,9 +16,7 @@
       <th>Bag #</th>
       <th>Received From</th>
       <th>Creator</th>
-      <th>Updater</th>
       <th>Comments</th>
-      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -47,12 +45,7 @@
       </td>
       <td><%= transaction.sender.name if transaction.sender %></td>
       <td><%= transaction.creator.name if transaction.creator %></td>
-      <td><%= transaction.updater.name if transaction.updater %></td>
       <td><%= simple_format(transaction.comments) %></td>
-      <td>
-        <%= link_to "Edit", edit_finished_good_transaction_path(transaction), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", finished_good_transaction_path(transaction), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
-      </td>
     </tr>
   <% end %>
   </tbody>

@@ -67,6 +67,11 @@ a.history_link {
   padding-left: 18px;
 }
 
+a.search_link {
+  background: transparent url(icons/search.png) no-repeat 0 0;
+  padding-left: 18px;
+}
+
 .positive {
   background-color: #d7ffcc;
   padding: 5px 10px;
@@ -75,4 +80,13 @@ a.history_link {
 .negative {
   background-color: #F7D4D4;
   padding: 5px 10px;
+}
+
+#search_form {
+  float:left;
+  padding-right: 10px;
+}
+
+p.buttons {
+  margin-left: 35px;
 }

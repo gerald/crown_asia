@@ -11,8 +11,9 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   validates :transaction_date, :quantity, :lot_number, :presence => true
   
-  validates :reference_type, :reference_number, :start_bag_number, :end_bag_number, :sender, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
-  validates :start_bag_number, :end_bag_number, :numericality => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :reference_type, :reference_number, :start_bag_number, :end_bag_number, :sender, :quantity_per_bag, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :start_bag_number, :end_bag_number, :quantity_per_bag, :numericality => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :remainder_quantity, :numericality => true, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   validates :reference_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   
   validates :dr_number, :si_number, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
@@ -37,17 +38,17 @@ class FinishedGoodTransaction < ActiveRecord::Base
   protected
     def create_bags
       return if self.transaction_type != "add"
-      total = self.quantity
-      per_bag = self.quantity_per_bag
       self.start_bag_number.upto(self.end_bag_number) do |i|
-        Bag.create(:bag_number => i, :adding_transaction => self, :finished_good => self.finished_good, :quantity => per_bag)
-        total -= per_bag
+        Bag.create(:bag_number => i, :adding_transaction => self, :finished_good => self.finished_good, :quantity => self.quantity_per_bag)
       end
-      Bag.create(:bag_number => 0, :adding_transaction => self, :finished_good => self.finished_good, :quantity => total) if total > 0
+      Bag.create(:bag_number => 0, :adding_transaction => self, :finished_good => self.finished_good, :quantity => self.remainder_quantity) if !self.remainder_quantity.blank?
     end
     
     def set_quantity
-      return if self.transaction_type != "sub"
-      self.quantity = Bag.sum("quantity", :conditions => ["ID IN(?)", self.removed_bag_ids])
+      if self.transaction_type == "sub"
+        self.quantity = Bag.sum("quantity", :conditions => ["ID IN(?)", self.removed_bag_ids])
+      else
+        self.quantity = (((self.end_bag_number - self.start_bag_number) + 1) * self.quantity_per_bag) + self.remainder_quantity
+      end
     end
 end

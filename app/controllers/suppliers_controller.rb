@@ -1,7 +1,11 @@
 class SuppliersController < ApplicationController
 
   def index
-    @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    if params[:search_text].blank?
+      @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    else
+      @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
+    end
   end
   
   def new
@@ -10,7 +14,7 @@ class SuppliersController < ApplicationController
   
   def create
     @supplier = Supplier.new(params[:supplier])
-    
+    @supplier.creator = current_user
     if @supplier.save
       flash[:notice] = "Supplier saved successfully"
       redirect_to suppliers_path
@@ -25,7 +29,7 @@ class SuppliersController < ApplicationController
   
   def update
     @supplier = Supplier.find(params[:id])
-    
+    @supplier.updater = current_user
     if @supplier.update_attributes(params[:supplier])
       flash[:notice] = "#{@supplier.name} was updated successfully"
       redirect_to suppliers_path

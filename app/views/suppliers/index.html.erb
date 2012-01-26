@@ -1,15 +1,20 @@
 <h1>Suppliers</h1>
 
-<%= link_to "Create Supplier", new_supplier_path, :class => "create_link" %>
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
 
-<br/><br/>
+<%= link_to "Add Supplier", new_supplier_path, :class => "create_link" %>
 
-<%= will_paginate @suppliers %>
+<br class="clear"/><br/>
 
 <table>
   <thead>
     <tr>
-      <th width="70%">Name</th>
+      <th>Name</th>
+      <th>Active</th>
+      <th>Creator</th>
+      <th>Updater</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -17,6 +22,9 @@
   <% @suppliers.each do |supplier| %>
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= supplier.name %></td>
+      <td><%= supplier.active ? "Yes" : "No" %></td>
+      <td><%= supplier.creator.name if supplier.creator %></td>
+      <td><%= supplier.updater.name if supplier.updater %></td>
       <td>
         <%= link_to "Edit", edit_supplier_path(supplier), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", supplier_path(supplier), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
@@ -25,3 +33,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @suppliers %>
