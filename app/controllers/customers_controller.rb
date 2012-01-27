@@ -1,7 +1,11 @@
 class CustomersController < ApplicationController
 
   def index
-    @customers = Customer.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    if params[:search_text].blank?
+      @customers = Customer.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    else
+      @customers = Customer.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "#{params[:search_text]}"], :order => "name")
+    end
   end
   
   def new
@@ -10,7 +14,7 @@ class CustomersController < ApplicationController
   
   def create
     @customer = Customer.new(params[:customer])
-    
+    @customer.creator = current_user
     if @customer.save
       flash[:notice] = "Customer saved successfully"
       redirect_to customers_path
@@ -25,7 +29,7 @@ class CustomersController < ApplicationController
   
   def update
     @customer = Customer.find(params[:id])
-    
+    @customer.updater = current_user
     if @customer.update_attributes(params[:customer])
       flash[:notice] = "#{@customer.name} was updated successfully"
       redirect_to customers_path

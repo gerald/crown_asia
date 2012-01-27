@@ -1,15 +1,19 @@
 <h1>Customers</h1>
 
-<%= link_to "Create Customer", new_customer_path, :class => "create_link" %>
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
 
-<br/><br/>
+<%= link_to "Add Customer", new_customer_path, :class => "create_link" %>
 
-<%= will_paginate @customers %>
+<br class="clear"/><br/>
 
 <table>
   <thead>
     <tr>
-      <th width="70%">Name</th>
+      <th>Name</th>
+      <th>Creator</th>
+      <th>Updater</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -17,6 +21,8 @@
   <% @customers.each do |customer| %>  
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= customer.name %></td>
+      <td><%= customer.creator.name if customer.creator %></td>
+      <td><%= customer.updater.name if customer.updater %></td>
       <td>
         <%= link_to "Edit", edit_customer_path(customer), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", customer_path(customer), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
@@ -25,3 +31,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @customers %>

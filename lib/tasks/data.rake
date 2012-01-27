@@ -1,12 +1,12 @@
 namespace :data do
   desc 'Setup data'
   task :setup_initial_data => :environment do
-    UnitOfMeasure.create(:name => "Kilogram", :code => "KG")
-    UnitOfMeasure.create(:name => "Piece", :code => "PC")
-    UnitOfMeasure.create(:name => "Roll", :code => "ROLL")
-    UnitOfMeasure.create(:name => "Ream", :code => "REAM")
-    UnitOfMeasure.create(:name => "Bottle", :code => "BOTTLE")
-    UnitOfMeasure.create(:name => "Bundle", :code => "BUNDLE")
+    UnitOfMeasure.create(:code => "KG")
+    UnitOfMeasure.create(:code => "PC")
+    UnitOfMeasure.create(:code => "ROLL")
+    UnitOfMeasure.create(:code => "REAM")
+    UnitOfMeasure.create(:code => "BOTTLE")
+    UnitOfMeasure.create(:code => "BUNDLE")
     
     Department.create(:name => "Warehouse & Physical Distribution", :code => "WPD")
     Department.create(:name => "Production & Maintenance", :code => "PM")

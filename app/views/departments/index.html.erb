@@ -1,16 +1,21 @@
 <h1>Departments</h1>
 
-<%= link_to "Create Department", new_department_path, :class => "create_link" %>
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
 
-<br/><br/>
+<%= link_to "Add Department", new_department_path, :class => "create_link" %>
 
-<%= will_paginate @departments %>
+<br class="clear"/><br/>
 
 <table>
   <thead>
     <tr>
-      <th width="40%">Name</th>
-      <th width="30%">Code</th>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Active</th>
+      <th>Creator</th>
+      <th>Updater</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -19,6 +24,9 @@
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= department.name %></td>
       <td><%= department.code %></td>
+      <td><%= department.active ? "Yes" : "No" %></td>
+      <td><%= department.creator.name if department.creator %></td>
+      <td><%= department.updater.name if department.updater %></td>
       <td>
         <%= link_to "Edit", edit_department_path(department), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", department_path(department), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
@@ -27,3 +35,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @departments %>

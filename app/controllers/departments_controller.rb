@@ -1,6 +1,10 @@
 class DepartmentsController < ApplicationController
   def index
-    @departments = Department.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    if params[:search_text].blank?
+      @departments = Department.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    else
+      @departments = Department.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ? OR code LIKE ?", "%#{params[:search_text]}%", "%#{params[:search_text]}%"], :order => "name")
+    end
   end
   
   def new
@@ -9,7 +13,7 @@ class DepartmentsController < ApplicationController
   
   def create
     @department = Department.new(params[:department])
-    
+    @department.creator = current_user
     if @department.save
       flash[:notice] = "Department saved successfully"
       redirect_to departments_path
@@ -24,7 +28,7 @@ class DepartmentsController < ApplicationController
   
   def update
     @department = Department.find(params[:id])
-    
+    @department.updater = current_user
     if @department.update_attributes(params[:department])
       flash[:notice] = "#{@department.name} was updated successfully"
       redirect_to departments_path

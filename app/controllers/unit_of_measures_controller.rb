@@ -1,7 +1,11 @@
 class UnitOfMeasuresController < ApplicationController
 
   def index
-    @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    if params[:search_text].blank?
+      @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :order => "code")
+    else
+      @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{params[:search_text]}%"], :order => "code")
+    end
   end
   
   def new
@@ -10,7 +14,7 @@ class UnitOfMeasuresController < ApplicationController
   
   def create
     @unit_of_measure = UnitOfMeasure.new(params[:unit_of_measure])
-    
+    @unit_of_measure.creator = current_user
     if @unit_of_measure.save
       flash[:notice] = "Unit of Measure saved successfully"
       redirect_to unit_of_measures_path
@@ -25,7 +29,7 @@ class UnitOfMeasuresController < ApplicationController
   
   def update
     @unit_of_measure = UnitOfMeasure.find(params[:id])
-    
+    @unit_of_measure.updater = current_user
     if @unit_of_measure.update_attributes(params[:unit_of_measure])
       flash[:notice] = "#{@unit_of_measure.name} was updated successfully"
       redirect_to unit_of_measures_path
