@@ -22,18 +22,26 @@
   </dl>
   
   <dl>
-    <dd><%= f.label :usage %></dd>
-    <dd><%= f.text_field :usage %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :quantity %></dd>
-    <dd><%= f.text_field :quantity %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :lot_number %></dd>
-    <dd><%= f.text_field :lot_number %></dd>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <% if !@supply_transaction.new_record? %>
+                <th>Delete?</th>
+              <% end %>
+              <th>Supply</th> 
+              <th>Quantity Issued</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.fields_for :supply_transaction_items do |builder| %>
+              <%= render "sub_item_form", :f => builder %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
   </dl>
   
   <dl>

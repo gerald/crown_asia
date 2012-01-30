@@ -6,9 +6,7 @@
 
 <%= link_to "Add Raw Material", new_raw_material_path, :class => "create_link" %>
 
-<br/><br/>
-
-<%= will_paginate @raw_materials %>
+<br class="clear"/><br/>
 
 <table>
   <thead>
@@ -44,3 +42,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @raw_materials %>

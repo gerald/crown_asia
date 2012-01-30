@@ -9,7 +9,11 @@
     <%= render :partial => "sub_form", :locals =>{:f => f} %>
   <% end %>
   
-  <p><%= submit_tag "Submit" %></p>
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$(this).closest('form')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{raw_materials_path}')" %>
+  </p>
 <% end %>
 
 <script type="text/javascript">

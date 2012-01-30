@@ -1,0 +1,7 @@
+<tr>
+  <% if !@supply_transaction.new_record? %>
+    <td><%= f.check_box :_destroy %></td>
+  <% end %>
+  <td><%= f.select :supply_id, Supply.all.collect{|s| [s.name, s.id]}, {:include_blank => true} %></td>
+  <td><%= f.text_field :quantity %></td>
+</tr>

@@ -1,9 +1,8 @@
-<h1>New Transaction for <%= @supply.name %></h1>
+<h1>New Transaction</h1>
 
 <%= render :partial => "shared/error_messages", :locals => {:target => @supply_transaction} %>
 
 <%= form_for @supply_transaction do |f| %>
-  <%= f.hidden_field :supply_id %>
   <%= f.hidden_field :transaction_type %>
   
   <% if @supply_transaction.transaction_type == "add" %>
@@ -12,7 +11,11 @@
     <%= render :partial => "sub_form", :locals =>{:f => f} %>
   <% end %>
   
-  <p><%= submit_tag "Submit" %></p>
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$('#new_supply_transaction')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{supplies_path}')" %>
+  </p>
 <% end %>
 
 <script type="text/javascript">

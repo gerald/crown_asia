@@ -1,5 +1,10 @@
 <fieldset>
   <dl>
+    <dd><%= f.label :pre_number, "PRE Number" %></dd>
+    <dd><%= f.text_field :pre_number %></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :rr_number, "RR Number" %></dd>
     <dd><%= f.text_field :rr_number %></dd>
   </dl>
@@ -12,23 +17,32 @@
   <br class="clear"/>
   
   <dl>
-    <dd><%= f.label :quantity %></dd>
-    <dd><%= f.text_field :quantity %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :pre_number, "PRE Number" %></dd>
-    <dd><%= f.text_field :pre_number %></dd>
-  </dl>
-  
-  <dl>
     <dd><%= f.label :supplier_name %></dd>
-    <dd><%= f.text_field :supplier_name %></dd>
+    <dd><%= f.select :supplier_name, Supplier.all.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
   </dl>
   
   <dl>
-    <dd><%= f.label :unit_price %></dd>
-    <dd><%= f.text_field :unit_price %></dd>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <% if !@supply_transaction.new_record? %>
+                <th>Delete?</th>
+              <% end %>
+              <th>Supply</th> 
+              <th>Quantity Received</th>
+              <th>Unit Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.fields_for :supply_transaction_items do |builder| %>
+              <%= render "add_item_form", :f => builder %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
   </dl>
   
   <dl>
