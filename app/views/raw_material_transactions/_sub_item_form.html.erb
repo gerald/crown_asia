@@ -1,0 +1,7 @@
+<tr>
+  <% if !@raw_material_transaction.new_record? %>
+    <td><%= f.check_box :_destroy %></td>
+  <% end %>
+  <td><%= f.select :lot_number, lot_number_options(@raw_material), {:include_blank => true} %></td>
+  <td><%= f.text_field :quantity, :class => "quantity_text" %></td>
+</tr>

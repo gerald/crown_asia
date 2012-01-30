@@ -35,15 +35,24 @@
         <table>
           <thead>
             <tr>
-              <th>Delete?</th>
+              <% if !@raw_material_transaction.new_record? %>
+                <th>Delete?</th>
+              <% end %>
               <th>Lot Number</th> 
               <th>Quantity Received</th>
             </tr>
           </thead>
           <tbody>
             <%= f.fields_for :raw_material_transaction_items do |builder| %>
-              <%= render "item_form", :f => builder %>
+              <%= render "add_item_form", :f => builder %>
             <% end %>
+            <tr>
+              <% if !@raw_material_transaction.new_record? %>
+                <td></td>
+              <% end %>
+              <td style="text-align:right">Total</td>
+              <td id="total_quantity"></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -57,11 +66,23 @@
 </fieldset>
 
 <%= javascript_tag :defer => "defer" do %>
+  function update_total() {
+    sum = 0;
+    $('.quantity_text').each(function() {
+        sum += Number($(this).val());
+    });
+    $('#total_quantity').html(sum);
+  }
+  
+  $('.quantity_text').change(function() {
+    update_total();
+  });
+  
   function update_sender() {
     $.ajax({
       type: 'POST',
       url: '<%= update_sender_raw_material_transactions_path %>',
-      data: 'reference_type=' + $('#raw_material_transaction_reference_type').val(),
+      data: 'reference_type=' + $('#raw_material_transaction_reference_type').val() + '&sender_id=<%= @raw_material_transaction.sender_id %>',
       beforeSend: function(request){$('#loader').show();},
       complete: function(request){$('#loader').hide()}
     });
@@ -69,6 +90,7 @@
 
   $(document).ready(function() {
     update_sender();
+    update_total();
   });
 
 <% end %>

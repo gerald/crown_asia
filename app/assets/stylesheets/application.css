@@ -90,3 +90,8 @@ a.search_link {
 p.buttons {
   margin-left: 35px;
 }
+
+#total_quantity {
+  color: #000;
+  font-weight: bold;
+}

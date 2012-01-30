@@ -46,6 +46,7 @@ class RawMaterialTransactionsController < ApplicationController
   end
   
   def update_sender
+    # @raw_material_transaction = RawMaterialTransaction.find(params[:raw_material_transaction_id]) if !params[:raw_material_transaction_id].blank?
     @reference_type = params[:reference_type]
   end
 

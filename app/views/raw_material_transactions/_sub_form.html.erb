@@ -22,15 +22,24 @@
         <table>
           <thead>
             <tr>
-              <th>Delete?</th>
+              <% if !@raw_material_transaction.new_record? %>
+                <th>Delete?</th>
+              <% end %>
               <th>Lot Number</th> 
               <th>Quantity Issued</th>
             </tr>
           </thead>
           <tbody>
             <%= f.fields_for :raw_material_transaction_items do |builder| %>
-              <%= render "item_form", :f => builder %>
+              <%= render "sub_item_form", :f => builder %>
             <% end %>
+            <tr>
+              <% if !@raw_material_transaction.new_record? %>
+                <td></td>
+              <% end %>
+              <td style="text-align:right">Total</td>
+              <td id="total_quantity"></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -42,3 +51,21 @@
     <dd><%= f.text_area :comments %></dd>
   </dl>
 </fieldset>
+
+<%= javascript_tag :defer => "defer" do %>
+  function update_total() {
+    sum = 0;
+    $('.quantity_text').each(function() {
+        sum += Number($(this).val());
+    });
+    $('#total_quantity').html(sum);
+  }
+  
+  $('.quantity_text').change(function() {
+    update_total();
+  });
+  
+  $(document).ready(function() {
+    update_total();
+  });
+<% end %>

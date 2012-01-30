@@ -13,9 +13,14 @@ class RawMaterial < ActiveRecord::Base
   
   acts_as_paranoid
   
-  def quantity_on_hand
-    add_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'add' AND raw_material_transactions.raw_material_id = ?", self.id])
-    sub_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'sub' AND raw_material_transactions.raw_material_id = ?", self.id])
+  def quantity_on_hand(lot_number = nil)
+    if lot_number.nil?
+      add_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'add' AND raw_material_transactions.raw_material_id = ?", self.id])
+      sub_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'sub' AND raw_material_transactions.raw_material_id = ?", self.id])
+    else
+      add_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'add' AND raw_material_transactions.raw_material_id = ? AND lot_number = ?", self.id, lot_number])
+      sub_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'sub' AND raw_material_transactions.raw_material_id = ? AND lot_number = ?", self.id, lot_number])
+    end
     
     add_quantity - sub_quantity
   end

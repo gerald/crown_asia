@@ -60,7 +60,7 @@
     $.ajax({
       type: 'POST',
       url: '<%= update_sender_finished_good_transactions_path %>',
-      data: 'reference_type=' + $('#finished_good_transaction_reference_type').val(),
+      data: 'reference_type=' + $('#finished_good_transaction_reference_type').val() + '&sender_id=<%= @finished_good_transaction.sender_id %>',
       beforeSend: function(request){$('#loader').show();},
       complete: function(request){$('#loader').hide()}
     });
