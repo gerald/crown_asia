@@ -6,7 +6,7 @@
   <%= render :partial => "form", :locals =>{:f => f} %>
   
   <p class="buttons">
-    <%= submit_tag "Submit" %>
+    <%= submit_tag "Save" %>
     <%= button_to_function "Reset", "$('#new_customer')[0].reset()" %>
     <%= button_to_function "Cancel", "window.location.replace('#{customers_path}')" %>
   </p>

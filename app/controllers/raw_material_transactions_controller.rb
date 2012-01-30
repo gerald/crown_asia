@@ -6,6 +6,7 @@ class RawMaterialTransactionsController < ApplicationController
     @raw_material_transaction.raw_material = @raw_material
     @raw_material_transaction.transaction_type = params[:transaction_type]
     @raw_material_transaction.transaction_date = Date.today
+    5.times {@raw_material_transaction.raw_material_transaction_items.build}
   end
   
   def create

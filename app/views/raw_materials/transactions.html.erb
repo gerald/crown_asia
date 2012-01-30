@@ -9,14 +9,11 @@
       <th>Ref. Type</th>
       <th>Ref. Number</th>
       <th>Date</th>
-      <th>Quantity</th>
-      <th>Lot #</th>
       <th>PO #</th>
       <th>MIRS #</th>
+      <th>Items</th>
       <th>Issued To</th>
       <th>Received From</th>
-      <th>Creator</th>
-      <th>Updater</th>
       <th>Comments</th>
       <th>&nbsp;</th>
     </tr>
@@ -34,14 +31,15 @@
       <td><%= transaction.reference_type %></td>
       <td><%= transaction.reference_number %></td>
       <td><%= transaction.transaction_date.strftime("%m/%d/%Y") if transaction.transaction_date %></td>
-      <td><%= transaction.quantity %></td>
-      <td><%= transaction.lot_number %></td>
       <td><%= transaction.po_number %></td>
       <td><%= transaction.mirs_number %></td>
+      <td>
+        <% transaction.raw_material_transaction_items.each do |item| %>
+          <%= item.lot_number %> - <%= item.quantity %><br/>
+        <% end %>
+      </td>
       <td><%= transaction.issued_department.name if transaction.issued_department %></td>
       <td><%= transaction.sender.name if transaction.sender %></td>
-      <td><%= transaction.creator.name if transaction.creator %></td>
-      <td><%= transaction.updater.name if transaction.updater %></td>
       <td><%= simple_format(transaction.comments) %></td>
       <td>
         <%= link_to "Edit", edit_raw_material_transaction_path(transaction), :class => "edit_link" %> &nbsp;&nbsp;

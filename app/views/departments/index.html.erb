@@ -14,8 +14,6 @@
       <th>Name</th>
       <th>Code</th>
       <th>Active</th>
-      <th>Creator</th>
-      <th>Updater</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -25,8 +23,6 @@
       <td><%= department.name %></td>
       <td><%= department.code %></td>
       <td><%= department.active ? "Yes" : "No" %></td>
-      <td><%= department.creator.name if department.creator %></td>
-      <td><%= department.updater.name if department.updater %></td>
       <td>
         <%= link_to "Edit", edit_department_path(department), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", department_path(department), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>

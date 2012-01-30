@@ -13,8 +13,6 @@
     <tr>
       <th>Name</th>
       <th>Active</th>
-      <th>Creator</th>
-      <th>Updater</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -23,8 +21,6 @@
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= supplier.name %></td>
       <td><%= supplier.active ? "Yes" : "No" %></td>
-      <td><%= supplier.creator.name if supplier.creator %></td>
-      <td><%= supplier.updater.name if supplier.updater %></td>
       <td>
         <%= link_to "Edit", edit_supplier_path(supplier), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", supplier_path(supplier), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>

@@ -8,11 +8,14 @@ class RawMaterial < ActiveRecord::Base
   validates :name, :code, :raw_material_type, :unit_of_measure, :supplier, :presence => true
   validates :code, :uniqueness => true
   
+  belongs_to :creator, :class_name => "User"
+  belongs_to :updater, :class_name => "User"
+  
   acts_as_paranoid
   
   def quantity_on_hand
-    add_quantity = self.raw_material_transactions.sum("quantity", :conditions => ["transaction_type = 'add'"])
-    sub_quantity = self.raw_material_transactions.sum("quantity", :conditions => ["transaction_type = 'sub'"])
+    add_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'add' AND raw_material_transactions.raw_material_id = ?", self.id])
+    sub_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'sub' AND raw_material_transactions.raw_material_id = ?", self.id])
     
     add_quantity - sub_quantity
   end

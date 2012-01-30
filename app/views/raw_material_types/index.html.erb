@@ -1,6 +1,10 @@
 <h1>Raw Material Types</h1>
 
-<%= link_to "Create Raw Material Type", new_raw_material_type_path, :class => "create_link" %>
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Raw Material Type", new_raw_material_type_path, :class => "create_link" %>
 
 <br/><br/>
 
@@ -9,7 +13,6 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
       <th>Code</th>
       <th>Description</th>
       <th>&nbsp;</th>
@@ -18,7 +21,6 @@
   <tbody>
   <% @raw_material_types.each do |raw_material_type| %>
     <tr class="<%= cycle("light", "dark") %>">
-      <td><%= raw_material_type.name %></td>
       <td><%= raw_material_type.code %></td>
       <td><%= raw_material_type.description %></td>
       <td>

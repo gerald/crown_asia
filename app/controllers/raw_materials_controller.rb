@@ -1,7 +1,11 @@
 class RawMaterialsController < ApplicationController
   
   def index
-    @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    if params[:search_text].blank?
+      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    else
+      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
+    end
   end
   
   def new
@@ -10,7 +14,7 @@ class RawMaterialsController < ApplicationController
   
   def create
     @raw_material = RawMaterial.new(params[:raw_material])
-    
+    @raw_material.creator = current_user
     if @raw_material.save
       flash[:notice] = "Raw Material saved successfully"
       redirect_to raw_materials_path
@@ -25,7 +29,7 @@ class RawMaterialsController < ApplicationController
   
   def update
     @raw_material = RawMaterial.find(params[:id])
-    
+    @raw_material.updater = current_user
     if @raw_material.update_attributes(params[:raw_material])
       flash[:notice] = "#{@raw_material.name} was updated successfully"
       redirect_to raw_materials_path

@@ -17,13 +17,24 @@
   </dl>
   
   <dl>
-    <dd><%= f.label :quantity %></dd>
-    <dd><%= f.text_field :quantity %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :lot_number %></dd>
-    <dd><%= f.text_field :lot_number %></dd>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <th>Delete?</th>
+              <th>Lot Number</th> 
+              <th>Quantity Issued</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.fields_for :raw_material_transaction_items do |builder| %>
+              <%= render "item_form", :f => builder %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
   </dl>
   
   <dl>

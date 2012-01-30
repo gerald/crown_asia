@@ -13,10 +13,10 @@ namespace :data do
     Department.create(:name => "Quality Assurance/R&D", :code => "QARD")
     Department.create(:name => "Management", :code => "MGT")
 
-    RawMaterialType.create(:name => "CMR", :code => "CMR")
-    RawMaterialType.create(:name => "CMP", :code => "CMP")
-    RawMaterialType.create(:name => "CSS", :code => "CSS")
-    RawMaterialType.create(:name => "CSL", :code => "CSL")
-    RawMaterialType.create(:name => "COL", :code => "COL")
+    RawMaterialType.create(:code => "CMR")
+    RawMaterialType.create(:code => "CMP")
+    RawMaterialType.create(:code => "CSS")
+    RawMaterialType.create(:code => "CSL")
+    RawMaterialType.create(:code => "COL")
   end
 end

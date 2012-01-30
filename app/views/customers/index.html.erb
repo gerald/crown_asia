@@ -12,8 +12,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Creator</th>
-      <th>Updater</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -21,8 +19,6 @@
   <% @customers.each do |customer| %>  
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= customer.name %></td>
-      <td><%= customer.creator.name if customer.creator %></td>
-      <td><%= customer.updater.name if customer.updater %></td>
       <td>
         <%= link_to "Edit", edit_customer_path(customer), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", customer_path(customer), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>

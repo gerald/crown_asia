@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120127120845) do
+ActiveRecord::Schema.define(:version => 20120130081156) do
 
   create_table "bags", :force => true do |t|
     t.integer  "bag_number"
@@ -78,13 +78,20 @@ ActiveRecord::Schema.define(:version => 20120127120845) do
     t.datetime "updated_at"
   end
 
+  create_table "raw_material_transaction_items", :force => true do |t|
+    t.string   "lot_number"
+    t.float    "quantity"
+    t.integer  "raw_material_transaction_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+  end
+
   create_table "raw_material_transactions", :force => true do |t|
     t.string   "transaction_type"
     t.string   "reference_type"
     t.string   "reference_number"
     t.date     "transaction_date"
-    t.float    "quantity"
-    t.string   "lot_number"
     t.string   "po_number"
     t.string   "mirs_number"
     t.integer  "raw_material_id"
@@ -100,11 +107,12 @@ ActiveRecord::Schema.define(:version => 20120127120845) do
   end
 
   create_table "raw_material_types", :force => true do |t|
-    t.string   "name"
     t.string   "code"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
   end
 
   create_table "raw_materials", :force => true do |t|
