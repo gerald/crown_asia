@@ -1,6 +1,8 @@
 <h1>Transactions for <%= @raw_material.name %></h1>
 
-<%= will_paginate @transactions %>
+<%= link_to "Back", raw_materials_path, :class => "back_link" %>
+
+<br/><br/>
 
 <table>
   <thead>
@@ -49,3 +51,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @transactions %>

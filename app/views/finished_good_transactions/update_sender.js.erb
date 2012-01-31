@@ -1,13 +1,7 @@
 <% if @reference_type == "TOS" %>
-  $('#sender_select').html('<%= select_tag("finished_good_transaction[sender_id]", []) %>');
-  <% Department.all. each do |department| %>
-    $('#finished_good_transaction_sender_id').append("<option value='<%= department.id %>' <%= "selected='selected'" if department.id == params[:sender_id].to_i %>><%= department.name %></option>")
-  <% end %>
+  $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[sender_id]", options_from_collection_for_select(Department.all, "id", "name", params[:sender_id]))) %>');
   $('#sender_select').append('<%= hidden_field_tag("finished_good_transaction[sender_type]", "Department") %>');
 <% else %>
-  $('#sender_select').html('<%= select_tag("finished_good_transaction[sender_id]", []) %>');
-  <% Supplier.all. each do |supplier| %>
-    $('#finished_good_transaction_sender_id').append("<option value='<%= supplier.id %>' <%= "selected='selected'" if supplier.id == params[:sender_id].to_i %>><%= supplier.name %></option>")
-  <% end %>
+  $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[sender_id]", options_from_collection_for_select(Supplier.all, "id", "name", params[:sender_id]))) %>');
   $('#sender_select').append('<%= hidden_field_tag("finished_good_transaction[sender_type]", "Supplier") %>');
 <% end %>

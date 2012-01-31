@@ -19,7 +19,7 @@
   <dl>
     <dd><%= f.label :lot_number %></dd>
     <dd>
-      <%= f.select :lot_number, lot_number_options, {:include_blank => true}, {:onchange => "update_bags()"} %>
+      <%= f.select :lot_number, lot_number_fg_options, {:include_blank => true}, {:onchange => "update_bags()"} %>
       <%= loader %>
     </dd>
   </dl>

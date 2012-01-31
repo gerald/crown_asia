@@ -2,6 +2,8 @@ class FinishedGood < ActiveRecord::Base
 
   belongs_to :unit_of_measure
   belongs_to :customer
+  belongs_to :creator, :class_name => "User"
+  belongs_to :updater, :class_name => "User"
   
   has_many :finished_good_transactions
   has_many :bags

@@ -1,4 +1,4 @@
-<table>
+<table id="bags_table">
   <thead>
     <tr>
       <th></th>
@@ -9,7 +9,7 @@
   <tbody>
   <% bags.each do |bag| %>
     <tr class="<%= cycle("light", "dark") %>">
-      <td><%= check_box_tag "finished_good_transaction[removed_bag_ids][]", bag.id, @finished_good_transaction.removed_bags.include?(bag) %></td>
+      <td><%= check_box_tag "finished_good_transaction[removed_bag_ids][]", bag.id, false %></td>
       <td><%= bag.bag_number %></td>
       <td><%= bag.quantity %></td>
     </tr>

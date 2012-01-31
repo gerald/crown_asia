@@ -1,6 +1,10 @@
 class FinishedGoodsController < ApplicationController
   def index
-    @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    if params[:search_text].blank?
+      @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    else
+      @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
+    end
   end
   
   def new
@@ -9,7 +13,7 @@ class FinishedGoodsController < ApplicationController
   
   def create
     @finished_good = FinishedGood.new(params[:finished_good])
-    
+    @finished_good.creator = current_user
     if @finished_good.save
       flash[:notice] = "Finished Good saved successfully"
       redirect_to finished_goods_path
@@ -24,7 +28,7 @@ class FinishedGoodsController < ApplicationController
   
   def update
     @finished_good = FinishedGood.find(params[:id])
-    
+    @finished_good.updater = current_user
     if @finished_good.update_attributes(params[:finished_good])
       flash[:notice] = "#{@finished_good.name} was updated successfully"
       redirect_to finished_goods_path

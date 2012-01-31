@@ -12,6 +12,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Active</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
   <% @customers.each do |customer| %>  
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= customer.name %></td>
+      <td><%= customer.active ? "Yes" : "No" %></td>
       <td>
         <%= link_to "Edit", edit_customer_path(customer), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", customer_path(customer), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>

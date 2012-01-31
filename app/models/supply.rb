@@ -6,7 +6,7 @@ class Supply < ActiveRecord::Base
   
   has_many :supply_transaction_items, :dependent => :destroy
   
-  validates :name, :code, :unit_of_measure, :supply_type, :presence => true
+  validates :name, :unit_of_measure, :supply_type, :presence => true
   
   acts_as_paranoid
   

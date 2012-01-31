@@ -1,20 +1,20 @@
 <h1>Finished Goods</h1>
 
-<%= link_to "Create Finished Good", new_finished_good_path, :class => "create_link" %>
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
 
-<br/><br/>
+<%= link_to "Add Finished Good", new_finished_good_path, :class => "create_link" %>
 
-<%= will_paginate @finished_goods %>
+<br class="clear"/><br/>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Code</th>
-      <th>Description</th>
       <th>UOM</th>
       <th>Customer</th>
-      <th>Local?</th>
       <th>Quantity</th>
       <th>Last Transaction</th>
       <th>Classification</th>
@@ -27,10 +27,8 @@
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= finished_good.name %></td>
       <td><%= finished_good.code %></td>
-      <td><%= simple_format(finished_good.description) %></td>
       <td><%= finished_good.unit_of_measure.name %></td>
       <td><%= finished_good.customer.name %></td>
-      <td><%= finished_good.local ? "L" : "I" %></td>
       <td><%= finished_good.quantity_on_hand %></td>
       <td><%= finished_good.last_transaction_date.strftime("%m/%d/%Y") if finished_good.last_transaction_date %></td>
       <td><%= finished_good.classification %></td>
@@ -46,3 +44,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @finished_goods %>
