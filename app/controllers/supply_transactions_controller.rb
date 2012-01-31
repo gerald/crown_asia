@@ -40,4 +40,7 @@ class SupplyTransactionsController < ApplicationController
     redirect_to supplies_path
   end
   
+  def update_supplies
+    @supply_type = params[:supply_type]
+  end
 end

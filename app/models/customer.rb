@@ -7,4 +7,7 @@ class Customer < ActiveRecord::Base
   
   belongs_to :creator, :class_name => "User"
   belongs_to :updater, :class_name => "User"
+  
+  scope :active_customers, :conditions => {:active => true}
+  
 end

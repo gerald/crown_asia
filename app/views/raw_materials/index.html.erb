@@ -28,7 +28,7 @@
       <td><%= raw_material.code %></td>
       <td><%= raw_material.name %></td>
       <td><%= raw_material.supplier.name %></td>
-      <td><%= raw_material.quantity_on_hand %></td>
+      <td><%= number_with_precision(raw_material.quantity_on_hand, :precision => 5) %></td>
       <td><%= raw_material.last_transaction_date.strftime("%m/%d/%Y") if raw_material.last_transaction_date %></td>
       <td><%= raw_material.classification %></td>
       <td>

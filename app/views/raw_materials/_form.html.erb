@@ -31,7 +31,7 @@
   
   <dl>
     <dd><%= f.label :supplier %></dd>
-    <dd><%= f.select :supplier_id, Supplier.all.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
+    <dd><%= f.select :supplier_id, Supplier.active_suppliers.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
   </dl>
   
   <dl>

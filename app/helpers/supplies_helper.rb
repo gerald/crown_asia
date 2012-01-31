@@ -1,8 +1,8 @@
 module SuppliesHelper
 
   def supply_type_options
-    [["Office", "Office"],
-     ["Cleaning", "Cleaning"],
+    [["O/C", "O/C"],
+     ["Packaging", "Packaging"],
      ["Engineering", "Engineering"]]
   end
 

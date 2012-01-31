@@ -1,7 +1,7 @@
 <% if @reference_type == "TOS" %>
-  $('#sender_select').html('<%= escape_javascript(select_tag("raw_material_transaction[sender_id]", options_from_collection_for_select(Department.all, "id", "name", params[:sender_id]))) %>');
+  $('#sender_select').html('<%= escape_javascript(select_tag("raw_material_transaction[sender_id]", options_from_collection_for_select(Department.active_departments, "id", "name", params[:sender_id]))) %>');
   $('#sender_select').append('<%= hidden_field_tag("raw_material_transaction[sender_type]", "Department") %>');
 <% else %>
-  $('#sender_select').html('<%= escape_javascript(select_tag("raw_material_transaction[sender_id]", options_from_collection_for_select(Supplier.all, "id", "name", params[:sender_id]))) %>');
+  $('#sender_select').html('<%= escape_javascript(select_tag("raw_material_transaction[sender_id]", options_from_collection_for_select(Supplier.active_suppliers, "id", "name", params[:sender_id]))) %>');
   $('#sender_select').append('<%= hidden_field_tag("raw_material_transaction[sender_type]", "Supplier") %>');
 <% end %>

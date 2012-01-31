@@ -21,7 +21,7 @@
   
   <dl>
     <dd><%= f.label :customer %></dd>
-    <dd><%= f.select :customer_id, Customer.all.collect{|c| [c.name, c.id]}, {:include_blank => true} %></dd>
+    <dd><%= f.select :customer_id, Customer.active_customers.collect{|c| [c.name, c.id]}, {:include_blank => true} %></dd>
   </dl>
   
   <dl>

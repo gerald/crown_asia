@@ -18,8 +18,18 @@
   
   <dl>
     <dd><%= f.label :supplier_name %></dd>
-    <dd><%= f.select :supplier_name, Supplier.all.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
+    <dd><%= f.select :supplier_name, Supplier.active_suppliers.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
   </dl>
+  
+  <% if @supply_transaction.new_record? %>
+  <dl>
+    <dd><%= f.label :supply_type %></dd>
+    <dd>
+      <%= f.select :supply_type, supply_type_options, {:include_blank => true}, {:onchange => "update_supplies()"} %>
+      <%= loader %>
+    </dd>
+  </dl>
+  <% end %>
   
   <dl>
     <dd>
@@ -50,3 +60,15 @@
     <dd><%= f.text_area :comments %></dd>
   </dl>
 </fieldset>
+
+<%= javascript_tag :defer => "defer" do %>
+  function update_supplies() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_supplies_supply_transactions_path %>',
+      data: 'supply_type=' + $('#supply_transaction_supply_type').val(),
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+<% end %>

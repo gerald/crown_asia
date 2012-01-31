@@ -8,7 +8,9 @@ CrownAsia::Application.routes.draw do
     get 'transactions', :on => :member
   end
 
-  resources :supply_transactions
+  resources :supply_transactions do
+    post 'update_supplies', :on => :collection
+  end
 
   resources :supplies do
     get 'transactions', :on => :member
