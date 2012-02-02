@@ -10,17 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131083658) do
+ActiveRecord::Schema.define(:version => 20120202073158) do
 
   create_table "bags", :force => true do |t|
     t.integer  "bag_number"
-    t.integer  "adding_transaction_id"
     t.integer  "removing_transaction_id"
     t.integer  "finished_good_id"
     t.float    "quantity"
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "finished_good_transaction_item_id"
   end
 
   create_table "customers", :force => true do |t|
@@ -42,17 +42,25 @@ ActiveRecord::Schema.define(:version => 20120131083658) do
     t.integer  "updater_id"
   end
 
+  create_table "finished_good_transaction_items", :force => true do |t|
+    t.string   "lot_number"
+    t.integer  "start_bag_number"
+    t.integer  "end_bag_number"
+    t.float    "quantity"
+    t.boolean  "underpack",                    :default => false
+    t.integer  "finished_good_transaction_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "finished_good_transactions", :force => true do |t|
     t.string   "transaction_type"
     t.string   "reference_type"
     t.string   "reference_number"
     t.date     "transaction_date"
-    t.float    "quantity"
-    t.string   "lot_number"
     t.string   "dr_number"
     t.string   "si_number"
-    t.integer  "start_bag_number"
-    t.integer  "end_bag_number"
     t.integer  "finished_good_id"
     t.integer  "sender_id"
     t.string   "sender_type"
@@ -63,12 +71,15 @@ ActiveRecord::Schema.define(:version => 20120131083658) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "quantity_per_bag"
-    t.float    "remainder_quantity"
+    t.string   "lot_number"
+    t.string   "issue_type"
+    t.integer  "issued_to_id"
+    t.string   "issued_to_type"
+    t.string   "mirs_number"
   end
 
   create_table "finished_goods", :force => true do |t|
     t.string   "name"
-    t.string   "code"
     t.text     "description"
     t.integer  "unit_of_measure_id"
     t.integer  "customer_id"

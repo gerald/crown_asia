@@ -9,12 +9,13 @@
       <th>Ref. Type</th>
       <th>Ref. Number</th>
       <th>Date</th>
-      <th>Quantity</th>
       <th>Lot #</th>
       <th>DR #</th>
       <th>SI #</th>
+      <th>MIRS #</th>
       <th>Bag #</th>
       <th>Received From</th>
+      <th>Issued To</th>
       <th>Creator</th>
       <th>Comments</th>
     </tr>
@@ -32,18 +33,25 @@
       <td><%= transaction.reference_type %></td>
       <td><%= transaction.reference_number %></td>
       <td><%= transaction.transaction_date.strftime("%m/%d/%Y") if transaction.transaction_date %></td>
-      <td><%= transaction.quantity %></td>
       <td><%= transaction.lot_number %></td>
       <td><%= transaction.dr_number %></td>
       <td><%= transaction.si_number %></td>
+      <td><%= transaction.mirs_number %></td>
       <td>
         <% if transaction.transaction_type == "add" %>
-          <%= transaction.start_bag_number %> - <%= transaction.end_bag_number %>
+          <% transaction.finished_good_transaction_items.each do |item| %>
+            <% if item.underpack %>
+              Underpack Bag #0 <br/>
+            <% else %>
+              <%= item.lot_number %>(<%= item.start_bag_number %>-<%= item.end_bag_number %>)<br/>
+            <% end %>
+          <% end %>
         <% else %>
           <%= transaction.removed_bag_numbers %>
         <% end %>
       </td>
       <td><%= transaction.sender.name if transaction.sender %></td>
+      <td><%= transaction.issued_to.name if transaction.issued_to %></td>
       <td><%= transaction.creator.name if transaction.creator %></td>
       <td><%= simple_format(transaction.comments) %></td>
     </tr>

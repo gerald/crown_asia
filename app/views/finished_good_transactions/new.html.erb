@@ -12,7 +12,11 @@
     <%= render :partial => "sub_form", :locals =>{:f => f} %>
   <% end %>
   
-  <p><%= submit_tag "Submit" %></p>
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$('#new_finished_transaction')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{finished_goods_path}')" %>
+  </p>
 <% end %>
 
 <script type="text/javascript">

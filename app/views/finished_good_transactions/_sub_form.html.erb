@@ -1,5 +1,18 @@
 <fieldset>
   <dl>
+    <dd><%= f.label :issue_type %></dd>
+    <dd><%= f.select :issue_type, [["Customer", "Customer"], ["Internal", "Internal"]], {}, {:onchange => "update_issued()"} %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <%= f.label :issued_to, "Issued To" %>
+      <%= loader("issued_loader") %>
+    </dd>
+    <dd id="sender_select"></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :dr_number, "DR Number" %></dd>
     <dd><%= f.text_field :dr_number %></dd>
   </dl>
@@ -7,6 +20,11 @@
   <dl>
     <dd><%= f.label :si_number, "SI Number" %></dd>
     <dd><%= f.text_field :si_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :mirs_number, "MIRS Number" %></dd>
+    <dd><%= f.text_field :mirs_number %></dd>
   </dl>
   
   <dl>
@@ -19,7 +37,7 @@
   <dl>
     <dd><%= f.label :lot_number %></dd>
     <dd>
-      <%= f.select :lot_number, lot_number_fg_options, {:include_blank => true}, {:onchange => "update_bags()"} %>
+      <%= f.select :lot_number, lot_number_fg_options(@finished_good), {:include_blank => true}, {:onchange => "update_bags()"} %>
       <%= loader %>
     </dd>
   </dl>
@@ -40,14 +58,25 @@
     $.ajax({
       type: 'POST',
       url: '<%= update_bags_finished_good_transactions_path %>',
-      data: 'lot_number=' + $('#finished_good_transaction_lot_number').val(),
+      data: 'lot_number=' + $('#finished_good_transaction_lot_number').val() + '&finished_good_id=<%= @finished_good.id %>',
       beforeSend: function(request){$('#loader').show();},
       complete: function(request){$('#loader').hide()}
+    });
+  }
+  
+  function update_issued() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_issued_finished_good_transactions_path %>',
+      data: 'issue_type=' + $('#finished_good_transaction_issue_type').val() + '&issued_to_id=<%= @finished_good_transaction.issued_to_id %>',
+      beforeSend: function(request){$('#issued_loader').show();},
+      complete: function(request){$('#issued_loader').hide()}
     });
   }
 
   $(document).ready(function() {
     update_bags();
+    update_issued();
   });
 
 <% end %>

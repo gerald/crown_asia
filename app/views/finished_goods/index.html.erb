@@ -12,7 +12,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Code</th>
       <th>UOM</th>
       <th>Customer</th>
       <th>Quantity</th>
@@ -26,7 +25,6 @@
   <% @finished_goods.each do |finished_good| %>
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= finished_good.name %></td>
-      <td><%= finished_good.code %></td>
       <td><%= finished_good.unit_of_measure.name %></td>
       <td><%= finished_good.customer.name %></td>
       <td><%= number_with_precision(finished_good.quantity_on_hand, :precision => 5) %></td>

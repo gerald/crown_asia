@@ -2,6 +2,7 @@ CrownAsia::Application.routes.draw do
   resources :finished_good_transactions do
     post 'update_sender', :on => :collection
     post 'update_bags', :on => :collection
+    post 'update_issued', :on => :collection
   end
 
   resources :finished_goods do

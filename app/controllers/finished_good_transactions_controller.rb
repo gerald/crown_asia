@@ -5,6 +5,8 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction.finished_good = @finished_good
     @finished_good_transaction.transaction_type = params[:transaction_type]
     @finished_good_transaction.transaction_date = Date.today
+    3.times {@finished_good_transaction.finished_good_transaction_items.build}
+    @finished_good_transaction.finished_good_transaction_items.build(:underpack => true)
   end
   
   def create
@@ -48,6 +50,15 @@ class FinishedGoodTransactionsController < ApplicationController
   end
   
   def update_bags
-    @bags = Bag.all(:include => [:adding_transaction], :conditions => ["finished_good_transactions.lot_number = ? AND removing_transaction_id IS NULL", params[:lot_number]])
+    @finished_good = FinishedGood.find(params[:finished_good_id])
+    if params[:lot_number].blank?
+      @bags = []
+    else
+      @bags = Bag.all(:include => [:finished_good_transaction_item], :conditions => ["(finished_good_transaction_items.lot_number = ? OR finished_good_transaction_items.lot_number IS NULL) AND bags.finished_good_id = ? AND removing_transaction_id IS NULL", params[:lot_number], @finished_good.id], :order => "bag_number")
+    end
+  end
+  
+  def update_issued
+    @issue_type = params[:issue_type]
   end
 end

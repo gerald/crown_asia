@@ -8,8 +8,7 @@ class FinishedGood < ActiveRecord::Base
   has_many :finished_good_transactions
   has_many :bags
   
-  validates :name, :code, :unit_of_measure, :customer, :presence => true
-  validates :code, :uniqueness => true
+  validates :name, :unit_of_measure, :customer, :presence => true
   
   acts_as_paranoid
   

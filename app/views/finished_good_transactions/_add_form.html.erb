@@ -26,27 +26,32 @@
   
   <dl>
     <dd><%= f.label :quantity_per_bag %></dd>
-    <dd><%= f.text_field :quantity_per_bag %></dd>
+    <dd><%= f.select :quantity_per_bag, quantity_per_bag_options, {:include_blank => true} %></dd>
   </dl>
   
   <dl>
-    <dd><%= f.label :remainder_quantity %></dd>
-    <dd><%= f.text_field :remainder_quantity %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :lot_number %></dd>
-    <dd><%= f.text_field :lot_number %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :start_bag_number %></dd>
-    <dd><%= f.text_field :start_bag_number %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :end_bag_number %></dd>
-    <dd><%= f.text_field :end_bag_number %></dd>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <% if !@finished_good_transaction.new_record? %>
+                <th>Delete?</th>
+              <% end %>
+              <th>Lot #</th> 
+              <th>Fr Bag</th>
+              <th>To Bag</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.fields_for :finished_good_transaction_items do |builder| %>
+              <%= render "item_form", :f => builder %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
   </dl>
   
   <dl>
