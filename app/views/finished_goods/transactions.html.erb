@@ -1,6 +1,8 @@
 <h1>Transactions for <%= @finished_good.name %></h1>
 
-<%= will_paginate @transactions %>
+<%= link_to "Back", finished_goods_path, :class => "back_link" %>
+
+<br/><br/>
 
 <table>
   <thead>
@@ -58,3 +60,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @transactions %>
