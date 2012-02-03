@@ -10,13 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202073158) do
+ActiveRecord::Schema.define(:version => 20120203060644) do
 
   create_table "bags", :force => true do |t|
     t.integer  "bag_number"
     t.integer  "removing_transaction_id"
     t.integer  "finished_good_id"
-    t.float    "quantity"
+    t.decimal  "quantity",                          :precision => 11, :scale => 5
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(:version => 20120202073158) do
     t.string   "lot_number"
     t.integer  "start_bag_number"
     t.integer  "end_bag_number"
-    t.float    "quantity"
-    t.boolean  "underpack",                    :default => false
+    t.decimal  "quantity",                     :precision => 11, :scale => 5
+    t.boolean  "underpack",                                                   :default => false
     t.integer  "finished_good_transaction_id"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20120202073158) do
 
   create_table "raw_material_transaction_items", :force => true do |t|
     t.string   "lot_number"
-    t.float    "quantity"
+    t.decimal  "quantity",                    :precision => 11, :scale => 5
     t.integer  "raw_material_transaction_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(:version => 20120202073158) do
   end
 
   create_table "supply_transaction_items", :force => true do |t|
-    t.float    "quantity"
+    t.decimal  "quantity",              :precision => 11, :scale => 5
     t.float    "unit_price"
     t.integer  "supply_id"
     t.integer  "supply_transaction_id"

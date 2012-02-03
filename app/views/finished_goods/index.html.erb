@@ -27,7 +27,7 @@
       <td><%= finished_good.name %></td>
       <td><%= finished_good.unit_of_measure.name %></td>
       <td><%= finished_good.customer.name %></td>
-      <td><%= number_with_precision(finished_good.quantity_on_hand, :precision => 5) %></td>
+      <td><%= finished_good.quantity_on_hand %></td>
       <td><%= finished_good.last_transaction_date.strftime("%m/%d/%Y") if finished_good.last_transaction_date %></td>
       <td><%= finished_good.classification %></td>
       <td><%= simple_format(finished_good.comments) %></td>
