@@ -20,7 +20,7 @@
   <% @unit_of_measures.each do |unit_of_measure| %>  
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= unit_of_measure.code %></td>
-      <td><%= simple_format(unit_of_measure.description) %></td>
+      <td><%= unit_of_measure.description %></td>
       <td>
         <%= link_to "Edit", edit_unit_of_measure_path(unit_of_measure), :class => "edit_link" %> &nbsp;&nbsp;
         <%= link_to "Delete", unit_of_measure_path(unit_of_measure), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>

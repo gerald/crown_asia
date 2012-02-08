@@ -1,7 +1,7 @@
 <fieldset>
   <dl>
     <dd><%= f.label :reference_type %></dd>
-    <dd><%= f.select :reference_type, [["TOS", "TOS"], ["RR", "RR"]], {}, {:onchange => "update_sender()"} %></dd>
+    <dd><%= f.select :reference_type, [["RR", "RR"], ["TOS", "TOS"]], {}, {:onchange => "update_sender()"} %></dd>
   </dl>
   
   <dl>

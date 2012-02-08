@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120203060644) do
+ActiveRecord::Schema.define(:version => 20120208162446) do
 
   create_table "bags", :force => true do |t|
     t.integer  "bag_number"
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(:version => 20120203060644) do
 
   create_table "unit_of_measures", :force => true do |t|
     t.string   "code"
-    t.text     "description"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"

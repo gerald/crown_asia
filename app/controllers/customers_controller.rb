@@ -4,7 +4,7 @@ class CustomersController < ApplicationController
     if params[:search_text].blank?
       @customers = Customer.paginate(:per_page => 20, :page => params[:page], :order => "name")
     else
-      @customers = Customer.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "#{params[:search_text]}"], :order => "name")
+      @customers = Customer.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
     end
   end
   

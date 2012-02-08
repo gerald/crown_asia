@@ -11,8 +11,8 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
       <th>Code</th>
+      <th>Name</th>
       <th>Active</th>
       <th>&nbsp;</th>
     </tr>
@@ -20,8 +20,8 @@
   <tbody>
   <% @departments.each do |department| %>
     <tr class="<%= cycle("light", "dark") %>">
-      <td><%= department.name %></td>
       <td><%= department.code %></td>
+      <td><%= department.name %></td>
       <td><%= department.active ? "Yes" : "No" %></td>
       <td>
         <%= link_to "Edit", edit_department_path(department), :class => "edit_link" %> &nbsp;&nbsp;

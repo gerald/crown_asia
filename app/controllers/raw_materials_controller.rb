@@ -4,7 +4,7 @@ class RawMaterialsController < ApplicationController
     if params[:search_text].blank?
       @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :order => "name")
     else
-      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
+      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{params[:search_text]}%"], :order => "name")
     end
   end
   
