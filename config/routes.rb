@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :roles
+
   resources :finished_good_transactions do
     post 'update_sender', :on => :collection
     post 'update_bags', :on => :collection
@@ -36,6 +38,8 @@ CrownAsia::Application.routes.draw do
   resources :suppliers
 
   devise_for :users
+  
+  match 'permissions' => 'permissions#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

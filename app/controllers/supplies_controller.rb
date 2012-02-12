@@ -1,4 +1,10 @@
 class SuppliesController < ApplicationController
+  before_filter :authorize_view, :only => [:index]
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  before_filter :authorize_delete, :only => [:destroy]
+  before_filter :authorize_transactions, :only => [:transactions]
+  
   def index
     if params[:search_text].blank?
       @supplies = Supply.paginate(:per_page => 20, :page => params[:page], :order => "name")
@@ -48,4 +54,27 @@ class SuppliesController < ApplicationController
     @supply = Supply.find(params[:id])
     @transactions = @supply.supply_transaction_items.paginate(:per_page => 20, :page => params[:page], :include => [:supply_transaction], :order => "supply_transactions.transaction_date DESC")
   end
+  
+  protected
+  
+    def authorize_view
+      authorize! :view, Supply
+    end
+    
+    def authorize_create
+      authorize! :create, Supply
+    end
+    
+    def authorize_update
+      authorize! :update, Supply
+    end
+    
+    def authorize_delete
+      authorize! :delete, Supply
+    end
+    
+    def authorize_transactions
+      authorize! :transactions, Supply
+    end
+    
 end

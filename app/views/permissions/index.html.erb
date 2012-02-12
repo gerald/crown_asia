@@ -1,0 +1,42 @@
+<h1>Permissions</h1>
+
+<%= form_tag "", :method => :get do %>
+  <%= select_tag "role_id", options_for_select(Role.all.collect{|r| [r.name.titleize, r.id]}, @role.id) %> <%= submit_tag "Submit" %>
+<% end %>
+
+<br class="clear"/>
+<br/>
+
+<%= form_tag "" do %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Subject</th>
+      <th>Permissions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Ability.permissions(@role).each do |o| -%>
+      <tr class="<%= cycle("light", "dark") %>">
+        <td><strong><%= o[:label] || o[:subject] %></strong></td>
+        <td>
+          <table>
+          <% o[:permissions].each do |perm| -%>
+          <tr>
+            <td width="20%">
+              <label><%= check_box_tag "permissions[#{o[:subject].underscore}][#{perm[:action]}]", "1", (1 == @role.permission_for(o[:subject], perm[:action]).to_i) %> <%= perm[:action].titleize %></label>
+            </td>
+            <td><%= perm[:desc].gsub(/\[TODO\]/, content_tag(:span, "NOT LIVE", :class => "highlighter")) %></td>
+          </tr>
+          <% end -%>
+          </table>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+
+<%= submit_tag "Save" %>
+
+<% end %>

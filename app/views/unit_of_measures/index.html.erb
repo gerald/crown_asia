@@ -4,7 +4,7 @@
   <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Unit of Measure", new_unit_of_measure_path, :class => "create_link" %>
+<%= link_to "Add Unit of Measure", new_unit_of_measure_path, :class => "create_link" if can?(:create, UnitOfMeasure) %>
 
 <br class="clear"/><br/>
 
@@ -22,8 +22,8 @@
       <td><%= unit_of_measure.code %></td>
       <td><%= unit_of_measure.description %></td>
       <td>
-        <%= link_to "Edit", edit_unit_of_measure_path(unit_of_measure), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", unit_of_measure_path(unit_of_measure), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+        <%= link_to "Edit", edit_unit_of_measure_path(unit_of_measure), :class => "edit_link" if can?(:update, UnitOfMeasure) %> &nbsp;&nbsp;
+        <%= link_to "Delete", unit_of_measure_path(unit_of_measure), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, UnitOfMeasure) %>
       </td>
     </tr>
   <% end %>

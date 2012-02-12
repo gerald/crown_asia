@@ -4,7 +4,7 @@
   <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Department", new_department_path, :class => "create_link" %>
+<%= link_to "Add Department", new_department_path, :class => "create_link" if can?(:create, Department) %>
 
 <br class="clear"/><br/>
 
@@ -24,8 +24,8 @@
       <td><%= department.name %></td>
       <td><%= department.active ? "Yes" : "No" %></td>
       <td>
-        <%= link_to "Edit", edit_department_path(department), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", department_path(department), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+        <%= link_to "Edit", edit_department_path(department), :class => "edit_link" if can?(:update, Department) %> &nbsp;&nbsp;
+        <%= link_to "Delete", department_path(department), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete,Department) %>
       </td>
     </tr>
   <% end %>

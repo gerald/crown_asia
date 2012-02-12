@@ -1,0 +1,31 @@
+<h1>Roles</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Role", new_role_path, :class => "create_link" if can?(:create, Role) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @roles.each do |role| %>  
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= role.name.titleize %></td>
+      <td>
+        <%= link_to "Edit", edit_role_path(role), :class => "edit_link" if can?(:update, Role) %> &nbsp;&nbsp;
+        <%= link_to "Delete", role_path(role), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Role) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @roles %>

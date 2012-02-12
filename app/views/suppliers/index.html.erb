@@ -4,7 +4,7 @@
   <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Supplier", new_supplier_path, :class => "create_link" %>
+<%= link_to "Add Supplier", new_supplier_path, :class => "create_link" if can?(:create, Supplier) %>
 
 <br class="clear"/><br/>
 
@@ -22,8 +22,8 @@
       <td><%= supplier.name %></td>
       <td><%= supplier.active ? "Yes" : "No" %></td>
       <td>
-        <%= link_to "Edit", edit_supplier_path(supplier), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", supplier_path(supplier), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+        <%= link_to "Edit", edit_supplier_path(supplier), :class => "edit_link" if can?(:update, Supplier) %> &nbsp;&nbsp;
+        <%= link_to "Delete", supplier_path(supplier), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Supplier) %>
       </td>
     </tr>
   <% end %>

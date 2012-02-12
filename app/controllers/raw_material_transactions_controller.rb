@@ -1,5 +1,8 @@
 class RawMaterialTransactionsController < ApplicationController
-
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  before_filter :authorize_delete, :only => [:destroy]
+  
   def new
     @raw_material = RawMaterial.find(params[:raw_material_id])
     @raw_material_transaction = RawMaterialTransaction.new
@@ -49,5 +52,19 @@ class RawMaterialTransactionsController < ApplicationController
     # @raw_material_transaction = RawMaterialTransaction.find(params[:raw_material_transaction_id]) if !params[:raw_material_transaction_id].blank?
     @reference_type = params[:reference_type]
   end
-
+  
+  protected
+  
+    def authorize_create
+      authorize! :create, RawMaterialTransaction
+    end
+    
+    def authorize_update
+      authorize! :update, RawMaterialTransaction
+    end
+    
+    def authorize_delete
+      authorize! :delete, RawMaterialTransaction
+    end
+    
 end

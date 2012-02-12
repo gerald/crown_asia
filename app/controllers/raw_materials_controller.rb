@@ -1,4 +1,9 @@
 class RawMaterialsController < ApplicationController
+  before_filter :authorize_view, :only => [:index]
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  before_filter :authorize_delete, :only => [:destroy]
+  before_filter :authorize_transactions, :only => [:transactions]
   
   def index
     if params[:search_text].blank?
@@ -49,5 +54,27 @@ class RawMaterialsController < ApplicationController
     @raw_material = RawMaterial.find(params[:id])
     @transactions = @raw_material.raw_material_transactions.paginate(:per_page => 20, :page => params[:page], :order => "transaction_date DESC")
   end
+  
+  protected
+  
+    def authorize_view
+      authorize! :view, RawMaterial
+    end
+    
+    def authorize_create
+      authorize! :create, RawMaterial
+    end
+    
+    def authorize_update
+      authorize! :update, RawMaterial
+    end
+    
+    def authorize_delete
+      authorize! :delete, RawMaterial
+    end
+    
+    def authorize_transactions
+      authorize! :transactions, RawMaterial
+    end
   
 end

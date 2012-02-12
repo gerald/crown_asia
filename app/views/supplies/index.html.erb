@@ -4,9 +4,9 @@
   <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Supply", new_supply_path, :class => "create_link" %>
-<%= link_to "Add", new_supply_transaction_path(:transaction_type => "add"), :class => "create_link" %>
-<%= link_to "Deduct", new_supply_transaction_path(:transaction_type => "sub"), :class => "delete_link" %>
+<%= link_to "Add Supply", new_supply_path, :class => "create_link" if can?(:create, Supply) %>
+<%= link_to "Add", new_supply_transaction_path(:transaction_type => "add"), :class => "create_link" if can?(:create, SupplyTransaction) %>
+<%= link_to "Deduct", new_supply_transaction_path(:transaction_type => "sub"), :class => "delete_link" if can?(:create, SupplyTransaction) %>
 
 <br class="clear"/><br/>
 
@@ -32,9 +32,9 @@
       <td><%= supply.last_transaction_date.strftime("%m/%d/%Y") if supply.last_transaction_date %></td>
       <td><%= simple_format(supply.comments) %></td>
       <td>
-        <%= link_to "Edit", edit_supply_path(supply), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", supply_path(supply), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %> <br/>
-        <%= link_to "History", transactions_supply_path(supply), :class => "history_link" %>
+        <%= link_to "Edit", edit_supply_path(supply), :class => "edit_link" if can?(:update, Supply) %> &nbsp;&nbsp;
+        <%= link_to "Delete", supply_path(supply), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Supply) %> <br/>
+        <%= link_to "History", transactions_supply_path(supply), :class => "history_link" if can?(:transactions, Supply) %>
       </td>
     </tr>
   <% end %>

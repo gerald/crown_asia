@@ -1,4 +1,10 @@
 class FinishedGoodsController < ApplicationController
+  before_filter :authorize_view, :only => [:index]
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  before_filter :authorize_delete, :only => [:destroy]
+  before_filter :authorize_transactions, :only => [:transactions]
+  
   def index
     if params[:search_text].blank?
       @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :order => "name")
@@ -48,4 +54,27 @@ class FinishedGoodsController < ApplicationController
     @finished_good = FinishedGood.find(params[:id])
     @transactions = @finished_good.finished_good_transactions.paginate(:per_page => 20, :page => params[:page], :order => "transaction_date DESC")
   end
+  
+  protected
+  
+    def authorize_view
+      authorize! :view, FinishedGood
+    end
+    
+    def authorize_create
+      authorize! :create, FinishedGood
+    end
+    
+    def authorize_update
+      authorize! :update, FinishedGood
+    end
+    
+    def authorize_delete
+      authorize! :delete, FinishedGood
+    end
+    
+    def authorize_transactions
+      authorize! :transactions, FinishedGood
+    end
+    
 end

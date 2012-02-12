@@ -8,7 +8,14 @@ class User < ActiveRecord::Base
   
   validates :first_name, :last_name, :username, :presence => true
   
+  has_many :role_users
+  has_many :roles, :through => :role_users
+  
   def name
     "#{self.first_name} #{self.last_name}"
+  end
+  
+  def has_role?(role_name)
+    self.roles.count(:conditions => ["name = ?", role_name]) > 0
   end
 end

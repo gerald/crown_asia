@@ -1,5 +1,9 @@
 class SuppliersController < ApplicationController
-
+  before_filter :authorize_view, :only => [:index]
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  before_filter :authorize_delete, :only => [:destroy]
+  
   def index
     if params[:search_text].blank?
       @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :order => "name")
@@ -44,5 +48,23 @@ class SuppliersController < ApplicationController
     flash[:notice] = "#{@supplier.name} was deleted successfully"
     redirect_to suppliers_path
   end
+  
+  protected
+  
+    def authorize_view
+      authorize! :view, Supplier
+    end
+    
+    def authorize_create
+      authorize! :create, Supplier
+    end
+    
+    def authorize_update
+      authorize! :update, Supplier
+    end
+    
+    def authorize_delete
+      authorize! :delete, Supplier
+    end
 
 end

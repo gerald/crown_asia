@@ -42,7 +42,7 @@
       <td><%= transaction.supply_transaction.issued_user.name if transaction.supply_transaction.issued_user %></td>
       <td><%= simple_format(transaction.supply_transaction.comments) %></td>
       <td>
-        <%= link_to "Edit", edit_supply_transaction_path(transaction.supply_transaction), :class => "edit_link" %>
+        <%= link_to "Edit", edit_supply_transaction_path(transaction.supply_transaction), :class => "edit_link" if can?(:update, SupplyTransaction) %>
       </td>
     </tr>
   <% end %>

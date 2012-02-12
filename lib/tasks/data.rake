@@ -19,4 +19,13 @@ namespace :data do
     RawMaterialType.create(:code => "CSL")
     RawMaterialType.create(:code => "COL")
   end
+  
+  desc 'Setup roles'
+  task :setup_roles => :environment do
+    Role.create(:name => "admin")
+    Role.create(:name => "department_head")
+    Role.create(:name => "supervisor")
+    Role.create(:name => "admin_assistant")
+    Role.create(:name => "encoder")
+  end
 end

@@ -7,6 +7,7 @@ namespace :users do
     u.email = "pipay04@yahoo.com"
     u.first_name = "Stephanie"
     u.last_name = "Lee Vilanueva"
+    u.roles << Role.find_by_name("admin")
     u.save!
   end
 end

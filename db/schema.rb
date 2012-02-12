@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208162446) do
+ActiveRecord::Schema.define(:version => 20120212084627) do
 
   create_table "bags", :force => true do |t|
     t.integer  "bag_number"
@@ -139,6 +139,20 @@ ActiveRecord::Schema.define(:version => 20120208162446) do
     t.boolean  "local"
     t.text     "comments"
     t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "role_users", :force => true do |t|
+    t.integer  "role_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.text     "permissions"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

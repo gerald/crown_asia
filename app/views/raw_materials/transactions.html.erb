@@ -44,8 +44,8 @@
       <td><%= transaction.sender.name if transaction.sender %></td>
       <td><%= simple_format(transaction.comments) %></td>
       <td>
-        <%= link_to "Edit", edit_raw_material_transaction_path(transaction), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", raw_material_transaction_path(transaction), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+        <%= link_to "Edit", edit_raw_material_transaction_path(transaction), :class => "edit_link" if can?(:update, RawMaterialTransaction) %> &nbsp;&nbsp;
+        <%= link_to "Delete", raw_material_transaction_path(transaction), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, RawMaterialTransaction) %>
       </td>
     </tr>
   <% end %>

@@ -1,5 +1,9 @@
 class RawMaterialTypesController < ApplicationController
-
+  before_filter :authorize_view, :only => [:index]
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  before_filter :authorize_delete, :only => [:destroy]
+  
   def index
     if params[:search_text].blank?
       @raw_material_types = RawMaterialType.paginate(:per_page => 20, :page => params[:page], :order => "code")
@@ -44,5 +48,23 @@ class RawMaterialTypesController < ApplicationController
     flash[:notice] = "#{@raw_material_type.name} was deleted successfully"
     redirect_to raw_material_types_path
   end
-
+  
+  protected
+  
+    def authorize_view
+      authorize! :view, RawMaterialType
+    end
+    
+    def authorize_create
+      authorize! :create, RawMaterialType
+    end
+    
+    def authorize_update
+      authorize! :update, RawMaterialType
+    end
+    
+    def authorize_delete
+      authorize! :delete, RawMaterialType
+    end
+    
 end

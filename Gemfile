@@ -21,6 +21,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'will_paginate'
 gem 'paranoia'
+gem "cancan"
 
 # Use unicorn as the web server
 # gem 'unicorn'

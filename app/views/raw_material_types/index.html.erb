@@ -4,7 +4,7 @@
   <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Raw Material Type", new_raw_material_type_path, :class => "create_link" %>
+<%= link_to "Add Raw Material Type", new_raw_material_type_path, :class => "create_link" if can?(:create, RawMaterialType) %>
 
 <br class="clear"/><br/>
 
@@ -22,8 +22,8 @@
       <td><%= raw_material_type.code %></td>
       <td><%= raw_material_type.description %></td>
       <td>
-        <%= link_to "Edit", edit_raw_material_type_path(raw_material_type), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", raw_material_type_path(raw_material_type), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+        <%= link_to "Edit", edit_raw_material_type_path(raw_material_type), :class => "edit_link" if can?(:update, RawMaterialType) %> &nbsp;&nbsp;
+        <%= link_to "Delete", raw_material_type_path(raw_material_type), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, RawMaterialType) %>
       </td>
     </tr>
   <% end %>

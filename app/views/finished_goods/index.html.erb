@@ -4,7 +4,7 @@
   <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Finished Good", new_finished_good_path, :class => "create_link" %>
+<%= link_to "Add Finished Good", new_finished_good_path, :class => "create_link" if can?(:create, FinishedGood) %>
 
 <br class="clear"/><br/>
 
@@ -32,11 +32,11 @@
       <td><%= finished_good.classification %></td>
       <td><%= simple_format(finished_good.comments) %></td>
       <td>
-        <%= link_to "Edit", edit_finished_good_path(finished_good), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", finished_good_path(finished_good), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %> <br/>
-        <%= link_to "Add", new_finished_good_transaction_path(:finished_good_id => finished_good, :transaction_type => "add"), :class => "create_link" %> &nbsp;&nbsp;
-        <%= link_to "Deduct", new_finished_good_transaction_path(:finished_good_id => finished_good, :transaction_type => "sub"), :class => "delete_link" %> &nbsp;&nbsp;
-        <%= link_to "History", transactions_finished_good_path(finished_good), :class => "history_link" %>
+        <%= link_to "Edit", edit_finished_good_path(finished_good), :class => "edit_link" if can?(:update, FinishedGood) %> &nbsp;&nbsp;
+        <%= link_to "Delete", finished_good_path(finished_good), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, FinishedGood) %> <br/>
+        <%= link_to "Add", new_finished_good_transaction_path(:finished_good_id => finished_good, :transaction_type => "add"), :class => "create_link" if can?(:create, FinishedGoodTransaction) %> &nbsp;&nbsp;
+        <%= link_to "Deduct", new_finished_good_transaction_path(:finished_good_id => finished_good, :transaction_type => "sub"), :class => "delete_link" if can?(:create, FinishedGoodTransaction) %> &nbsp;&nbsp;
+        <%= link_to "History", transactions_finished_good_path(finished_good), :class => "history_link" if can?(:transactions, FinishedGood) %>
       </td>
     </tr>
   <% end %>

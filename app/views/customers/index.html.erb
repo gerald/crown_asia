@@ -4,7 +4,7 @@
   <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Customer", new_customer_path, :class => "create_link" %>
+<%= link_to "Add Customer", new_customer_path, :class => "create_link" if can?(:create, Customer) %>
 
 <br class="clear"/><br/>
 
@@ -22,8 +22,8 @@
       <td><%= customer.name %></td>
       <td><%= customer.active ? "Yes" : "No" %></td>
       <td>
-        <%= link_to "Edit", edit_customer_path(customer), :class => "edit_link" %> &nbsp;&nbsp;
-        <%= link_to "Delete", customer_path(customer), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" %>
+        <%= link_to "Edit", edit_customer_path(customer), :class => "edit_link" if can?(:update, Customer) %> &nbsp;&nbsp;
+        <%= link_to "Delete", customer_path(customer), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Customer) %>
       </td>
     </tr>
   <% end %>

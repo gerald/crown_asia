@@ -1,5 +1,9 @@
 class UnitOfMeasuresController < ApplicationController
-
+  before_filter :authorize_view, :only => [:index]
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  before_filter :authorize_delete, :only => [:destroy]
+  
   def index
     if params[:search_text].blank?
       @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :order => "code")
@@ -44,5 +48,23 @@ class UnitOfMeasuresController < ApplicationController
     flash[:notice] = "#{@unit_of_measure.name} was deleted successfully"
     redirect_to unit_of_measures_path
   end
+  
+  protected
+  
+    def authorize_view
+      authorize! :view, UnitOfMeasure
+    end
+    
+    def authorize_create
+      authorize! :create, UnitOfMeasure
+    end
+    
+    def authorize_update
+      authorize! :update, UnitOfMeasure
+    end
+    
+    def authorize_delete
+      authorize! :delete, UnitOfMeasure
+    end
 
 end

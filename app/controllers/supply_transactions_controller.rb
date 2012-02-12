@@ -1,5 +1,7 @@
 class SupplyTransactionsController < ApplicationController
-
+  before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
+  
   def new
     @supply_transaction = SupplyTransaction.new
     @supply_transaction.transaction_type = params[:transaction_type]
@@ -33,14 +35,25 @@ class SupplyTransactionsController < ApplicationController
     end
   end
   
-  def destroy
-    @supply_transaction = SupplyTransaction.find(params[:id])
-    @supply_transaction.destroy
-    flash[:notice] = "Transaction was deleted successfully"
-    redirect_to supplies_path
-  end
+  # def destroy
+    # @supply_transaction = SupplyTransaction.find(params[:id])
+    # @supply_transaction.destroy
+    # flash[:notice] = "Transaction was deleted successfully"
+    # redirect_to supplies_path
+  # end
   
   def update_supplies
     @supply_type = params[:supply_type]
   end
+  
+  protected
+  
+    def authorize_create
+      authorize! :create, SupplyTransaction
+    end
+    
+    def authorize_update
+      authorize! :update, SupplyTransaction
+    end
+    
 end
