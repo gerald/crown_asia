@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :accounts
+  
   resources :roles
 
   resources :finished_good_transactions do
@@ -37,10 +39,12 @@ CrownAsia::Application.routes.draw do
 
   resources :suppliers
 
-  devise_for :users
+  devise_for :users, :path_prefix => 'd'
+  
+  resources :users
   
   match 'permissions' => 'permissions#index'
-
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -42,6 +42,9 @@
               <% if can?(:view, Role) %>
                 <li class="<%= "active" if controller_name == "roles" %>"><%= link_to "Roles", roles_path %></li>
               <% end %>
+              <% if can?(:view, User) %>
+                <li class="<%= "active" if controller_name == "users" %>"><%= link_to "Users", users_path %></li>
+              <% end %>
               <% if current_user.has_role?("admin") %>
                 <li class="<%= "active" if controller_name == "permissions" %>"><%= link_to "Permissions", permissions_path %></li>
               <% end %>

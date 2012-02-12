@@ -1,0 +1,34 @@
+<h1>Users</h1>
+<%= link_to "Add User", new_user_path, :class => "create_link" if can?(:create, User) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Name</th>
+      <th>Roles</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>  
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= user.username %></td>
+      <td><%= user.name %></td>
+      <td>
+        <% user.roles.each do |role| %>
+          <%= role.name.titleize %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to "Edit", edit_user_path(user), :class => "edit_link" if can?(:update, User) %> &nbsp;&nbsp;
+        <%= link_to "Delete", user_path(user), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, User) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @users %>

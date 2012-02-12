@@ -45,6 +45,13 @@ class Ability
       { :action => "delete", :desc => "Can delete rm types"}
     ]},
     
+    { :subject => "User", :label => "Users", :permissions => [
+      { :action => "view", :desc => "Can view users"},
+      { :action => "create", :desc => "Can create a new user"},
+      { :action => "update", :desc => "Can edit existing users"},
+      { :action => "delete", :desc => "Can delete users"}
+    ]},
+    
     { :subject => "Role", :label => "Roles", :permissions => [
       { :action => "view", :desc => "Can view roles"},
       { :action => "create", :desc => "Can create a new role"},

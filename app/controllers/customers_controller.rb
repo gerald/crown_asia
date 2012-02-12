@@ -5,7 +5,6 @@ class CustomersController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    authorize! :view, Customer
     if params[:search_text].blank?
       @customers = Customer.paginate(:per_page => 20, :page => params[:page], :order => "name")
     else
@@ -14,12 +13,10 @@ class CustomersController < ApplicationController
   end
   
   def new
-    authorize! :create, Customer
     @customer = Customer.new
   end
   
   def create
-    authorize! :create, Customer
     @customer = Customer.new(params[:customer])
     @customer.creator = current_user
     if @customer.save

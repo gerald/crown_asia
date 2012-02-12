@@ -1,0 +1,52 @@
+<h1>New User</h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @user} %>
+
+<%= form_for @user do |f| %>
+  <fieldset>
+    <dl>
+      <dd><%= f.label :username %></dd>
+      <dd><%= f.text_field :username %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :first_name %></dd>
+      <dd><%= f.text_field :first_name %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :last_name %></dd>
+      <dd><%= f.text_field :last_name %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :email %></dd>
+      <dd><%= f.text_field :email %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :password %></dd>
+      <dd><%= f.password_field :password %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :password_confirmation %></dd>
+      <dd><%= f.password_field :password_confirmation %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :roles %></dd>
+      <dd>
+        <% Role.all.each do |role| %>
+          <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role) %> <%= role.name.titleize %><br/>
+        <% end %>
+      </dd>
+    </dl>
+  </fieldset>
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$('#new_user')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{users_path}')" %>
+  </p>
+<% end %>
