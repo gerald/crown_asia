@@ -96,6 +96,10 @@ class Ability
     
     { :subject => "FinishedGoodTransaction", :label => "Finished Good Transactions", :permissions => [
       { :action => "create", :desc => "Can create a new finished good transaction"}
+    ]},
+    
+    { :subject => "Bag", :label => "Bags", :permissions => [
+      { :action => "return", :desc => "Can return bags"}
     ]}
   ]
 

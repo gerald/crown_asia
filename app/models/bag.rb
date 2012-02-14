@@ -6,4 +6,11 @@ class Bag < ActiveRecord::Base
   validates :quantity, :numericality => true
   
   acts_as_paranoid
+  
+  acts_as_audited
+  
+  def return
+    self.removing_transaction = nil
+    self.save
+  end
 end

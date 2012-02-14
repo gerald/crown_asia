@@ -1,13 +1,13 @@
 <fieldset>
-  <dl>
-    <dd><%= f.label :name %></dd>
-    <dd><%= f.text_field :name %></dd>
-  </dl>
-  
   <% if @role.new_record? %>
   <dl>
     <dd><%= f.label :code %></dd>
     <dd><%= f.text_field :code %></dd>
   </dl>
   <% end %>
+  
+  <dl>
+    <dd><%= f.label :name %></dd>
+    <dd><%= f.text_field :name %></dd>
+  </dl>
 </fieldset>

@@ -77,6 +77,11 @@ a.back_link {
   padding-left: 18px;
 }
 
+a.return_bag_link {
+  background: transparent url(icons/basket_delete.png) no-repeat 0 0;
+  padding-left: 18px;
+}
+
 .positive {
   background-color: #d7ffcc;
   padding: 5px 10px;

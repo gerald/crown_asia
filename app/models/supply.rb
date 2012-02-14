@@ -10,6 +10,8 @@ class Supply < ActiveRecord::Base
   
   acts_as_paranoid
   
+  acts_as_audited
+  
   def quantity_on_hand
     add_quantity = SupplyTransactionItem.sum("quantity", :include => [:supply_transaction], :conditions => ["supply_transactions.transaction_type = 'add' AND supply_transaction_items.supply_id = ?", self.id])
     sub_quantity = SupplyTransactionItem.sum("quantity", :include => [:supply_transaction], :conditions => ["supply_transactions.transaction_type = 'sub' AND supply_transaction_items.supply_id = ?", self.id])

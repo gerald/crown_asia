@@ -9,4 +9,7 @@ class SupplyTransactionItem < ActiveRecord::Base
   validates :unit_price, :numericality => true, :if => Proc.new { |t| t.transaction_type == "add" }
   
   acts_as_paranoid
+  
+  acts_as_audited
+  
 end

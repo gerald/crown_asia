@@ -22,6 +22,7 @@ gem 'devise'
 gem 'will_paginate'
 gem 'paranoia'
 gem "cancan"
+gem "acts_as_audited", "2.0.0"
 
 # Use unicorn as the web server
 # gem 'unicorn'

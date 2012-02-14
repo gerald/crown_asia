@@ -2,6 +2,6 @@
   $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[issued_to_id]", options_from_collection_for_select(Customer.active_customers, "id", "name", params[:issued_to_id]))) %>');
   $('#sender_select').append('<%= hidden_field_tag("finished_good_transaction[issued_to_type]", "Customer") %>');
 <% else %>
-  $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[issued_to_id]", options_from_collection_for_select(Department.active_departments, "id", "name", params[:issued_to_id]))) %>');
+  $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[issued_to_id]", options_from_collection_for_select(Department.active_departments, "id", "code", params[:issued_to_id]))) %>');
   $('#sender_select').append('<%= hidden_field_tag("finished_good_transaction[issued_to_type]", "Department") %>');
 <% end %>

@@ -6,6 +6,8 @@
 
 <%= link_to "Add Finished Good", new_finished_good_path, :class => "create_link" if can?(:create, FinishedGood) %>
 
+<%= link_to "Return Bags", return_bags_path, :class => "return_bag_link" if can?(:return, Bag) %>
+
 <br class="clear"/><br/>
 
 <table>

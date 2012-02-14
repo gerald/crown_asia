@@ -1,4 +1,9 @@
 CrownAsia::Application.routes.draw do
+  resources :bags do
+    get 'return', :on => :collection
+    post 'return', :on => :collection
+  end
+  
   resources :accounts
   
   resources :roles

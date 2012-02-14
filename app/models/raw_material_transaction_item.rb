@@ -5,4 +5,7 @@ class RawMaterialTransactionItem < ActiveRecord::Base
   validates :quantity, :numericality => true
   
   acts_as_paranoid
+  
+  acts_as_audited
+  
 end

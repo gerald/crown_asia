@@ -26,6 +26,8 @@ class FinishedGoodTransaction < ActiveRecord::Base
   after_create :create_bags
   
   acts_as_paranoid
+  
+  acts_as_audited
 
   def removed_bag_numbers
     return nil if self.transaction_type != "sub"

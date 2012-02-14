@@ -18,5 +18,7 @@ class RawMaterialTransaction < ActiveRecord::Base
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   
   acts_as_paranoid
+  
+  acts_as_audited
 
 end
