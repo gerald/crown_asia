@@ -6,7 +6,7 @@ class PermissionsController < ApplicationController
       return
     end
 
-    @role = params[:role_id] ? Role.find(params[:role_id]) : Role.find_by_name("admin")
+    @role = params[:role_id] ? Role.find(params[:role_id]) : Role.find_by_code("admin")
     
     if request.post?
       @role.update_attribute(:permissions, params[:permissions])

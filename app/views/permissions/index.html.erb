@@ -1,7 +1,7 @@
 <h1>Permissions</h1>
 
 <%= form_tag "", :method => :get do %>
-  <%= select_tag "role_id", options_for_select(Role.all.collect{|r| [r.name.titleize, r.id]}, @role.id) %> <%= submit_tag "Submit" %>
+  <%= select_tag "role_id", options_for_select(Role.all.collect{|r| [r.name, r.id]}, @role.id) %> <%= submit_tag "Submit" %>
 <% end %>
 
 <br class="clear"/>
