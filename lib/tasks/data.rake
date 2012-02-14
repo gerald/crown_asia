@@ -22,10 +22,10 @@ namespace :data do
   
   desc 'Setup roles'
   task :setup_roles => :environment do
-    Role.create(:name => "admin")
-    Role.create(:name => "department_head")
-    Role.create(:name => "supervisor")
-    Role.create(:name => "admin_assistant")
-    Role.create(:name => "encoder")
+    Role.create(:name => "Administrator", :code => "admin")
+    Role.create(:name => "Department Head", :code => "department_head")
+    Role.create(:name => "Supervisor", :code => "supervisor")
+    Role.create(:name => "Admin Assistant", :code => "admin_assistant")
+    Role.create(:name => "Encoder", :code => "encoder")
   end
 end

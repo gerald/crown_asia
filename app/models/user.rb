@@ -16,6 +16,6 @@ class User < ActiveRecord::Base
   end
   
   def has_role?(role_name)
-    self.roles.count(:conditions => ["name = ?", role_name]) > 0
+    self.roles.count(:conditions => ["code = ?", role_name]) > 0
   end
 end

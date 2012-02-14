@@ -18,7 +18,7 @@
   <tbody>
   <% @roles.each do |role| %>  
     <tr class="<%= cycle("light", "dark") %>">
-      <td><%= role.name.titleize %></td>
+      <td><%= role.name %></td>
       <td>
         <%= link_to "Edit", edit_role_path(role), :class => "edit_link" if can?(:update, Role) %> &nbsp;&nbsp;
         <%= link_to "Delete", role_path(role), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Role) %>

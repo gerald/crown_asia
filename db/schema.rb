@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120212084627) do
+ActiveRecord::Schema.define(:version => 20120214031500) do
 
   create_table "bags", :force => true do |t|
     t.integer  "bag_number"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20120212084627) do
     t.text     "permissions"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "code"
   end
 
   create_table "suppliers", :force => true do |t|
