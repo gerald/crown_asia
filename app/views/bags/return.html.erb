@@ -22,7 +22,7 @@
         <td><%= bag.bag_number %></td>
         <td><%= bag.removing_transaction.lot_number %></td>
         <td><%= bag.quantity %></td>
-        <td><%= bag.finished_good.name %></td>
+        <td><%= bag.finished_good.name if bag.finished_good %></td>
       </tr>
     <% end %>
     </tbody>
