@@ -4,6 +4,13 @@
 
 <br/><br/>
 
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= select_tag "lot_number", options_for_select(lot_number_bag_options, params[:lot_number]), :include_blank => true %>
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<br class="clear"/><br/><br/>
+
 <%= form_tag return_bags_path do %>
   <table>
     <thead>
