@@ -3,7 +3,7 @@
     <td><%= f.check_box :_destroy %></td>
   <% end %>
   <td>
-    <%= f.select :lot_number, lot_number_fg_options(@finished_good), {:include_blank => true} %>
+    <%= f.select :lot_number, lot_number_fg_options(@finished_good, true), {:include_blank => true} %>
     <%= f.hidden_field :transaction_type %>
   </td>
   <td>
