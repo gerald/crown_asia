@@ -29,7 +29,7 @@
       <tr class="<%= cycle("light", "dark") %>">
         <td><%= check_box_tag "bag_ids[]", bag.id %></td>
         <td><%= bag.bag_number %></td>
-        <td><%= bag.removing_transaction.lot_number %></td>
+        <td><%= bag.finished_good_transaction_item.lot_number %></td>
         <td><%= bag.quantity %></td>
         <td><%= bag.finished_good.name if bag.finished_good %></td>
       </tr>

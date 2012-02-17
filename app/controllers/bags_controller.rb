@@ -6,7 +6,7 @@ class BagsController < ApplicationController
     @conditions = ["removing_transaction_id IS NOT NULL"]
     
     if !params[:lot_number].blank?
-      @conditions[0] << " AND finished_good_transactions.lot_number = ?"
+      @conditions[0] << " AND finished_good_transaction_items.lot_number = ?"
       @conditions << params[:lot_number]
     end
     
@@ -23,7 +23,7 @@ class BagsController < ApplicationController
       flash[:notice] = "Bags have been returned."
     end
     
-    @bags = Bag.paginate(:per_page => 20, :page => params[:page], :include => [:removing_transaction], :conditions => @conditions)
+    @bags = Bag.paginate(:per_page => 20, :page => params[:page], :include => [{:removing_transaction => :finished_good_transaction_items}], :conditions => @conditions)
   end
   
   def update_lot_numbers

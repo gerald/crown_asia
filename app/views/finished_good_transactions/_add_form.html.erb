@@ -46,7 +46,7 @@
           </thead>
           <tbody>
             <%= f.fields_for :finished_good_transaction_items do |builder| %>
-              <%= render "item_form", :f => builder %>
+              <%= render "add_item_form", :f => builder %>
             <% end %>
           </tbody>
         </table>

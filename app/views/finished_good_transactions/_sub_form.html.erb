@@ -34,11 +34,37 @@
   
   <br class="clear"/>
   
+  <!--
   <dl>
-    <dd><%= f.label :lot_number %></dd>
+    <dd><%# f.label :lot_number %></dd>
     <dd>
-      <%= f.select :lot_number, lot_number_fg_options(@finished_good), {:include_blank => true}, {:onchange => "update_bags()"} %>
-      <%= loader %>
+      <%# f.select :lot_number, lot_number_fg_options(@finished_good), {:include_blank => true}, {:onchange => "update_bags()"} %>
+      <%# loader %>
+    </dd>
+  </dl>
+  -->
+  
+  <dl>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <% if !@finished_good_transaction.new_record? %>
+                <th>Delete?</th>
+              <% end %>
+              <th>Lot #</th> 
+              <th>Fr Bag</th>
+              <th>To Bag</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.fields_for :finished_good_transaction_items do |builder| %>
+              <%= render "sub_item_form", :f => builder %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </dd>
   </dl>
   
@@ -47,10 +73,12 @@
     <dd><%= f.text_area :comments %></dd>
   </dl>
   
+  <!--
   <dl>
-    <dd><%= f.label :removed_bags, "Bags" %></dd>
+    <dd><%# f.label :removed_bags, "Bags" %></dd>
     <dd id="bag_selection"></dd>
   </dl>
+  -->
 </fieldset>
 
 <%= javascript_tag :defer => "defer" do %>
@@ -75,7 +103,7 @@
   }
 
   $(document).ready(function() {
-    update_bags();
+    // update_bags();
     update_issued();
   });
 

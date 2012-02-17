@@ -7,8 +7,8 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction.finished_good = @finished_good
     @finished_good_transaction.transaction_type = params[:transaction_type]
     @finished_good_transaction.transaction_date = Date.today
-    3.times {@finished_good_transaction.finished_good_transaction_items.build}
-    @finished_good_transaction.finished_good_transaction_items.build(:underpack => true)
+    3.times {@finished_good_transaction.finished_good_transaction_items.build(:transaction_type => params[:transaction_type])}
+    @finished_good_transaction.finished_good_transaction_items.build(:underpack => true, :transaction_type => "add") if params[:transaction_type] == "add"
   end
   
   def create
