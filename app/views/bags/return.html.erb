@@ -5,13 +5,15 @@
 <br/><br/>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <%= select_tag "lot_number", options_for_select(lot_number_bag_options, params[:lot_number]), :include_blank => true %>
+  Finished Good: <%= select_tag "finished_good_id", options_for_select(FinishedGood.all.collect{|f| [f.name, f.id.to_s]}, params[:finished_good_id]), :include_blank => true %>
+  <%= loader() %>
+  Lot Number: <span id="lot_number_options"><%= select_tag "lot_number", options_for_select(lot_number_bag_options, params[:lot_number]), :include_blank => true %></span>
   <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
 <br class="clear"/><br/><br/>
 
-<%= form_tag return_bags_path do %>
+<%= form_tag "" do %>
   <table>
     <thead>
       <tr>
@@ -39,3 +41,24 @@
 <% end %>
 
 <%= will_paginate @bags %>
+
+<%= javascript_tag :defer => "defer" do %>
+  $('#finished_good_id').change(function() {
+    update_lot_numbers();
+  });
+  
+  function update_lot_numbers() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_lot_numbers_bags_path %>',
+      data: 'finished_good_id=' + $('#finished_good_id').val() + '&lot_number=<%= params[:lot_number] %>',
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+
+  $(document).ready(function() {
+    update_lot_numbers();
+  });
+
+<% end %>

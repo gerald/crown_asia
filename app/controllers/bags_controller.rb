@@ -3,10 +3,16 @@ class BagsController < ApplicationController
   def return
     authorize! :return, Bag
     
-    if params[:lot_number].blank?
-      @bags = Bag.paginate(:per_page => 20, :page => params[:page], :conditions => ["removing_transaction_id IS NOT NULL"])
-    else
-      @bags = Bag.paginate(:include => [:removing_transaction], :per_page => 20, :page => params[:page], :conditions => ["finished_good_transactions.lot_number = ? AND removing_transaction_id IS NOT NULL", params[:lot_number]])
+    @conditions = ["removing_transaction_id IS NOT NULL"]
+    
+    if !params[:lot_number].blank?
+      @conditions[0] << " AND finished_good_transactions.lot_number = ?"
+      @conditions << params[:lot_number]
+    end
+    
+    if !params[:finished_good_id].blank?
+      @conditions[0] << " AND bags.finished_good_id = ?"
+      @conditions << params[:finished_good_id]
     end
     
     if request.post?
@@ -16,6 +22,13 @@ class BagsController < ApplicationController
       end
       flash[:notice] = "Bags have been returned."
     end
+    
+    @bags = Bag.paginate(:per_page => 20, :page => params[:page], :include => [:removing_transaction], :conditions => @conditions)
+  end
+  
+  def update_lot_numbers
+    @finished_good = FinishedGood.find(params[:finished_good_id]) if !params[:finished_good_id].blank?
+    @lot_number = params[:lot_number]
   end
 
 end
