@@ -2,6 +2,7 @@ CrownAsia::Application.routes.draw do
   resources :bags do
     get 'return', :on => :collection
     post 'return', :on => :collection
+    post 'update_lot_numbers', :on => :collection
   end
   
   resources :accounts

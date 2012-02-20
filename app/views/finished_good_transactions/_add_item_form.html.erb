@@ -8,6 +8,7 @@
     <% else %>
       Underpack(Bag #0)
     <% end %>
+    <%= f.hidden_field :transaction_type %>
   </td>
   <td>
     <% if !f.object.underpack %>

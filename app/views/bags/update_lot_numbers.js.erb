@@ -1,0 +1,1 @@
+$('#lot_number_options').html('<%= escape_javascript(select_tag("lot_number", options_for_select(lot_number_bag_options(@finished_good), @lot_number), :include_blank => true)) %>')

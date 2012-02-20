@@ -26,6 +26,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   validate :dr_or_si
   
   after_create :create_bags
+  after_create :remove_bags
   
   acts_as_paranoid
   
@@ -56,6 +57,16 @@ class FinishedGoodTransaction < ActiveRecord::Base
           item.start_bag_number.upto(item.end_bag_number) do |i|
             Bag.create(:bag_number => i, :finished_good => self.finished_good, :finished_good_transaction_item => item, :quantity => self.quantity_per_bag)
           end
+        end
+      end
+    end
+    
+    def remove_bags
+      return if self.transaction_type != "sub"
+      self.finished_good_transaction_items.each do |item|
+        item.start_bag_number.upto(item.end_bag_number) do |i|
+          bag = Bag.first(:include => [:finished_good_transaction_item], :conditions => ["finished_good_transaction_items.lot_number = ? AND bag_number = ?", item.lot_number, i])
+          bag.update_attribute(:removing_transaction_id, self.id)
         end
       end
     end
