@@ -18,8 +18,19 @@ class SupplyTransaction < ActiveRecord::Base
   validates :mirs_number, :issued_department, :issued_user, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   
+  validate :supply_quantity
+  
   acts_as_paranoid
   
   acts_as_audited
+  
+  def supply_quantity
+    self.supply_transaction_items.each do |item|
+      if item.quantity && item.quantity > item.supply.quantity_on_hand
+        errors.add(:base, "Transaction item quantity cannot be more than the remaining quantity of the supply")
+        return
+      end
+    end
+  end
   
 end

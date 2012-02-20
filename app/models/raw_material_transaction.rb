@@ -17,8 +17,18 @@ class RawMaterialTransaction < ActiveRecord::Base
   validates :mirs_number, :issued_department, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   
+  validate :raw_material_quantity
+  
   acts_as_paranoid
   
   acts_as_audited
-
+  
+  def raw_material_quantity
+    self.raw_material_transaction_items.each do |item|
+      if item.quantity && item.quantity > self.raw_material.quantity_on_hand(item.lot_number)
+        errors.add(:base, "Transaction item quantity cannot be more than the remaining quantity of the raw material")
+        return
+      end
+    end
+  end
 end

@@ -13,7 +13,7 @@
   
   <dl>
     <dd><%= f.label :issued_department, "Issued To" %></dd>
-    <dd><%= f.select :issued_department_id, Department.active_departments.collect{|d| [d.name, d.id]}, {:include_blank => true} %></dd>
+    <dd><%= f.select :issued_department_id, Department.active_departments.collect{|d| [d.code, d.id]}, {:include_blank => true} %></dd>
   </dl>
   
   <dl>

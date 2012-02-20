@@ -4,7 +4,7 @@
   <% end %>
   <td>
     <% if @supply_transaction.new_record? %>
-      <%= f.select :supply_id, Supply.all(:conditions => ["supply_type = ?", @supply_transaction.supply_type]).collect{|s| [s.name, s.id]}, {:include_blank => true}, {:class => "supply_select"} %>
+      <%= f.select :supply_id, Supply.all(:conditions => ["supply_type = ?", @supply_transaction.supply_type]).collect{|s| ["#{s.name} - #{s.quantity_on_hand} available", s.id]}, {:include_blank => true}, {:class => "supply_select"} %>
     <% else %>
       <%= f.object.supply.name %>
     <% end %>
