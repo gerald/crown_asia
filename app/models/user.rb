@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, :username, :presence => true
   
   validates :email, :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/}, :allow_nil => true, :allow_blank => true
-  validates :email, :uniqueness => true
+  validates :email, :uniqueness => true, :allow_nil => true, :allow_blank => true
   
   validates :password, :confirmation => true
   
