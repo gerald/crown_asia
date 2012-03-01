@@ -25,6 +25,7 @@ class SupplyTransaction < ActiveRecord::Base
   acts_as_audited
   
   def supply_quantity
+    return if self.transaction_type != "sub"
     self.supply_transaction_items.each do |item|
       if item.quantity && item.quantity > item.supply.quantity_on_hand
         errors.add(:base, "Transaction item quantity cannot be more than the remaining quantity of the supply")
