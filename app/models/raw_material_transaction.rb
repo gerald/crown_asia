@@ -24,6 +24,7 @@ class RawMaterialTransaction < ActiveRecord::Base
   acts_as_audited
   
   def raw_material_quantity
+    return if self.transaction_type != "sub"
     self.raw_material_transaction_items.each do |item|
       if item.quantity && item.quantity > self.raw_material.quantity_on_hand(item.lot_number)
         errors.add(:base, "Transaction item quantity cannot be more than the remaining quantity of the raw material")
