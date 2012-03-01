@@ -27,7 +27,7 @@
       <td><%= raw_material.raw_material_type.name %></td>
       <td><%= raw_material.code %></td>
       <td><%= raw_material.name %></td>
-      <td><%= raw_material.supplier.name %></td>
+      <td><%= raw_material.supplier.name if raw_material.supplier %></td>
       <td><%= raw_material.quantity_on_hand %></td>
       <td><%= raw_material.last_transaction_date.strftime("%m/%d/%Y") if raw_material.last_transaction_date %></td>
       <td><%= raw_material.classification %></td>
