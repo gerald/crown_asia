@@ -22,7 +22,7 @@ class SupplyTransaction < ActiveRecord::Base
   
   acts_as_paranoid
   
-  acts_as_audited
+  # acts_as_audited
   
   def supply_quantity
     return if self.transaction_type != "sub"

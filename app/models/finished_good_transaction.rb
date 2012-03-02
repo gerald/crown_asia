@@ -30,7 +30,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   acts_as_paranoid
   
-  acts_as_audited
+  # acts_as_audited
 
   def removed_bag_numbers
     return nil if self.transaction_type != "sub"
