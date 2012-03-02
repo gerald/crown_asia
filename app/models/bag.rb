@@ -7,7 +7,7 @@ class Bag < ActiveRecord::Base
   
   acts_as_paranoid
   
-  acts_as_audited, :except => [:deleted_at]
+  acts_as_audited :except => [:deleted_at]
   
   def return
     self.removing_transaction = nil
