@@ -13,7 +13,7 @@ class RawMaterial < ActiveRecord::Base
   
   acts_as_paranoid
   
-  # acts_as_audited
+  acts_as_audited :except => [:deleted_at]
   
   def quantity_on_hand(lot_number = nil)
     if lot_number.nil?

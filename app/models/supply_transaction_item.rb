@@ -10,6 +10,6 @@ class SupplyTransactionItem < ActiveRecord::Base
   
   acts_as_paranoid
   
-  # acts_as_audited
+  acts_as_audited :except => [:deleted_at]
   
 end

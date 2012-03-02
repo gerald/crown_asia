@@ -12,7 +12,7 @@ class FinishedGood < ActiveRecord::Base
   
   acts_as_paranoid
   
-  # acts_as_audited
+  acts_as_audited :except => [:deleted_at]
   
   def quantity_on_hand
     self.bags.sum("quantity", :conditions => ["removing_transaction_id IS NULL"])
