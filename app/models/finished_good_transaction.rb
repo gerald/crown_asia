@@ -24,6 +24,10 @@ class FinishedGoodTransaction < ActiveRecord::Base
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
   
   validate :dr_or_si
+  validate :bag_number_values
+  validate :taken_bag_range
+  validate :released_bag_range
+  validate :bag_number_existence
   
   after_create :create_bags
   after_create :remove_bags
@@ -41,9 +45,46 @@ class FinishedGoodTransaction < ActiveRecord::Base
     return "#{first_bag.bag_number} - #{last_bag.bag_number}"
   end
   
+  # Custom validations
   def dr_or_si
     if self.issue_type == "Customer" && self.transaction_type == "sub" && self.dr_number.blank? && self.si_number.blank?
       errors.add(:base, "DR and SI numbers can't both be blank.")
+    end
+  end
+  
+  def bag_number_values
+    self.finished_good_transaction_items.each do |item|
+      if !item.underpack && item.end_bag_number < item.start_bag_number
+        self.errors.add(:base, "End bag number cannot be greater than start bag number") 
+        return
+      end
+    end
+  end
+  
+  def taken_bag_range
+    self.finished_good_transaction_items.each do |item|
+      if item.transaction_type == "add" && !item.underpack && Bag.count(:include => [:finished_good_transaction_item, :finished_good], :conditions => ["bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) > 0
+        self.errors.add(:base, "Current range will use bag numbers that have already been taken") 
+        return
+      end
+    end
+  end
+  
+  def released_bag_range
+    self.finished_good_transaction_items.each do |item|
+      if item.transaction_type == "sub" && Bag.count(:include => [:finished_good_transaction_item], :conditions => ["removing_transaction_id IS NOT NULL AND bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ?", item.start_bag_number, item.end_bag_number, item.lot_number]) > 0
+        self.errors.add(:base, "Current range will use bag numbers that have already been released") 
+        return
+      end
+    end
+  end
+  
+  def bag_number_existence
+    self.finished_good_transaction_items.each do |item|
+      if item.transaction_type == "sub" && item.end_bag_number > item.start_bag_number && Bag.count(:include => [:finished_good_transaction_item, :finished_good], :conditions => ["bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) != (item.end_bag_number - item.start_bag_number) + 1
+        self.errors.add(:base, "Current range will use bag numbers that don't exist")
+        return
+      end
     end
   end
   

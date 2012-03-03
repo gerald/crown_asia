@@ -9,8 +9,6 @@ class FinishedGoodTransactionItem < ActiveRecord::Base
   
   validates :lot_number, :start_bag_number, :end_bag_number, :presence => true, :if => Proc.new { |item| !item.underpack }
   
-  validates_with BagRangeValidator
-  
   acts_as_paranoid
   
   acts_as_audited :except => [:deleted_at]
