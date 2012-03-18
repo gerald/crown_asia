@@ -7,5 +7,5 @@ class Supplier < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :updater, :class_name => "User"
   
-  scope :active_suppliers, :conditions => {:active => true}
+  scope :active_suppliers, :conditions => {:active => true}, :order => "name"
 end

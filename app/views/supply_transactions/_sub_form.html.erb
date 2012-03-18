@@ -18,7 +18,7 @@
   
   <dl>
     <dd><%= f.label :issued_user, "Issued To User" %></dd>
-    <dd><%= f.select :issued_user_id, User.all.collect{|d| [d.name, d.id]}, {:include_blank => true} %></dd>
+    <dd><%= f.select :issued_user_id, User.all(:order => "first_name").collect{|d| [d.name, d.id]}, {:include_blank => true} %></dd>
   </dl>
   
   <% if @supply_transaction.new_record? %>
