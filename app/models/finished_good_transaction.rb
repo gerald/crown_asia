@@ -72,7 +72,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   def released_bag_range
     self.finished_good_transaction_items.each do |item|
-      if item.transaction_type == "sub" && Bag.count(:include => [:finished_good_transaction_item], :conditions => ["removing_transaction_id IS NOT NULL AND bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ?", item.start_bag_number, item.end_bag_number, item.lot_number]) > 0
+      if item.transaction_type == "sub" && Bag.count(:include => [:finished_good_transaction_item, :finished_good], :conditions => ["removing_transaction_id IS NOT NULL AND bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) > 0
         self.errors.add(:base, "Current range will use bag numbers that have already been released") 
         return
       end
