@@ -2,7 +2,7 @@ module FinishedGoodTransactionsHelper
 
   def lot_number_fg_options(finished_good, show_available = false)
     if show_available
-      FinishedGoodTransactionItem.all(:include => [:finished_good_transaction, :bags], :conditions => ["finished_good_transactions.finished_good_id = ? AND finished_good_transaction_items.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.id IS NOT NULL", finished_good.id]).collect{|f| ["#{f.lot_number}(#{available_bag_numbers(f.lot_number, finished_good)})", f.lot_number]}.uniq
+      FinishedGoodTransactionItem.all(:include => [:finished_good_transaction, :bags], :conditions => ["finished_good_transactions.finished_good_id = ? AND finished_good_transaction_items.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.id IS NOT NULL", finished_good.id]).collect{|f| ["#{f.lot_number}(#{available_bag_numbers(f.lot_number, finished_good)})", f.lot_number]}.uniq + [["Underpack", "0"]]
     else
       FinishedGoodTransactionItem.all(:include => [:finished_good_transaction, :bags], :conditions => ["finished_good_transactions.finished_good_id = ? AND finished_good_transaction_items.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.id IS NOT NULL", finished_good.id]).collect{|f| [f.lot_number, f.lot_number]}.uniq
     end

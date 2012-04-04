@@ -1,0 +1,7 @@
+$('#underpack_<%= @index %>').html("");
+<% @underpack_bags.each do |bag| %>
+  $('#underpack_<%= @index %>').append('<%= check_box_tag "finished_good_transaction[finished_good_transaction_items_attributes][#{@index}][underpack_bags][]", bag.id %> <%= bag.id %>(<%= bag.quantity %>) <br/>');
+<% end %>
+<% if @lot_number == "0" %>
+  $('#underpack_<%= @index %>').append('<%= hidden_field_tag "finished_good_transaction[finished_good_transaction_items_attributes][#{@index}][underpack]", "1" %>');
+<% end %>

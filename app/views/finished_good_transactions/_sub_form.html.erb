@@ -54,13 +54,16 @@
                 <th>Delete?</th>
               <% end %>
               <th>Lot #</th> 
+              <th>Underpack</th>
               <th>Fr Bag</th>
               <th>To Bag</th>
             </tr>
           </thead>
           <tbody>
-            <%= f.fields_for :finished_good_transaction_items do |builder| %>
-              <%= render "sub_item_form", :f => builder %>
+            <% @finished_good_transaction.finished_good_transaction_items.each_with_index do |item, index| %>
+              <%= f.fields_for :finished_good_transaction_items, item do |builder| %>
+                <%= render "sub_item_form", :f => builder, :index => index %>
+              <% end %>
             <% end %>
           </tbody>
         </table>
@@ -97,6 +100,16 @@
       type: 'POST',
       url: '<%= update_issued_finished_good_transactions_path %>',
       data: 'issue_type=' + $('#finished_good_transaction_issue_type').val() + '&issued_to_id=<%= @finished_good_transaction.issued_to_id %>',
+      beforeSend: function(request){$('#issued_loader').show();},
+      complete: function(request){$('#issued_loader').hide()}
+    });
+  }
+  
+  function update_underpack(index) {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_underpack_finished_good_transactions_path %>',
+      data: 'index=' + index + '&lot_number=' + $('#finished_good_transaction_finished_good_transaction_items_attributes_' + index + '_lot_number').val() + '&finished_good_id=<%= @finished_good.id %>',
       beforeSend: function(request){$('#issued_loader').show();},
       complete: function(request){$('#issued_loader').hide()}
     });

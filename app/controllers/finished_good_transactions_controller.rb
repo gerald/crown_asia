@@ -64,6 +64,17 @@ class FinishedGoodTransactionsController < ApplicationController
     @issue_type = params[:issue_type]
   end
   
+  def update_underpack
+    @lot_number = params[:lot_number]
+    @finished_good = FinishedGood.find(params[:finished_good_id])
+    @index = params[:index]
+    if @lot_number == "0"
+      @underpack_bags = Bag.all(:conditions => ["bag_number = 0 AND removing_transaction_id IS NULL AND finished_good_id = ?", @finished_good.id])
+    else
+      @underpack_bags = []
+    end
+  end
+  
   protected
   
     def authorize_create
