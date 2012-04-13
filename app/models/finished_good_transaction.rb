@@ -114,7 +114,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
           end
         else
           item.start_bag_number.upto(item.end_bag_number) do |i|
-            bag = Bag.first(:include => [:finished_good_transaction_item], :conditions => ["finished_good_transaction_items.lot_number = ? AND bag_number = ?", item.lot_number, i])
+            bag = Bag.first(:include => [:finished_good_transaction_item], :conditions => ["finished_good_transaction_items.lot_number = ? AND bag_number = ? AND finished_good_id = ?", item.lot_number, i, self.finished_good.id])
             bag.update_attribute(:removing_transaction_id, self.id)
           end
         end
