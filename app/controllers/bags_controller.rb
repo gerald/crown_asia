@@ -6,7 +6,7 @@ class BagsController < ApplicationController
     @conditions = ["removing_transaction_id IS NOT NULL"]
     
     if !params[:lot_number].blank?
-      @conditions[0] << " AND finished_good_transaction_items.lot_number = ?"
+      @conditions[0] << " AND lot_number = ?"
       @conditions << params[:lot_number]
     end
     

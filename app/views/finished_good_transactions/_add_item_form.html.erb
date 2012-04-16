@@ -3,23 +3,23 @@
     <td><%= f.check_box :_destroy %></td>
   <% end %>
   <td>
-    <% if !f.object.underpack %>
-      <%= f.text_field :lot_number %>
-    <% else %>
-      Underpack(Bag #0)
-    <% end %>
+    <%= f.text_field :lot_number %>
     <%= f.hidden_field :transaction_type %>
   </td>
-  <td>
-    <% if !f.object.underpack %>
-      <%= f.text_field :start_bag_number %>
-    <% end %>
-  </td>
-  <td>
-    <% if !f.object.underpack %>
-      <%= f.text_field :end_bag_number %>
-    <% end %>
-  </td>
+  <% if f.object.underpack %>
+    <td colspan="2">Underpack(Bag #0)</td>
+  <% else %>
+    <td>
+      <% if !f.object.underpack %>
+        <%= f.text_field :start_bag_number %>
+      <% end %>
+    </td>
+    <td>
+      <% if !f.object.underpack %>
+        <%= f.text_field :end_bag_number %>
+      <% end %>
+    </td>
+  <% end %>
   <td>
     <% if f.object.underpack %>
       <%= f.text_field :quantity %>

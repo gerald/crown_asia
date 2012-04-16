@@ -28,6 +28,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   validate :taken_bag_range
   validate :released_bag_range
   validate :bag_number_existence
+  validate :underpack_bag_quantity
   
   after_create :create_bags
   after_create :remove_bags
@@ -54,7 +55,8 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   def bag_number_values
     self.finished_good_transaction_items.each do |item|
-      if !item.underpack && item.end_bag_number < item.start_bag_number
+      next if item.underpack
+      if item.end_bag_number < item.start_bag_number
         self.errors.add(:base, "End bag number cannot be greater than start bag number") 
         return
       end
@@ -63,7 +65,8 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   def taken_bag_range
     self.finished_good_transaction_items.each do |item|
-      if item.transaction_type == "add" && !item.underpack && Bag.count(:include => [:finished_good_transaction_item, :finished_good], :conditions => ["bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) > 0
+      next if item.underpack
+      if item.transaction_type == "add" && Bag.count(:include => [:finished_good], :conditions => ["bag_number >= ? AND bag_number <= ? AND bags.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) > 0
         self.errors.add(:base, "Current range will use bag numbers that have already been taken") 
         return
       end
@@ -73,7 +76,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   def released_bag_range
     self.finished_good_transaction_items.each do |item|
       next if item.underpack
-      if item.transaction_type == "sub" && Bag.count(:include => [:finished_good_transaction_item, :finished_good], :conditions => ["removing_transaction_id IS NOT NULL AND bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) > 0
+      if item.transaction_type == "sub" && Bag.count(:include => [:finished_good], :conditions => ["removing_transaction_id IS NOT NULL AND bag_number >= ? AND bag_number <= ? AND bags.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) > 0
         self.errors.add(:base, "Current range will use bag numbers that have already been released") 
         return
       end
@@ -83,8 +86,22 @@ class FinishedGoodTransaction < ActiveRecord::Base
   def bag_number_existence
     self.finished_good_transaction_items.each do |item|
       next if item.underpack
-      if item.transaction_type == "sub" && item.end_bag_number > item.start_bag_number && Bag.count(:include => [:finished_good_transaction_item, :finished_good], :conditions => ["bag_number >= ? AND bag_number <= ? AND finished_good_transaction_items.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) != (item.end_bag_number - item.start_bag_number) + 1
+      if item.transaction_type == "sub" && item.end_bag_number > item.start_bag_number && Bag.count(:include => [:finished_good], :conditions => ["bag_number >= ? AND bag_number <= ? AND bags.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) != (item.end_bag_number - item.start_bag_number) + 1
         self.errors.add(:base, "Current range will use bag numbers that don't exist")
+        return
+      end
+    end
+  end
+  
+  def underpack_bag_quantity
+    self.finished_good_transaction_items.each do |item|
+      next if !item.underpack
+      underpack_bag = Bag.first(:conditions => ["bags.finished_good_id = ? AND bags.lot_number = ? AND bag_number = 0", self.finished_good.id, item.lot_number])
+      if underpack_bag.nil?
+        self.errors.add(:base, "Underpack bag does not exist for that lot number") 
+        return
+      elsif item.quantity > underpack_bag.quantity
+        self.errors.add(:base, "Quantity to be released cannot be greater than the current quantity of the underpack bag") 
         return
       end
     end
@@ -95,10 +112,15 @@ class FinishedGoodTransaction < ActiveRecord::Base
       return if self.transaction_type != "add"
       self.finished_good_transaction_items.each do |item|
         if item.underpack
-          Bag.create(:bag_number => 0, :finished_good => self.finished_good, :finished_good_transaction_item => item, :quantity => item.quantity)
+          underpack_bag = Bag.first(:conditions => ["bags.finished_good_id = ? AND bags.lot_number = ? AND bag_number = 0", self.finished_good.id, item.lot_number])
+          if underpack_bag.nil?
+            Bag.create(:bag_number => 0, :finished_good => self.finished_good, :finished_good_transaction_item => item, :quantity => item.quantity, :lot_number => item.lot_number)
+          else
+            underpack_bag.update_attribute(:quantity, underpack_bag.quantity + item.quantity)
+          end
         else
           item.start_bag_number.upto(item.end_bag_number) do |i|
-            Bag.create(:bag_number => i, :finished_good => self.finished_good, :finished_good_transaction_item => item, :quantity => self.quantity_per_bag)
+            Bag.create(:bag_number => i, :finished_good => self.finished_good, :finished_good_transaction_item => item, :quantity => self.quantity_per_bag, :lot_number =>  item.lot_number)
           end
         end
       end
@@ -108,13 +130,11 @@ class FinishedGoodTransaction < ActiveRecord::Base
       return if self.transaction_type != "sub"
       self.finished_good_transaction_items.each do |item|
         if item.underpack
-          item.underpack_bags.each do |bag_id|
-            bag = Bag.find(bag_id)
-            bag.update_attribute(:removing_transaction_id, self.id)
-          end
+          underpack_bag = Bag.first(:conditions => ["bags.finished_good_id = ? AND bags.lot_number = ? AND bag_number = 0", self.finished_good.id, item.lot_number])
+          underpack_bag.update_attribute(:quantity, underpack_bag.quantity - item.quantity)
         else
           item.start_bag_number.upto(item.end_bag_number) do |i|
-            bag = Bag.first(:include => [:finished_good_transaction_item], :conditions => ["finished_good_transaction_items.lot_number = ? AND bag_number = ? AND finished_good_id = ?", item.lot_number, i, self.finished_good.id])
+            bag = Bag.first(:conditions => ["lot_number = ? AND bag_number = ? AND finished_good_id = ?", item.lot_number, i, self.finished_good.id])
             bag.update_attribute(:removing_transaction_id, self.id)
           end
         end

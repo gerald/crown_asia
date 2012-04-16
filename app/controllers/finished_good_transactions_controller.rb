@@ -8,7 +8,12 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction.transaction_type = params[:transaction_type]
     @finished_good_transaction.transaction_date = Date.today
     3.times {@finished_good_transaction.finished_good_transaction_items.build(:transaction_type => params[:transaction_type])}
-    @finished_good_transaction.finished_good_transaction_items.build(:underpack => true, :transaction_type => "add") if params[:transaction_type] == "add"
+    
+    if params[:transaction_type] == "add"
+      @finished_good_transaction.finished_good_transaction_items.build(:underpack => true, :transaction_type => "add")
+    else
+      3.times {@finished_good_transaction.finished_good_transaction_items.build(:transaction_type => params[:transaction_type], :underpack => true)}
+    end
   end
   
   def create
@@ -56,7 +61,7 @@ class FinishedGoodTransactionsController < ApplicationController
     if params[:lot_number].blank?
       @bags = []
     else
-      @bags = Bag.all(:include => [:finished_good_transaction_item], :conditions => ["(finished_good_transaction_items.lot_number = ? OR finished_good_transaction_items.lot_number IS NULL) AND bags.finished_good_id = ? AND removing_transaction_id IS NULL", params[:lot_number], @finished_good.id], :order => "bag_number")
+      @bags = Bag.all(:conditions => ["(lot_number = ? OR lot_number IS NULL) AND bags.finished_good_id = ? AND removing_transaction_id IS NULL", params[:lot_number], @finished_good.id], :order => "bag_number")
     end
   end
   

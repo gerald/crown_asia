@@ -3,16 +3,24 @@
     <td><%= f.check_box :_destroy %></td>
   <% end %>
   <td>
-    <%= f.select :lot_number, lot_number_fg_options(@finished_good, true), {:include_blank => true}, {:onchange => "update_underpack(#{index})"} %>
+    <% if f.object.underpack %>
+      <%= f.select :lot_number, lot_number_underpack_options(@finished_good), {:include_blank => true} %>
+    <% else %>
+      <%= f.select :lot_number, lot_number_fg_options(@finished_good), {:include_blank => true} %>
+    <% end %>
     <%= f.hidden_field :transaction_type %>
+    <%= f.hidden_field :underpack %>
   </td>
-  <td id="underpack_<%= index %>">
-  
-  </td>
-  <td>
-    <%= f.text_field :start_bag_number %>
-  </td>
-  <td>
-    <%= f.text_field :end_bag_number %>
-  </td>
+  <% if f.object.underpack %>
+    <td>
+      <%= f.text_field :quantity %>
+    </td>
+  <% else %>
+    <td>
+      <%= f.text_field :start_bag_number %>
+    </td>
+    <td>
+      <%= f.text_field :end_bag_number %>
+    </td>
+  <% end %>
 </tr>

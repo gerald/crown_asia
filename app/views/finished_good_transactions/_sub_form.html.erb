@@ -34,16 +34,6 @@
   
   <br class="clear"/>
   
-  <!--
-  <dl>
-    <dd><%# f.label :lot_number %></dd>
-    <dd>
-      <%# f.select :lot_number, lot_number_fg_options(@finished_good), {:include_blank => true}, {:onchange => "update_bags()"} %>
-      <%# loader %>
-    </dd>
-  </dl>
-  -->
-  
   <dl>
     <dd>
       <div id="item_div">
@@ -54,15 +44,35 @@
                 <th>Delete?</th>
               <% end %>
               <th>Lot #</th> 
-              <th>Underpack</th>
               <th>Fr Bag</th>
               <th>To Bag</th>
             </tr>
           </thead>
           <tbody>
-            <% @finished_good_transaction.finished_good_transaction_items.each_with_index do |item, index| %>
+            <% @finished_good_transaction.finished_good_transaction_items.select{|i| !i.underpack}.each_with_index do |item, index| %>
               <%= f.fields_for :finished_good_transaction_items, item do |builder| %>
                 <%= render "sub_item_form", :f => builder, :index => index %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <h2>Underpack</h2>
+        
+        <table>
+          <thead>
+            <tr>
+              <% if !@finished_good_transaction.new_record? %>
+                <th>Delete?</th>
+              <% end %>
+              <th>Lot #</th> 
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @finished_good_transaction.finished_good_transaction_items.select{|i| i.underpack}.each_with_index do |item, index| %>
+              <%= f.fields_for :finished_good_transaction_items, item do |builder| %>
+                <%= render "sub_item_form", :f => builder %>
               <% end %>
             <% end %>
           </tbody>
