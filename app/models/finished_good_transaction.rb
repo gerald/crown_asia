@@ -94,7 +94,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   end
   
   def underpack_bag_quantity
-    next if self.transaction_type == "add"
+    return if self.transaction_type == "add"
     self.finished_good_transaction_items.each do |item|
       next if !item.underpack
       underpack_bag = Bag.first(:conditions => ["bags.finished_good_id = ? AND bags.lot_number = ? AND bag_number = 0", self.finished_good.id, item.lot_number])
