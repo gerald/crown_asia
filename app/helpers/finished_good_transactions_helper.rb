@@ -14,7 +14,7 @@ module FinishedGoodTransactionsHelper
   end
   
   def available_bag_numbers(lot_number, finished_good)
-    bag_numbers = Bag.all(:select => "bag_number", :include => [{:finished_good_transaction_item => :finished_good_transaction}], :conditions => ["finished_good_transactions.finished_good_id = ? AND removing_transaction_id IS NULL AND bags.lot_number = ?", finished_good.id, lot_number], :order => "bag_number").collect{|b| b.bag_number}
+    bag_numbers = Bag.all(:select => "bag_number", :include => [{:finished_good_transaction_item => :finished_good_transaction}], :conditions => ["bags.underpack = 0 AND finished_good_transactions.finished_good_id = ? AND removing_transaction_id IS NULL AND bags.lot_number = ?", finished_good.id, lot_number], :order => "bag_number").collect{|b| b.bag_number}
     ranges = []
     current_index = 0
     start_number = nil
