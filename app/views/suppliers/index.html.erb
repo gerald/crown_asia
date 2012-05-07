@@ -1,7 +1,7 @@
 <h1>Suppliers</h1>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+  <%= text_field_tag "search_text", session[:supplier_search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
 <%= link_to "Add Supplier", new_supplier_path, :class => "create_link" if can?(:create, Supplier) %>
