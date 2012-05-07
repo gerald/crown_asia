@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120416155501) do
+ActiveRecord::Schema.define(:version => 20120507131801) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -184,9 +184,15 @@ ActiveRecord::Schema.define(:version => 20120416155501) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",     :default => false
+    t.boolean  "active",                             :default => false
     t.integer  "creator_id"
     t.integer  "updater_id"
+    t.boolean  "applicable_to_rm",                   :default => true
+    t.boolean  "applicable_to_fg",                   :default => true
+    t.boolean  "applicable_to_supplies_oc",          :default => true
+    t.boolean  "applicable_to_supplies_engineering", :default => true
+    t.boolean  "applicable_to_supplies_packaging",   :default => true
+    t.boolean  "applicable_to_supplies_scrap",       :default => true
   end
 
   create_table "supplies", :force => true do |t|

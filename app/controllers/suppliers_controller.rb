@@ -5,11 +5,8 @@ class SuppliersController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    if params[:search_text].blank?
-      @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :order => "name")
-    else
-      @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
-    end
+    session[:supplier_search_text] = params[:search_text] if !params[:search_text].nil?
+    @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:supplier_search_text]}%"], :order => "name")
   end
   
   def new
@@ -44,8 +41,11 @@ class SuppliersController < ApplicationController
   
   def destroy
     @supplier = Supplier.find(params[:id])
-    @supplier.destroy
-    flash[:notice] = "#{@supplier.name} was deleted successfully"
+    if @supplier.destroy
+      flash[:notice] = "#{@supplier.name} was deleted successfully"
+    else
+      flash[:error] = "#{@supplier.name} was not deleted successfully"
+    end
     redirect_to suppliers_path
   end
   
