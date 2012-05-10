@@ -5,11 +5,8 @@ class UnitOfMeasuresController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    if params[:search_text].blank?
-      @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :order => "code")
-    else
-      @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{params[:search_text]}%"], :order => "code")
-    end
+    session[:uom_search_text] = params[:search_text] if !params[:search_text].nil?
+    @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{session[:uom_search_text]}%"], :order => "code")
   end
   
   def new

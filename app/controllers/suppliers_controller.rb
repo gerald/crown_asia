@@ -44,7 +44,7 @@ class SuppliersController < ApplicationController
     if @supplier.destroy
       flash[:notice] = "#{@supplier.name} was deleted successfully"
     else
-      flash[:error] = "#{@supplier.name} was not deleted successfully"
+      flash[:error] = "#{@supplier.name} cannot be deleted. There might be records associated to it."
     end
     redirect_to suppliers_path
   end

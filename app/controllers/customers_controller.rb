@@ -5,11 +5,8 @@ class CustomersController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    if params[:search_text].blank?
-      @customers = Customer.paginate(:per_page => 20, :page => params[:page], :order => "name")
-    else
-      @customers = Customer.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
-    end
+    session[:customer_search_text] = params[:search_text] if !params[:search_text].nil?
+    @customers = Customer.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:customer_search_text]}%"], :order => "name")
   end
   
   def new
@@ -44,8 +41,11 @@ class CustomersController < ApplicationController
   
   def destroy
     @customer = Customer.find(params[:id])
-    @customer.destroy
-    flash[:notice] = "#{@customer.name} was deleted successfully"
+    if @customer.destroy
+      flash[:notice] = "#{@customer.name} was deleted successfully"
+    else
+      flash[:error] = "#{@customer.name} cannot be deleted. There might be records associated to it."
+    end
     redirect_to customers_path
   end
   

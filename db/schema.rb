@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507131801) do
+ActiveRecord::Schema.define(:version => 20120510112531) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -52,6 +52,12 @@ ActiveRecord::Schema.define(:version => 20120507131801) do
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.boolean  "active"
+    t.boolean  "applicable_to_rm",                   :default => true
+    t.boolean  "applicable_to_fg",                   :default => true
+    t.boolean  "applicable_to_supplies_oc",          :default => true
+    t.boolean  "applicable_to_supplies_engineering", :default => true
+    t.boolean  "applicable_to_supplies_packaging",   :default => true
+    t.boolean  "applicable_to_supplies_scrap",       :default => true
   end
 
   create_table "departments", :force => true do |t|
@@ -62,6 +68,8 @@ ActiveRecord::Schema.define(:version => 20120507131801) do
     t.boolean  "active",     :default => true
     t.integer  "creator_id"
     t.integer  "updater_id"
+    t.boolean  "rm_rr",      :default => true
+    t.boolean  "fg_tos",     :default => true
   end
 
   create_table "finished_good_transaction_items", :force => true do |t|
@@ -245,6 +253,12 @@ ActiveRecord::Schema.define(:version => 20120507131801) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+    t.boolean  "applicable_to_rm",                   :default => true
+    t.boolean  "applicable_to_fg",                   :default => true
+    t.boolean  "applicable_to_supplies_oc",          :default => true
+    t.boolean  "applicable_to_supplies_engineering", :default => true
+    t.boolean  "applicable_to_supplies_packaging",   :default => true
+    t.boolean  "applicable_to_supplies_scrap",       :default => true
   end
 
   create_table "users", :force => true do |t|
