@@ -1,7 +1,9 @@
 <h1>Supplies</h1>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+  <%= text_field_tag "search_text", session[:supply_name] %> 
+  <%= select_tag "type_text", options_for_select([""] + supply_type_options, session[:supply_type]) %>
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
 <%= link_to "Add Supply", new_supply_path, :class => "create_link" if can?(:create, Supply) %>

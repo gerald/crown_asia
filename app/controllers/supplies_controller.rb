@@ -6,11 +6,10 @@ class SuppliesController < ApplicationController
   before_filter :authorize_transactions, :only => [:transactions]
   
   def index
-    if params[:search_text].blank?
-      @supplies = Supply.paginate(:per_page => 20, :page => params[:page], :order => "name")
-    else
-      @supplies = Supply.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
-    end
+    session[:supply_name] = params[:search_text] if !params[:search_text].nil?
+    session[:supply_type] = params[:type_text] if !params[:type_text].nil?
+    
+    @supplies = Supply.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ? AND supply_type LIKE ?", "%#{session[:supply_name]}%", "%#{session[:supply_type]}%"], :order => "name")
   end
   
   def new
