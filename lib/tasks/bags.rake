@@ -8,8 +8,8 @@ namespace :bags do
   
   desc 'Update underpack bags with missing lot numbers'
   task :populate_missing_underpack_lot_numbers => :environment do
-    Bag.all(:conditions => "bag_number = 0 AND (lot_number IS NULL OR lot_number = '')").each do |bag|
-      bag.update_attribute(:lot_number, "0")
+    Bag.all(:conditions => "bag_number = 0 AND lot_number = '0'").each_with_index do |bag, index|
+      bag.update_attribute(:lot_number, "#{index + 1}")
     end
   end
   

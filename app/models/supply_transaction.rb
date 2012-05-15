@@ -14,6 +14,7 @@ class SupplyTransaction < ActiveRecord::Base
   
   validates :rr_number, :pre_number, :supplier_name, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   validates :rr_number, :pre_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :po_number, :format => {:with => /[0-9]+/}, :allow_blank => true, :allow_nil => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   
   validates :mirs_number, :issued_department, :issued_user, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
