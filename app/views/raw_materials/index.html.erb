@@ -1,7 +1,9 @@
 <h1>Raw Materials</h1>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <%= text_field_tag "search_text", params[:search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+  <%= text_field_tag "search_text", session[:rm_code] %> 
+  <%= select_tag "type_text", options_for_select([""] + RawMaterialType.all.collect{|t| [t.name, t.id]}, session[:rm_type]) %>
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
 <%= link_to "Add Raw Material", new_raw_material_path, :class => "create_link" if can?(:create, RawMaterial) %>
@@ -16,6 +18,7 @@
       <th>Name</th>
       <th>Supplier</th>
       <th>Quantity</th>
+      <th>Critical Qty</th>
       <th>Last Transaction</th>
       <th>Classification</th>
       <th>&nbsp;</th>
@@ -28,7 +31,8 @@
       <td><%= raw_material.code %></td>
       <td><%= raw_material.name %></td>
       <td><%= raw_material.supplier.name if raw_material.supplier %></td>
-      <td><%= raw_material.quantity_on_hand %></td>
+      <td class="<%= 'negative' if raw_material.critical? %>"><%= raw_material.quantity_on_hand %></td>
+      <td><%= raw_material.critical_quantity %></td>
       <td><%= raw_material.last_transaction_date.strftime("%m/%d/%Y") if raw_material.last_transaction_date %></td>
       <td><%= raw_material.classification %></td>
       <td>

@@ -6,10 +6,13 @@ class RawMaterialsController < ApplicationController
   before_filter :authorize_transactions, :only => [:transactions]
   
   def index
-    if params[:search_text].blank?
-      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :order => "name")
+    session[:rm_code] = params[:search_text] if !params[:search_text].nil?
+    session[:rm_type] = params[:type_text] if !params[:type_text].nil?
+    
+    if session[:rm_type].blank?
+      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{session[:rm_code]}%"], :order => "name")
     else
-      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{params[:search_text]}%"], :order => "name")
+      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ? AND raw_material_type_id = ?", "%#{session[:rm_code]}%", session[:rm_type]], :order => "name")
     end
   end
   
