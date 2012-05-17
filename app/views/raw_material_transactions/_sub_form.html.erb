@@ -12,9 +12,34 @@
   <br class="clear"/>
   
   <dl>
-    <dd><%= f.label :issued_department, "Issued To" %></dd>
-    <dd><%= f.select :issued_department_id, Department.active_departments.collect{|d| [d.code, d.id]}, {:include_blank => true} %></dd>
+    <dd><%= f.label :issue_type %></dd>
+    <dd><%= f.select :issue_type, [["Customer", "Customer"], ["Internal", "Internal"]], {}, {:onchange => "update_issued()"} %></dd>
   </dl>
+  
+  <dl>
+    <dd>
+      <%= f.label :issued_to, "Issued To" %>
+      <%= loader("issued_loader") %>
+    </dd>
+    <dd id="sender_select"></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :dr_number, "DR Number" %></dd>
+    <dd><%= f.text_field :dr_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :si_number, "SI Number" %></dd>
+    <dd><%= f.text_field :si_number %></dd>
+  </dl>
+  
+  <!--
+  <dl>
+    <dd><%# f.label :issued_department, "Issued To" %></dd>
+    <dd><%# f.select :issued_department_id, Department.active_departments.collect{|d| [d.code, d.id]}, {:include_blank => true} %></dd>
+  </dl>
+  -->
   
   <dl>
     <dd>
@@ -53,6 +78,16 @@
 </fieldset>
 
 <%= javascript_tag :defer => "defer" do %>
+  function update_issued() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_issued_raw_material_transactions_path %>',
+      data: 'issue_type=' + $('#raw_material_transaction_issue_type').val() + '&issued_to_id=<%= @raw_material_transaction.issued_to_id %>',
+      beforeSend: function(request){$('#issued_loader').show();},
+      complete: function(request){$('#issued_loader').hide()}
+    });
+  }
+  
   function update_total() {
     sum = 0;
     $('.quantity_text').each(function() {
@@ -67,5 +102,6 @@
   
   $(document).ready(function() {
     update_total();
+    update_issued();
   });
 <% end %>

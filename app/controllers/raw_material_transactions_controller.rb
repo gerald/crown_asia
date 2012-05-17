@@ -54,6 +54,10 @@ class RawMaterialTransactionsController < ApplicationController
     @raw_material = RawMaterial.find(params[:raw_material_id])
   end
   
+  def update_issued
+    @issue_type = params[:issue_type]
+  end
+  
   protected
   
     def authorize_create

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517025921) do
+ActiveRecord::Schema.define(:version => 20120517044126) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -148,6 +148,11 @@ ActiveRecord::Schema.define(:version => 20120517025921) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+    t.string   "issue_type"
+    t.integer  "issued_to_id"
+    t.string   "issued_to_type"
+    t.string   "dr_number"
+    t.string   "si_number"
   end
 
   create_table "raw_material_types", :force => true do |t|
@@ -248,6 +253,8 @@ ActiveRecord::Schema.define(:version => 20120517025921) do
     t.string   "supply_type"
     t.string   "po_number"
     t.string   "reference_type"
+    t.string   "misc_sales_number"
+    t.string   "sr_number"
   end
 
   create_table "unit_of_measures", :force => true do |t|
