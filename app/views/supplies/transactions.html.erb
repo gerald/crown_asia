@@ -12,7 +12,8 @@
       <th>Quantity</th>
       <th>Unit Price</th>
       <th>Supplier</th>
-      <th>RR #</th>
+      <th>Reference Type
+      <th>Reference #</th>
       <th>PRE #</th>
       <th>MIRS #</th>
       <th>Issued To Department</th>
@@ -35,6 +36,7 @@
       <td><%= transaction.quantity %></td>
       <td><%= transaction.unit_price %></td>
       <td><%= transaction.supply_transaction.supplier_name %></td>
+      <td><%= transaction.supply_transaction.reference_type %></td>
       <td><%= transaction.supply_transaction.rr_number %></td>
       <td><%= transaction.supply_transaction.pre_number %></td>
       <td><%= transaction.supply_transaction.mirs_number %></td>

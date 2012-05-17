@@ -10,7 +10,12 @@
   </dl>
   
   <dl>
-    <dd><%= f.label :rr_number, "RR Number" %></dd>
+    <dd><%= f.label :reference_type %></dd>
+    <dd><%= f.select :reference_type, [["TOS", "TOS"], ["RR", "RR"]] %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :rr_number, "Reference Number" %></dd>
     <dd><%= f.text_field :rr_number %></dd>
   </dl>
   
