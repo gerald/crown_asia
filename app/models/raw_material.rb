@@ -39,4 +39,9 @@ class RawMaterial < ActiveRecord::Base
     return "S" if Date.today - self.last_transaction_date >= 30 && Date.today - self.last_transaction_date < 365
     return "N" if Date.today - self.last_transaction_date >= 365
   end
+  
+  def critical?
+    return false if self.critical_quantity.nil?
+    self.quantity_on_hand <= self.critical_quantity
+  end
 end

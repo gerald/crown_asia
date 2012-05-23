@@ -17,6 +17,7 @@
       <th>Issued To</th>
       <th>Received From</th>
       <th>Comments</th>
+      <th>Creator</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -43,6 +44,7 @@
       <td><%= transaction.issued_department.name if transaction.issued_department %></td>
       <td><%= transaction.sender.name if transaction.sender %></td>
       <td><%= simple_format(transaction.comments) %></td>
+      <td><%= transaction.creator.name if transaction.creator %></td>
       <td>
         <%= link_to "Edit", edit_raw_material_transaction_path(transaction), :class => "edit_link" if can?(:update, RawMaterialTransaction) %> &nbsp;&nbsp;
         <%= link_to "Delete", raw_material_transaction_path(transaction), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, RawMaterialTransaction) %>

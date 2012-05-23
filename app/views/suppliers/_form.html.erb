@@ -8,4 +8,38 @@
     <dd><%= f.label :active %></dd>
     <dd><%= f.check_box :active %></dd>
   </dl>
+  
+  <dl>
+    <dd><strong>Applicable to:</strong></dd>
+  </dl>
+  
+  <dl>
+    <dd class="applicable_to"><%= f.label :applicable_to_rm, "RM:" %></dd>
+    <dd><%= f.check_box :applicable_to_rm %></dd>
+  </dl>
+  
+  <dl>
+    <dd class="applicable_to"><%= f.label :applicable_to_fg, "FG:" %></dd>
+    <dd><%= f.check_box :applicable_to_fg %></dd>
+  </dl>
+  
+  <dl>
+    <dd class="applicable_to"><%= f.label :applicable_to_supplies_oc, "Supplies - OC:" %></dd>
+    <dd><%= f.check_box :applicable_to_supplies_oc %></dd>
+  </dl>
+  
+  <dl>
+    <dd class="applicable_to"><%= f.label :applicable_to_supplies_engineering, "Supplies - Engineering:" %></dd>
+    <dd><%= f.check_box :applicable_to_supplies_engineering %></dd>
+  </dl>
+  
+  <dl>
+    <dd class="applicable_to"><%= f.label :applicable_to_supplies_packaging, "Supplies - Packaging:" %></dd>
+    <dd><%= f.check_box :applicable_to_supplies_packaging %></dd>
+  </dl>
+  
+  <dl>
+    <dd class="applicable_to"><%= f.label :applicable_to_supplies_scrap, "Supplies - Scrap:" %></dd>
+    <dd><%= f.check_box :applicable_to_supplies_scrap %></dd>
+  </dl>
 </fieldset>

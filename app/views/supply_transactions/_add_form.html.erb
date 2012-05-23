@@ -10,7 +10,12 @@
   </dl>
   
   <dl>
-    <dd><%= f.label :rr_number, "RR Number" %></dd>
+    <dd><%= f.label :reference_type %></dd>
+    <dd><%= f.select :reference_type, [["TOS", "TOS"], ["RR", "RR"]] %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :rr_number, "Reference Number" %></dd>
     <dd><%= f.text_field :rr_number %></dd>
   </dl>
   
@@ -21,10 +26,6 @@
   
   <br class="clear"/>
   
-  <dl>
-    <dd><%= f.label :supplier_name %></dd>
-    <dd><%= f.select :supplier_name, Supplier.active_suppliers.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
-  </dl>
   
   <% if @supply_transaction.new_record? %>
   <dl>
@@ -35,6 +36,11 @@
     </dd>
   </dl>
   <% end %>
+  
+  <dl>
+    <dd><%= f.label :supplier %></dd>
+    <dd id="supplier_select"><%# f.select :supplier_name, Supplier.active_suppliers.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
+  </dl>
   
   <dl>
     <dd>
@@ -71,9 +77,13 @@
     $.ajax({
       type: 'POST',
       url: '<%= update_supplies_supply_transactions_path %>',
-      data: 'supply_type=' + $('#supply_transaction_supply_type').val(),
+      data: 'supply_type=' + $('#supply_transaction_supply_type').val() + '&supplier_id=<%= @supply_transaction.supplier_id %>',
       beforeSend: function(request){$('#loader').show();},
       complete: function(request){$('#loader').hide()}
     });
   }
+  
+  $(document).ready(function() {
+    update_supplies();
+  });
 <% end %>

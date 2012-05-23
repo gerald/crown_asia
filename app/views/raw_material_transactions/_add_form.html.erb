@@ -82,7 +82,7 @@
     $.ajax({
       type: 'POST',
       url: '<%= update_sender_raw_material_transactions_path %>',
-      data: 'reference_type=' + $('#raw_material_transaction_reference_type').val() + '&sender_id=<%= @raw_material_transaction.sender_id %>',
+      data: 'reference_type=' + $('#raw_material_transaction_reference_type').val() + '&sender_id=<%= @raw_material_transaction.sender_id %>&raw_material_id=<%= @raw_material.id %>',
       beforeSend: function(request){$('#loader').show();},
       complete: function(request){$('#loader').hide()}
     });

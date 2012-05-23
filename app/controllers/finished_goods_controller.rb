@@ -6,11 +6,8 @@ class FinishedGoodsController < ApplicationController
   before_filter :authorize_transactions, :only => [:transactions]
   
   def index
-    if params[:search_text].blank?
-      @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :order => "name")
-    else
-      @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
-    end
+    session[:finished_good_search_text] = params[:search_text] if !params[:search_text].nil?
+    @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:finished_good_search_text]}%"], :order => "name")
   end
   
   def new

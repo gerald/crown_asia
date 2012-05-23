@@ -21,6 +21,16 @@
     <dd><%= f.select :issued_user_id, User.all(:order => "first_name").collect{|d| [d.name, d.id]}, {:include_blank => true} %></dd>
   </dl>
   
+  <dl>
+    <dd><%= f.label :misc_sales_number %></dd>
+    <dd><%= f.text_field :misc_sales_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :sr_number, "SR Number" %></dd>
+    <dd><%= f.text_field :sr_number %></dd>
+  </dl>
+  
   <% if @supply_transaction.new_record? %>
   <dl>
     <dd><%= f.label :supply_type %></dd>

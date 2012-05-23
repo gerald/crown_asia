@@ -5,6 +5,7 @@ class SupplyTransaction < ActiveRecord::Base
   belongs_to :issued_user, :class_name => "User"
   belongs_to :creator, :class_name => "User"
   belongs_to :updater, :class_name => "User"
+  belongs_to :supplier
   
   has_many :supply_transaction_items, :dependent => :destroy
   
@@ -12,12 +13,13 @@ class SupplyTransaction < ActiveRecord::Base
   
   validates :transaction_date, :supply_type, :presence => true
   
-  validates :rr_number, :pre_number, :supplier_name, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
+  validates :rr_number, :pre_number, :supplier, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   validates :rr_number, :pre_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   validates :po_number, :format => {:with => /[0-9]+/}, :allow_blank => true, :allow_nil => true, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   
   validates :mirs_number, :issued_department, :issued_user, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
+  validates :misc_sales_number, :sr_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   
   validate :supply_quantity
   
@@ -33,6 +35,11 @@ class SupplyTransaction < ActiveRecord::Base
         return
       end
     end
+  end
+  
+  def supplier_name
+    return "" if self.supplier.nil?
+    return self.supplier.name
   end
   
 end
