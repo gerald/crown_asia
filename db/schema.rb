@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517044126) do
+ActiveRecord::Schema.define(:version => 20120523131407) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -236,7 +236,7 @@ ActiveRecord::Schema.define(:version => 20120517044126) do
   create_table "supply_transactions", :force => true do |t|
     t.string   "transaction_type"
     t.date     "transaction_date"
-    t.string   "supplier_name"
+    t.integer  "supplier_id"
     t.string   "usage"
     t.string   "rr_number"
     t.string   "pre_number"

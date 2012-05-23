@@ -1,3 +1,9 @@
 $('.supply_select').each(function() {
   $(this).html('<%= escape_javascript(options_for_select([["", ""]] + Supply.all(:conditions => ["supply_type = ?", @supply_type], :order => "name").collect{|s| ["#{s.name} - #{s.quantity_on_hand} available", s.id]})) %>')
 })
+
+<% if @supply_type %>
+  $('#supplier_select').html('<%= escape_javascript(select_tag("supply_transaction[supplier_id]", options_from_collection_for_select(Supplier.active_suppliers.all(:conditions => "applicable_to_supplies_#{@supply_type.gsub('/', '').downcase} = 1"), "id", "name", params[:supplier_id]))) %>');
+<% else %>
+  $('#supplier_select').html('')
+<% end %>
