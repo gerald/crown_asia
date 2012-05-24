@@ -1,0 +1,33 @@
+<tr>
+  <% if !@finished_good_transaction.new_record? %>
+    <td><%= f.check_box :_destroy %></td>
+  <% end %>
+  <td>
+    <% if f.object.underpack %>
+      <%= f.select :lot_number, lot_number_underpack_options(@finished_good), {:include_blank => true} %>
+    <% else %>
+      <%= f.select :lot_number, lot_number_return_fg_options(@finished_good), {:include_blank => true} %>
+    <% end %>
+    <%= f.hidden_field :transaction_type %>
+  </td>
+  <% if f.object.underpack %>
+    <td colspan="2">Underpack(Bag #0)</td>
+  <% else %>
+    <td>
+      <% if !f.object.underpack %>
+        <%= f.text_field :start_bag_number %>
+      <% end %>
+    </td>
+    <td>
+      <% if !f.object.underpack %>
+        <%= f.text_field :end_bag_number %>
+      <% end %>
+    </td>
+  <% end %>
+  <td>
+    <% if f.object.underpack %>
+      <%= f.text_field :quantity %>
+    <% end %>
+    <%= f.hidden_field :underpack %>
+  </td>
+</tr>

@@ -18,20 +18,24 @@ class FinishedGoodTransaction < ActiveRecord::Base
   validates :reference_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   
   validates :issue_type, :issued_to, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
-  # validates :dr_number, :si_number, :presence => true, :if => Proc.new { |transaction| transaction.issue_type == "Customer" && transaction.transaction_type == "sub" }
   validates :mirs_number, :presence => true, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
   validates :dr_number, :si_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.issue_type == "Customer" && transaction.transaction_type == "sub" }
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
+  
+  validates :rr_number, :rr_date, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
+  validates :rr_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
   
   validate :dr_or_si
   validate :bag_number_values
   validate :taken_bag_range
   validate :released_bag_range
+  validate :return_bag_range
   validate :bag_number_existence
   validate :underpack_bag_quantity
   
   after_create :create_bags
   after_create :remove_bags
+  after_create :return_bags
   
   acts_as_paranoid
   
@@ -93,6 +97,16 @@ class FinishedGoodTransaction < ActiveRecord::Base
     end
   end
   
+  def return_bag_range
+    self.finished_good_transaction_items.each do |item|
+      next if item.underpack
+      if item.transaction_type == "return" && Bag.count(:include => [:finished_good], :conditions => ["removing_transaction_id IS NULL AND bag_number >= ? AND bag_number <= ? AND bags.lot_number = ? AND finished_goods.id = ?", item.start_bag_number, item.end_bag_number, item.lot_number, self.finished_good_id]) > 0
+        self.errors.add(:base, "Current range will use bag numbers that have not been released yet.") 
+        return
+      end
+    end
+  end
+  
   def underpack_bag_quantity
     return if self.transaction_type == "add"
     self.finished_good_transaction_items.each do |item|
@@ -141,4 +155,19 @@ class FinishedGoodTransaction < ActiveRecord::Base
         end
       end
     end
+    
+    def return_bags
+      return if self.transaction_type != "return"
+      self.finished_good_transaction_items.each do |item|
+        if item.underpack
+          underpack_bag = Bag.first(:conditions => ["bags.finished_good_id = ? AND bags.lot_number = ? AND bag_number = 0", self.finished_good.id, item.lot_number])
+          underpack_bag.update_attribute(:quantity, underpack_bag.quantity + item.quantity)
+        else
+          item.start_bag_number.upto(item.end_bag_number) do |i|
+            bag = Bag.first(:conditions => ["lot_number = ? AND bag_number = ? AND finished_good_id = ?", item.lot_number, i, self.finished_good.id])
+            bag.update_attribute(:removing_transaction_id, nil)
+          end
+        end
+      end
+    end 
 end

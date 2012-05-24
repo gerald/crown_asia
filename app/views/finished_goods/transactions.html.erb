@@ -11,9 +11,11 @@
       <th>Ref. Type</th>
       <th>Ref. Number</th>
       <th>Date</th>
+      <th>RR Date</th>
       <th>DR #</th>
       <th>SI #</th>
       <th>MIRS #</th>
+      <th>RR #</th>
       <th>Bag #</th>
       <th>Received From</th>
       <th>Issued To</th>
@@ -27,6 +29,8 @@
       <td>
         <% if transaction.transaction_type == "add" %>
           <span class="positive">Add</span>
+        <% elsif transaction.transaction_type == "return" %>
+          <span class="positive">Return</span>
         <% else %>
           <span class="negative">Deduct</span>
         <% end %>
@@ -34,9 +38,11 @@
       <td><%= transaction.reference_type %></td>
       <td><%= transaction.reference_number %></td>
       <td><%= transaction.transaction_date.strftime("%m/%d/%Y") if transaction.transaction_date %></td>
+      <td><%= transaction.rr_date.strftime("%m/%d/%Y") if transaction.rr_date %></td>
       <td><%= transaction.dr_number %></td>
       <td><%= transaction.si_number %></td>
       <td><%= transaction.mirs_number %></td>
+      <td><%= transaction.rr_number %></td>
       <td>
         <% transaction.finished_good_transaction_items.each do |item| %>
           <% if item.underpack %>
