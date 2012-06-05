@@ -22,8 +22,8 @@ class FinishedGoodTransaction < ActiveRecord::Base
   validates :dr_number, :si_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.issue_type == "Customer" && transaction.transaction_type == "sub" }
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
   
-  validates :rr_number, :rr_date, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
-  validates :rr_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
+  validates :transaction_date, :reference_number, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
+  validates :reference_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
   
   validate :dr_or_si
   validate :bag_number_values

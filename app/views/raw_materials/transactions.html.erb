@@ -41,7 +41,7 @@
           <%= item.lot_number %> - <%= item.quantity %><br/>
         <% end %>
       </td>
-      <td><%= transaction.issued_department.name if transaction.issued_department %></td>
+      <td><%= transaction.issued_to.name if transaction.issued_to %></td>
       <td><%= transaction.sender.name if transaction.sender %></td>
       <td><%= simple_format(transaction.comments) %></td>
       <td><%= transaction.creator.name if transaction.creator %></td>
