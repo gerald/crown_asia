@@ -28,7 +28,14 @@ class RawMaterialTransaction < ActiveRecord::Base
   def raw_material_quantity
     return if self.transaction_type != "sub"
     self.raw_material_transaction_items.each do |item|
-      if item.quantity && item.quantity > self.raw_material.quantity_on_hand(item.lot_number)
+      previous_quantity = 0
+      if item.new_record?
+        previous_quantity = self.raw_material.quantity_on_hand(item.lot_number)
+      else
+        previous_quantity = self.raw_material.quantity_on_hand(item.lot_number) + RawMaterialTransactionItem.find(item.id).quantity
+      end
+      
+      if item.quantity && item.quantity > previous_quantity 
         errors.add(:base, "Transaction item quantity cannot be more than the remaining quantity of the raw material")
         return
       end
