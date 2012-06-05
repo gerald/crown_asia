@@ -18,8 +18,10 @@ class FinishedGoodTransaction < ActiveRecord::Base
   validates :reference_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "add" }
   
   validates :issue_type, :issued_to, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
+  
+  validates :dr_number, :si_number, :mirs_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.issue_type == "Customer" && transaction.transaction_type == "sub" }
+  
   validates :mirs_number, :presence => true, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
-  validates :dr_number, :si_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.issue_type == "Customer" && transaction.transaction_type == "sub" }
   validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
   
   validates :transaction_date, :reference_number, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
@@ -52,7 +54,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   # Custom validations
   def dr_or_si
-    if self.issue_type == "Customer" && self.transaction_type == "sub" && self.dr_number.blank? && self.si_number.blank?
+    if self.issue_type == "Customer" && self.transaction_type == "sub" && self.dr_number.blank? && self.si_number.blank? && self.mirs_number
       errors.add(:base, "DR and SI numbers can't both be blank.")
     end
   end
