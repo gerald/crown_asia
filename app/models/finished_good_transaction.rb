@@ -54,8 +54,8 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   # Custom validations
   def dr_or_si
-    if self.issue_type == "Customer" && self.transaction_type == "sub" && self.dr_number.blank? && self.si_number.blank? && self.mirs_number
-      errors.add(:base, "DR and SI numbers can't both be blank.")
+    if self.issue_type == "Customer" && self.transaction_type == "sub" && self.dr_number.blank? && self.si_number.blank? && self.mirs_number.blank?
+      errors.add(:base, "Must provide at least one of DR, SI, or MIRS number.")
     end
   end
   
