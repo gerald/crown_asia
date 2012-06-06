@@ -22,6 +22,11 @@
   </dl>
   
   <dl>
+    <dd><%= f.label :issued_customer, "Issued To Customer" %></dd>
+    <dd><%= f.select :issued_customer_id, Customer.active_customers.collect{|c| [c.name, c.id]}, {:include_blank => true} %></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :misc_sales_number %></dd>
     <dd><%= f.text_field :misc_sales_number %></dd>
   </dl>
@@ -52,6 +57,7 @@
               <% end %>
               <th>Supply</th> 
               <th>Quantity Issued</th>
+              <th>Unit Price</th>
             </tr>
           </thead>
           <tbody>
