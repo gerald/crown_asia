@@ -67,6 +67,7 @@ class FinishedGoodTransactionsController < ApplicationController
   
   def update_issued
     @issue_type = params[:issue_type]
+    @finished_good = FinishedGood.find(params[:finished_good_id])
   end
   
   def update_underpack

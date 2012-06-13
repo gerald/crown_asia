@@ -109,7 +109,7 @@
     $.ajax({
       type: 'POST',
       url: '<%= update_issued_finished_good_transactions_path %>',
-      data: 'issue_type=' + $('#finished_good_transaction_issue_type').val() + '&issued_to_id=<%= @finished_good_transaction.issued_to_id %>',
+      data: 'issue_type=' + $('#finished_good_transaction_issue_type').val() + '&issued_to_id=<%= @finished_good_transaction.issued_to_id %>&finished_good_id=<%= @finished_good.id %>',
       beforeSend: function(request){$('#issued_loader').show();},
       complete: function(request){$('#issued_loader').hide()}
     });
