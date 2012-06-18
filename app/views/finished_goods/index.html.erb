@@ -1,7 +1,7 @@
 <h1>Finished Goods</h1>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <%= text_field_tag "search_text", session[:finished_good_search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+  <%= text_field_tag "search_text", session[:search][:finished_good_search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
 <%= link_to "Add Finished Good", new_finished_good_path, :class => "create_link" if can?(:create, FinishedGood) %>

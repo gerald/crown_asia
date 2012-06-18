@@ -1,8 +1,8 @@
 <h1>Raw Materials</h1>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <%= text_field_tag "search_text", session[:rm_code] %> 
-  <%= select_tag "type_text", options_for_select([""] + RawMaterialType.all.collect{|t| [t.name, t.id]}, session[:rm_type]) %>
+  <%= text_field_tag "search_text", session[:search][:rm_code] %> 
+  <%= select_tag "type_text", options_for_select([""] + RawMaterialType.all.collect{|t| [t.name, t.id]}, session[:search][:rm_type]) %>
   <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 

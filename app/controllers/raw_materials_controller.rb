@@ -1,18 +1,19 @@
 class RawMaterialsController < ApplicationController
   before_filter :authorize_view, :only => [:index]
+  before_filter(:only => [:index]) { |c| c.clear_search_session([:rm_code, :rm_type]) }
   before_filter :authorize_create, :only => [:new, :create]
   before_filter :authorize_update, :only => [:edit, :update]
   before_filter :authorize_delete, :only => [:destroy]
   before_filter :authorize_transactions, :only => [:transactions]
   
   def index
-    session[:rm_code] = params[:search_text] if !params[:search_text].nil?
-    session[:rm_type] = params[:type_text] if !params[:type_text].nil?
+    session[:search][:rm_code] = params[:search_text] if !params[:search_text].nil?
+    session[:search][:rm_type] = params[:type_text] if !params[:type_text].nil?
     
-    if session[:rm_type].blank?
-      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{session[:rm_code]}%"], :order => "name")
+    if session[:search][:rm_type].blank?
+      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{session[:search][:rm_code]}%"], :order => "name")
     else
-      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ? AND raw_material_type_id = ?", "%#{session[:rm_code]}%", session[:rm_type]], :order => "name")
+      @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ? AND raw_material_type_id = ?", "%#{session[:search][:rm_code]}%", session[:search][:rm_type]], :order => "name")
     end
   end
   

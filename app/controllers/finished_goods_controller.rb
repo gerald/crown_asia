@@ -1,13 +1,14 @@
 class FinishedGoodsController < ApplicationController
   before_filter :authorize_view, :only => [:index]
+  before_filter(:only => [:index]) { |c| c.clear_search_session([:finished_good_search_text]) }
   before_filter :authorize_create, :only => [:new, :create]
   before_filter :authorize_update, :only => [:edit, :update]
   before_filter :authorize_delete, :only => [:destroy]
   before_filter :authorize_transactions, :only => [:transactions]
   
   def index
-    session[:finished_good_search_text] = params[:search_text] if !params[:search_text].nil?
-    @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:finished_good_search_text]}%"], :order => "name")
+    session[:search][:finished_good_search_text] = params[:search_text] if !params[:search_text].nil?
+    @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:search][:finished_good_search_text]}%"], :order => "name")
   end
   
   def new

@@ -1,12 +1,13 @@
 class UnitOfMeasuresController < ApplicationController
   before_filter :authorize_view, :only => [:index]
+  before_filter(:only => [:index]) { |c| c.clear_search_session([:uom_search_text]) }
   before_filter :authorize_create, :only => [:new, :create]
   before_filter :authorize_update, :only => [:edit, :update]
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    session[:uom_search_text] = params[:search_text] if !params[:search_text].nil?
-    @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{session[:uom_search_text]}%"], :order => "code")
+    session[:search][:uom_search_text] = params[:search_text] if !params[:search_text].nil?
+    @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{session[:search][:uom_search_text]}%"], :order => "code")
   end
   
   def new

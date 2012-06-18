@@ -1,12 +1,13 @@
 class SuppliersController < ApplicationController
   before_filter :authorize_view, :only => [:index]
+  before_filter(:only => [:index]) { |c| c.clear_search_session([:supplier_search_text]) }
   before_filter :authorize_create, :only => [:new, :create]
   before_filter :authorize_update, :only => [:edit, :update]
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    session[:supplier_search_text] = params[:search_text] if !params[:search_text].nil?
-    @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:supplier_search_text]}%"], :order => "name")
+    session[:search][:supplier_search_text] = params[:search_text] if !params[:search_text].nil?
+    @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:search][:supplier_search_text]}%"], :order => "name")
   end
   
   def new
