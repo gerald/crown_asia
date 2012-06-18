@@ -1,5 +1,5 @@
 <% if @reference_type == "TOS" %>
-  $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[sender_id]", options_from_collection_for_select(Department.active_departments, "id", "code", params[:sender_id]))) %>');
+  $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[sender_id]", options_from_collection_for_select(Department.active_departments, "id", "code", params[:sender_id].blank? ? Department.find_by_code("PAM").id : params[:sender_id]))) %>');
   $('#sender_select').append('<%= hidden_field_tag("finished_good_transaction[sender_type]", "Department") %>');
 <% else %>
   $('#sender_select').html('<%= escape_javascript(select_tag("finished_good_transaction[sender_id]", options_from_collection_for_select(Customer.active_customers, "id", "name", params[:sender_id]))) %>');
