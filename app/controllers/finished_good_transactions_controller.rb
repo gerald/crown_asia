@@ -7,6 +7,8 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction.finished_good = @finished_good
     @finished_good_transaction.transaction_type = params[:transaction_type]
     @finished_good_transaction.transaction_date = Date.today
+    @finished_good_transaction.quantity_per_bag = "25" if params[:transaction_type] == "add"
+    
     3.times {@finished_good_transaction.finished_good_transaction_items.build(:transaction_type => params[:transaction_type])}
     
     if params[:transaction_type] == "add" || params[:transaction_type] == "return"

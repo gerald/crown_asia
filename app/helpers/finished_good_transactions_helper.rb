@@ -13,7 +13,7 @@ module FinishedGoodTransactionsHelper
   end
   
   def quantity_per_bag_options
-    [["25", "25"], ["500", "500"], ["800", "800"]]
+    [["25", "25.0"], ["500", "500.0"], ["800", "800.0"]]
   end
   
   def available_bag_numbers(lot_number, finished_good, return_transaction = false)
