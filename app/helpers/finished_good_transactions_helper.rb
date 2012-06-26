@@ -1,19 +1,19 @@
 module FinishedGoodTransactionsHelper
 
   def lot_number_fg_options(finished_good)
-    Bag.all(:select => "DISTINCT(lot_number)", :conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.bag_number != 0", finished_good.id], :order => "bags.lot_number").collect{|b| ["#{b.lot_number}(#{available_bag_numbers(b.lot_number, finished_good)})", b.lot_number]}
+    Bag.all(:select => "DISTINCT(lot_number)", :conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.bag_number != 0", finished_good.id], :order => "bags.lot_number DESC").collect{|b| ["#{b.lot_number}(#{available_bag_numbers(b.lot_number, finished_good)})", b.lot_number]}
   end
   
   def lot_number_return_fg_options(finished_good)
-    Bag.all(:select => "DISTINCT(lot_number)", :conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND bags.removing_transaction_id IS NOT NULL AND bags.bag_number != 0", finished_good.id], :order => "bags.lot_number").collect{|b| ["#{b.lot_number}(#{available_bag_numbers(b.lot_number, finished_good, true)})", b.lot_number]}
+    Bag.all(:select => "DISTINCT(lot_number)", :conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND bags.removing_transaction_id IS NOT NULL AND bags.bag_number != 0", finished_good.id], :order => "bags.lot_number DESC").collect{|b| ["#{b.lot_number}(#{available_bag_numbers(b.lot_number, finished_good, true)})", b.lot_number]}
   end
   
   def lot_number_underpack_options(finished_good)
-    Bag.all(:conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.bag_number = 0 AND bags.quantity > 0", finished_good.id], :order => "bags.lot_number").collect{|b| ["#{b.lot_number}(#{b.quantity})", b.lot_number]}.uniq
+    Bag.all(:conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.bag_number = 0 AND bags.quantity > 0", finished_good.id], :order => "bags.lot_number DESC").collect{|b| ["#{b.lot_number}(#{b.quantity})", b.lot_number]}.uniq
   end
   
   def lot_number_return_underpack_options(finished_good)
-    Bag.all(:select => "DISTINCT(lot_number)", :conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND (bags.removing_transaction_id IS NOT NULL OR bags.bag_number = 0)", finished_good.id], :order => "bags.lot_number").collect{|b| ["#{b.lot_number}", b.lot_number]}
+    Bag.all(:select => "DISTINCT(lot_number)", :conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND (bags.removing_transaction_id IS NOT NULL OR bags.bag_number = 0)", finished_good.id], :order => "bags.lot_number DESC").collect{|b| ["#{b.lot_number}", b.lot_number]}
   end
   
   def quantity_per_bag_options
