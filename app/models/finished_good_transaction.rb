@@ -110,7 +110,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   end
   
   def underpack_bag_quantity
-    return if self.transaction_type == "add"
+    return if self.transaction_type == "add" || self.transaction_type == "return"
     self.finished_good_transaction_items.each do |item|
       next if !item.underpack
       underpack_bag = Bag.first(:conditions => ["bags.finished_good_id = ? AND bags.lot_number = ? AND bag_number = 0", self.finished_good.id, item.lot_number])
@@ -163,7 +163,11 @@ class FinishedGoodTransaction < ActiveRecord::Base
       self.finished_good_transaction_items.each do |item|
         if item.underpack
           underpack_bag = Bag.first(:conditions => ["bags.finished_good_id = ? AND bags.lot_number = ? AND bag_number = 0", self.finished_good.id, item.lot_number])
-          underpack_bag.update_attribute(:quantity, underpack_bag.quantity + item.quantity)
+          if underpack_bag.nil?
+            Bag.create(:bag_number => 0, :finished_good => self.finished_good, :finished_good_transaction_item => item, :quantity => item.quantity, :lot_number => item.lot_number)
+          else
+            underpack_bag.update_attribute(:quantity, underpack_bag.quantity + item.quantity)
+          end
         else
           item.start_bag_number.upto(item.end_bag_number) do |i|
             bag = Bag.first(:conditions => ["lot_number = ? AND bag_number = ? AND finished_good_id = ?", item.lot_number, i, self.finished_good.id])

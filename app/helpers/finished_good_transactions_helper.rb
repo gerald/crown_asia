@@ -12,6 +12,10 @@ module FinishedGoodTransactionsHelper
     Bag.all(:conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND bags.removing_transaction_id IS NULL AND bags.bag_number = 0 AND bags.quantity > 0", finished_good.id]).collect{|b| ["#{b.lot_number}(#{b.quantity})", b.lot_number]}.uniq
   end
   
+  def lot_number_return_underpack_options(finished_good)
+    Bag.all(:select => "DISTINCT(lot_number)", :conditions => ["bags.finished_good_id = ? AND bags.lot_number IS NOT NULL AND (bags.removing_transaction_id IS NOT NULL OR bags.bag_number = 0)", finished_good.id]).collect{|b| ["#{b.lot_number}", b.lot_number]}
+  end
+  
   def quantity_per_bag_options
     [["25", "25.0"], ["500", "500.0"], ["800", "800.0"]]
   end
