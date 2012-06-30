@@ -163,6 +163,26 @@ ActiveRecord::Schema.define(:version => 20120704133831) do
     t.datetime "updated_at"
   end
 
+  create_table "formula_items", :force => true do |t|
+    t.float    "quantity"
+    t.float    "multiplier"
+    t.integer  "formula_id"
+    t.integer  "raw_material_type_id"
+    t.integer  "raw_material_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "formulas", :force => true do |t|
+    t.string   "formula_type"
+    t.boolean  "finished_good_local", :default => true
+    t.integer  "finished_good_id"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "mixers", :force => true do |t|
     t.string   "name"
     t.string   "brand"

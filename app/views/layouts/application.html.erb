@@ -66,6 +66,9 @@
               <% if can?(:view, Extruder) %>
                 <li class="<%= selected_menu "extruders" %>"><%= link_to "Extruders", extruders_path %></li>
               <% end %>
+              <% if can?(:view, Formula) %>
+                <li class="<%= selected_menu "formulas" %>"><%= link_to "Formulas", formulas_path %></li>
+              <% end %>
             <% end %>
           </ul>
         </div>

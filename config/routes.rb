@@ -1,4 +1,9 @@
 CrownAsia::Application.routes.draw do
+  resources :formulas do
+    post 'update_finished_good', :on => :collection
+    post 'update_raw_materials', :on => :collection
+  end
+
   resources :extruders
 
   resources :mixers

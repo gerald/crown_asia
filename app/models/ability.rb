@@ -103,17 +103,24 @@ class Ability
     ]},
     
     { :subject => "Mixer", :label => "Mixers", :permissions => [
-      { :action => "view", :desc => "Can view raw mixers"},
+      { :action => "view", :desc => "Can view mixers"},
       { :action => "create", :desc => "Can create a new mixer"},
       { :action => "update", :desc => "Can edit existing mixers"},
       { :action => "delete", :desc => "Can delete mixers"}
     ]},
     
     { :subject => "Extruder", :label => "Extruders", :permissions => [
-      { :action => "view", :desc => "Can view raw extruders"},
+      { :action => "view", :desc => "Can view extruders"},
       { :action => "create", :desc => "Can create a new extruder"},
       { :action => "update", :desc => "Can edit existing extruders"},
       { :action => "delete", :desc => "Can delete extruders"}
+    ]},
+    
+    { :subject => "Formula", :label => "Formulas", :permissions => [
+      { :action => "view", :desc => "Can view formulas"},
+      { :action => "create", :desc => "Can create a new formula"},
+      { :action => "update", :desc => "Can edit existing formulas"},
+      { :action => "delete", :desc => "Can delete formulas"}
     ]}
   ]
 
