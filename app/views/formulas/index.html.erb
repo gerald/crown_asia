@@ -1,0 +1,29 @@
+<h1>Formula</h1>
+
+<%= link_to "Add Formula", new_formula_path, :class => "create_link" if can?(:create, Formula) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Finished Good</th>
+      <th>Type</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @formulas.each do |formula| %>  
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= formula.finished_good.name %></td>
+      <td><%= formula.formula_type %></td>
+      <td>
+        <%= link_to "Edit", edit_formula_path(formula), :class => "edit_link" if can?(:update, Formula) %> &nbsp;&nbsp;
+        <%= link_to "Delete", formula_path(formula), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Formula) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @formulas %>

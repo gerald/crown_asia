@@ -42,11 +42,8 @@ class MixersController < ApplicationController
   
   def destroy
     @mixer = Mixer.find(params[:id])
-    if @mixer.destroy
-      flash[:notice] = "#{@mixer.name} was deleted successfully"
-    else
-      flash[:error] = "#{@mixer.name} cannot be deleted. There might be records associated to it."
-    end
+    @mixer.destroy
+    flash[:notice] = "#{@mixer.name} was deleted successfully"
     redirect_to mixers_path
   end
   

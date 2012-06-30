@@ -1,0 +1,72 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :finished_good_local, "FG Type" %></dd>
+    <dd><%= f.select :finished_good_local, [["Local", 1], ["Imported", 0]], {}, :onchange => "update_finished_good()" %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <%= f.label :finished_good_id, "FG" %>
+      <%= loader %>
+    </dd>
+    <dd id="fg_select"></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :formula_type %></dd>
+    <dd><%= f.select :formula_type, formula_type_options, :include_blank => true %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <% if !@formula.new_record? %>
+                <th>Delete?</th>
+              <% end %>
+              <th>Raw Material Type</th> 
+              <th>Raw Material</th>
+              <th>KG</th> 
+            </tr>
+          </thead>
+          <tbody>
+            <% @formula.formula_items.each_with_index do |item, index| %>
+              <%= f.fields_for :formula_items, item do |builder| %>
+                <%= render "formula_item_form", :f => builder, :index => index %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
+</fieldset>
+
+<%= javascript_tag :defer => "defer" do %>
+  function update_finished_good() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_finished_good_formulas_path %>',
+      data: 'local=' + $('#formula_finished_good_local').val() + '&finished_good_id=<%= @formula.finished_good_id %>',
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+  
+  function update_raw_materials(index) {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_raw_materials_formulas_path %>',
+      data: 'index=' + index + '&raw_material_type_id=' + $('#formula_formula_items_attributes_' + index + '_raw_material_type_id').val(),
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+
+  $(document).ready(function() {
+    update_finished_good();
+  });
+
+<% end %>

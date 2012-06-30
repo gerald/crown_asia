@@ -42,11 +42,8 @@ class ExtrudersController < ApplicationController
   
   def destroy
     @extruder = Extruder.find(params[:id])
-    if @extruder.destroy
-      flash[:notice] = "#{@extruder.name} was deleted successfully"
-    else
-      flash[:error] = "#{@extruder.name} cannot be deleted. There might be records associated to it."
-    end
+    @extruder.destroy
+    flash[:notice] = "#{@extruder.name} was deleted successfully"
     redirect_to extruders_path
   end
   
