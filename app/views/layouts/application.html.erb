@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" lang="EN" dir="ltr">
   <head profile="http://gmpg.org/xfn/11">
-    <title>Crown Asia</title>
+    <title><%= @title.nil? ? "Crown Asia" : @title %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <meta http-equiv="imagetoolbar" content="no" />
     <%= csrf_meta_tag %>
@@ -28,37 +28,43 @@
           <ul>
             <% if user_signed_in? %>
               <% if can?(:view, Supplier) %>
-                <li class="<%= "active" if controller_name == "suppliers" %>"><%= link_to "Suppliers", suppliers_path %></li>
+                <li class="<%= selected_menu "suppliers" %>"><%= link_to "Suppliers", suppliers_path %></li>
               <% end %>
               <% if can?(:view, Customer) %>
-                <li class="<%= "active" if controller_name == "customers" %>"><%= link_to "Customers", customers_path %></li>
+                <li class="<%= selected_menu "customers" %>"><%= link_to "Customers", customers_path %></li>
               <% end %>
               <% if can?(:view, UnitOfMeasure) %>
-                <li class="<%= "active" if controller_name == "unit_of_measures" %>"><%= link_to "UOM", unit_of_measures_path %></li>
+                <li class="<%= selected_menu "unit_of_measures" %>"><%= link_to "UOM", unit_of_measures_path %></li>
               <% end %>
               <% if can?(:view, Department) %>
-                <li class="<%= "active" if controller_name == "departments" %>"><%= link_to "Departments", departments_path %></li>
+                <li class="<%= selected_menu "departments" %>"><%= link_to "Departments", departments_path %></li>
               <% end %>
               <% if can?(:view, Role) %>
-                <li class="<%= "active" if controller_name == "roles" %>"><%= link_to "Roles", roles_path %></li>
+                <li class="<%= selected_menu "roles" %>"><%= link_to "Roles", roles_path %></li>
               <% end %>
               <% if can?(:view, User) %>
-                <li class="<%= "active" if controller_name == "users" %>"><%= link_to "Users", users_path %></li>
+                <li class="<%= selected_menu "users" %>"><%= link_to "Users", users_path %></li>
               <% end %>
               <% if current_user.has_role?("admin") %>
-                <li class="<%= "active" if controller_name == "permissions" %>"><%= link_to "Permissions", permissions_path %></li>
+                <li class="<%= selected_menu "permissions" %>"><%= link_to "Permissions", permissions_path %></li>
               <% end %>
               <% if can?(:view, RawMaterialType) %>
-                <li class="<%= "active" if controller_name == "raw_material_types" %>"><%= link_to "RM Types", raw_material_types_path %></li>
+                <li class="<%= selected_menu "raw_material_types" %>"><%= link_to "RM Types", raw_material_types_path %></li>
               <% end %>
               <% if can?(:view, RawMaterial) %>
-                <li class="<%= "active" if controller_name == "raw_materials" %>"><%= link_to "Raw Materials", raw_materials_path %></li>
+                <li class="<%= selected_menu "raw_materials" %>"><%= link_to "Raw Materials", raw_materials_path %></li>
               <% end %>
               <% if can?(:view, Supply) %>
-                <li class="<%= "active" if controller_name == "supplies" %>"><%= link_to "Supplies", supplies_path %></li>
+                <li class="<%= selected_menu "supplies" %>"><%= link_to "Supplies", supplies_path %></li>
               <% end %>
               <% if can?(:view, FinishedGood) %>
-                <li class="<%= "active" if controller_name == "finished_goods" %>"><%= link_to "Finished Goods", finished_goods_path %></li>
+                <li class="<%= selected_menu "finished_goods" %>"><%= link_to "Finished Goods", finished_goods_path %></li>
+              <% end %>
+              <% if can?(:view, Mixer) %>
+                <li class="<%= selected_menu "mixers" %>"><%= link_to "Mixers", mixers_path %></li>
+              <% end %>
+              <% if can?(:view, Extruder) %>
+                <li class="<%= selected_menu "extruders" %>"><%= link_to "Extruders", extruders_path %></li>
               <% end %>
             <% end %>
           </ul>

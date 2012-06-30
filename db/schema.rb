@@ -163,6 +163,16 @@ ActiveRecord::Schema.define(:version => 20120704133831) do
     t.datetime "updated_at"
   end
 
+  create_table "mixers", :force => true do |t|
+    t.string   "name"
+    t.string   "brand"
+    t.boolean  "active",     :default => true
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "raw_material_transaction_items", :force => true do |t|
     t.string   "lot_number"
     t.decimal  "quantity",                    :precision => 11, :scale => 5
