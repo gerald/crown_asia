@@ -1,4 +1,8 @@
 CrownAsia::Application.routes.draw do
+  resources :extruders
+
+  resources :mixers
+
   resources :bags do
     get 'return', :on => :collection
     post 'return', :on => :collection

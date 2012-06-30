@@ -1,0 +1,35 @@
+<h1>Mixers</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", session[:search][:mixer_search_text] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Mixer", new_mixer_path, :class => "create_link" if can?(:create, Mixer) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Brand</th>
+      <th>Active</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @mixers.each do |mixer| %>  
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= mixer.name %></td>
+      <td><%= mixer.brand %></td>
+      <td><%= mixer.active ? "Yes" : "No" %></td>
+      <td>
+        <%= link_to "Edit", edit_mixer_path(mixer), :class => "edit_link" if can?(:update, Mixer) %> &nbsp;&nbsp;
+        <%= link_to "Delete", mixer_path(mixer), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Mixer) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @mixers %>

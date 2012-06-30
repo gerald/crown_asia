@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120606024312) do
+ActiveRecord::Schema.define(:version => 20120630052859) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -72,6 +72,16 @@ ActiveRecord::Schema.define(:version => 20120606024312) do
     t.boolean  "fg_tos",     :default => true
   end
 
+  create_table "extruders", :force => true do |t|
+    t.string   "name"
+    t.string   "brand"
+    t.boolean  "active",     :default => true
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "finished_good_transaction_items", :force => true do |t|
     t.string   "lot_number"
     t.integer  "start_bag_number"
@@ -120,6 +130,16 @@ ActiveRecord::Schema.define(:version => 20120606024312) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+  end
+
+  create_table "mixers", :force => true do |t|
+    t.string   "name"
+    t.string   "brand"
+    t.boolean  "active",     :default => true
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "raw_material_transaction_items", :force => true do |t|
