@@ -16,6 +16,7 @@
       <th>Type</th>
       <th>Code</th>
       <th>Name</th>
+      <th>Active?</th>
       <th>Supplier</th>
       <th>Quantity</th>
       <th>Critical Qty</th>
@@ -30,6 +31,7 @@
       <td><%= raw_material.raw_material_type.name %></td>
       <td><%= raw_material.code %></td>
       <td><%= raw_material.name %></td>
+      <td><%= raw_material.active ? "Yes" : "No" %></td>
       <td><%= raw_material.supplier.name if raw_material.supplier %></td>
       <td class="<%= 'negative' if raw_material.critical? %>"><%= raw_material.quantity_on_hand %></td>
       <td><%= raw_material.critical_quantity %></td>

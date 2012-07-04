@@ -15,6 +15,8 @@ class RawMaterial < ActiveRecord::Base
   
   acts_as_audited :except => [:deleted_at]
   
+  scope :active, :conditions => {:active => true}, :order => "name"
+  
   def quantity_on_hand(lot_number = nil)
     if lot_number.nil?
       add_quantity = RawMaterialTransactionItem.sum("quantity", :include => [:raw_material_transaction], :conditions => ["raw_material_transactions.transaction_type = 'add' AND raw_material_transactions.raw_material_id = ?", self.id])

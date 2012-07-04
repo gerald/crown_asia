@@ -15,6 +15,11 @@
   </dl>
   
   <dl>
+    <dd><%= f.label :active %></dd>
+    <dd><%= f.check_box :active %></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :unit_of_measure %></dd>
     <dd><%= f.select :unit_of_measure_id, UnitOfMeasure.all(:order => "code").collect{|u| [u.name, u.id]}, {:include_blank => true} %></dd>
   </dl>

@@ -14,6 +14,8 @@ class FinishedGood < ActiveRecord::Base
   
   acts_as_audited :except => [:deleted_at]
   
+  scope :active, :conditions => {:active => true}, :order => "name"
+  
   def quantity_on_hand
     self.bags.sum("quantity", :conditions => ["removing_transaction_id IS NULL"])
   end
