@@ -1,5 +1,5 @@
 $('.supply_select').each(function() {
-  $(this).html('<%= escape_javascript(options_for_select([["", ""]] + Supply.active(:conditions => ["supply_type = ?", @supply_type], :order => "name").collect{|s| ["#{s.name} - #{s.quantity_on_hand} available", s.id]})) %>')
+  $(this).html('<%= escape_javascript(options_for_select([["", ""]] + Supply.active.all(:conditions => ["supply_type = ?", @supply_type]).collect{|s| ["#{s.name} - #{s.quantity_on_hand} available", s.id]})) %>')
 })
 
 <% if @supply_type %>
