@@ -1,7 +1,7 @@
 <fieldset>
   <dl>
     <dd><%= f.label :finished_good_local, "FG Type" %></dd>
-    <dd><%= f.select :finished_good_local, [["Local", 1], ["Imported", 0]], {}, :onchange => "update_finished_good()" %></dd>
+    <dd><%= f.select :finished_good_local, [["Local", 1], ["Export", 0]], {}, :onchange => "update_finished_good()" %></dd>
   </dl>
   
   <dl>

@@ -28,6 +28,7 @@ class FormulasController < ApplicationController
   
   def edit
     @formula = Formula.find(params[:id])
+    (11 - @formula.formula_items.count).times {@formula.formula_items.build}
   end
   
   def update
@@ -56,7 +57,7 @@ class FormulasController < ApplicationController
   def update_raw_materials
     @index = params[:index]
     @raw_material_type = RawMaterialType.find(params[:raw_material_type_id])
-    @raw_materials = @raw_material_type.raw_materials
+    @raw_materials = @raw_material_type.raw_materials.active
   end
   
   protected

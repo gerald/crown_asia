@@ -1,13 +1,17 @@
 <tr>
   <% if !@formula.new_record? %>
-    <td><%= f.check_box :_destroy if f.object.raw_material_type.code != "CMR" %></td>
+    <td><%= f.check_box :_destroy if !f.object.new_record? && f.object.raw_material_type.code != "CMR" %></td>
   <% end %>
   <td>
     <% if f.object.raw_material_type && f.object.raw_material_type.code == "CMR" %>
       CMR
       <%= f.hidden_field :raw_material_type_id %>
     <% else %>
-      <%= f.select :raw_material_type_id, RawMaterialType.all(:conditions => "code != 'CMR'").collect{|rmt| [rmt.name, rmt.id]}, {:include_blank => true}, :onchange => "update_raw_materials(#{index})" %>
+      <% if f.object.new_record? %>
+        <%= f.select :raw_material_type_id, RawMaterialType.all(:conditions => "code != 'CMR'", :order => "code").collect{|rmt| [rmt.name, rmt.id]}, {:include_blank => true}, :onchange => "update_raw_materials(#{index})" %>
+      <% else %>
+        <%= f.object.raw_material_type.code %>
+      <% end %>
     <% end %>
   </td>
   <td id="formula_item_rm_<%= index %>">
