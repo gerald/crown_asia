@@ -121,6 +121,11 @@ class Ability
       { :action => "create", :desc => "Can create a new formula"},
       { :action => "update", :desc => "Can edit existing formulas"},
       { :action => "delete", :desc => "Can delete formulas"}
+    ]},
+    
+    { :subject => "IssuedFormula", :label => "Issued Formulas", :permissions => [
+      { :action => "view", :desc => "Can view issued formulas"},
+      { :action => "create", :desc => "Can create a new issued formula"}
     ]}
   ]
 

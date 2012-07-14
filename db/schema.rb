@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704133831) do
+ActiveRecord::Schema.define(:version => 20120714061530) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -153,62 +153,27 @@ ActiveRecord::Schema.define(:version => 20120704133831) do
     t.datetime "updated_at"
   end
 
-  create_table "mixers", :force => true do |t|
-    t.string   "name"
-    t.string   "brand"
-    t.boolean  "active",     :default => true
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "formula_items", :force => true do |t|
-    t.float    "quantity"
-    t.float    "multiplier"
-    t.integer  "formula_id"
-    t.integer  "raw_material_type_id"
+  create_table "issued_formula_items", :force => true do |t|
+    t.integer  "issued_formula_id"
     t.integer  "raw_material_id"
+    t.float    "big_batch_quantity"
+    t.float    "small_batch_quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "formulas", :force => true do |t|
-    t.string   "formula_type"
-    t.boolean  "finished_good_local", :default => true
+  create_table "issued_formulas", :force => true do |t|
+    t.string   "control_number"
+    t.date     "issuance_date"
+    t.boolean  "finished_good_local",        :default => true
     t.integer  "finished_good_id"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "mixers", :force => true do |t|
-    t.string   "name"
-    t.string   "brand"
-    t.boolean  "active",     :default => true
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "formula_items", :force => true do |t|
-    t.float    "quantity"
-    t.float    "multiplier"
     t.integer  "formula_id"
-    t.integer  "raw_material_type_id"
-    t.integer  "raw_material_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "formulas", :force => true do |t|
-    t.string   "formula_type"
-    t.boolean  "finished_good_local", :default => true
-    t.integer  "finished_good_id"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
+    t.integer  "mixer_id"
+    t.integer  "extruder_id"
+    t.float    "resin_big_batch_quantity"
+    t.float    "resin_small_batch_quantity"
+    t.float    "big_batch_quantity"
+    t.float    "small_batch_quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

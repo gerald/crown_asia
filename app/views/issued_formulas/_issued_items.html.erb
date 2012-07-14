@@ -1,0 +1,42 @@
+<table>
+  <thead>
+    <tr>
+      <th>RM</th> 
+      <th>Big Batch (kg)</th>
+      <th>Small Batch (kg)</th>
+      <th>Total (kg)</th>
+      <th>Available (kg)</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.each do |item| %>
+      <tr>
+        <td><%= item.raw_material.name %></td>
+        <td>
+          <% if item.raw_material_type.code == "CMR" %>
+            <%= resin_big_batch_number %>
+          <% else %>
+            <%= resin_big_batch_number * item.multiplier %>
+          <% end %>
+        </td>
+        <td>
+          <% if item.raw_material_type.code == "CMR" %>
+            <%= resin_small_batch_number %>
+          <% else %>
+            <%= resin_small_batch_number * item.multiplier %>
+          <% end %>
+        </td>
+        <td>
+          <% if item.raw_material_type.code == "CMR" %>
+            <%= resin_big_batch_number + resin_small_batch_number %>
+          <% else %>
+            <%= (resin_big_batch_number + resin_small_batch_number) * item.multiplier %>
+          <% end %>
+        </td>
+        <td><%= item.raw_material.quantity_on_hand %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

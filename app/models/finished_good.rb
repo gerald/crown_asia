@@ -7,6 +7,7 @@ class FinishedGood < ActiveRecord::Base
   
   has_many :finished_good_transactions
   has_many :bags
+  has_many :formulas
   
   validates :name, :unit_of_measure, :customer, :presence => true
   

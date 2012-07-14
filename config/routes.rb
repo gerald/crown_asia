@@ -1,4 +1,10 @@
 CrownAsia::Application.routes.draw do
+  resources :issued_formulas do
+    post 'update_finished_good', :on => :collection
+    post 'update_formula', :on => :collection
+    post 'update_item_list', :on => :collection
+  end
+
   resources :formulas do
     post 'update_finished_good', :on => :collection
     post 'update_raw_materials', :on => :collection

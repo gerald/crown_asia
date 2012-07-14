@@ -1,0 +1,42 @@
+<h1>Issued Formula</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "issuance_date", session[:search][:issuance_date], :readonly => true %> 
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Issued Formula", new_issued_formula_path, :class => "create_link" if can?(:create, Formula) %>
+
+<br class="clear"/><br/>
+
+<% if @issued_formulas %>
+  <table>
+    <thead>
+      <tr>
+        <th>Control #</th>
+        <th>Finished Good</th>
+        <th>Production Date</th>
+        <th>Lot #</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @issued_formulas.each do |issued_formula| %>  
+      <tr class="<%= cycle("light", "dark") %>">
+        <td><%= issued_formula.control_number %></td>
+        <td><%= issued_formula.finished_good.name %></td>
+        <td><%= issued_formula.issuance_date.strftime('%m/%d/%Y') %></td>
+        <td><%= issued_formula.lot_number %></td>
+        <td></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  
+  <%= will_paginate @issued_formulas %>
+<% end %>
+
+<script type="text/javascript">
+  Date.format = 'yyyy-mm-dd';
+  $('#issuance_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+</script>

@@ -1,0 +1,1 @@
+$('#item_div').html('<%= escape_javascript(render(:partial => "issued_items.html.erb", :locals => {:items => @items, :resin_big_batch_number => @resin_big_batch_number, :resin_small_batch_number => @resin_small_batch_number})) %>')
