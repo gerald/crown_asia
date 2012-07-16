@@ -20,7 +20,10 @@
   </dl>
   
   <dl>
-    <dd><%= f.label :formula_id, "Formula Type" %></dd>
+    <dd>
+      <%= f.label :formula_id, "Formula Type" %>
+      <%= loader("formula_type_loader") %>
+    </dd>
     <dd id="formula_type_select"></dd>
   </dl>
   
@@ -36,26 +39,27 @@
   
   <dl>
     <dd><%= f.label :resin_big_batch_quantity, "Resin (CMR) big batch (Kg)" %></dd>
-    <dd><%= f.text_field :resin_big_batch_quantity %></dd>
+    <dd><%= f.text_field :resin_big_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
   </dl>
   
   <dl>
     <dd><%= f.label :resin_small_batch_quantity, "Resin (CMR) small batch (Kg)" %></dd>
-    <dd><%= f.text_field :resin_small_batch_quantity %></dd>
+    <dd><%= f.text_field :resin_small_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
   </dl>
   
   <dl>
     <dd><%= f.label :big_batch_quantity, "# of batches (big)" %></dd>
-    <dd><%= f.text_field :big_batch_quantity %></dd>
+    <dd><%= f.text_field :big_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
   </dl>
   
   <dl>
     <dd><%= f.label :small_batch_quantity, "# of batches (small)" %></dd>
-    <dd><%= f.text_field :small_batch_quantity %></dd>
+    <dd><%= f.text_field :small_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
   </dl>
   
   <dl>
     <dd>
+      <%= loader("item_list_loader") %>
       <div id="item_div">
         
       </div>
@@ -76,28 +80,30 @@
     });
   }
   
-  function update_formula() {
+  function update_formula(finished_good_id) {
     $.ajax({
       type: 'POST',
       url: '<%= update_formula_issued_formulas_path %>',
-      data: 'finished_good_id=' + $('#issued_formula_finished_good_id').val() + '&formula_id=<%= @issued_formula.formula_id %>',
-      beforeSend: function(request){$('#loader').show();},
-      complete: function(request){$('#loader').hide()}
+      data: 'finished_good_id=' + finished_good_id + '&formula_id=<%= @issued_formula.formula_id %>',
+      beforeSend: function(request){$('#formula_type_loader').show();},
+      complete: function(request){$('#formula_type_loader').hide()}
     });
   }
   
-  function update_item_list() {
+  function update_item_list(formula_id) {
     $.ajax({
       type: 'POST',
       url: '<%= update_item_list_issued_formulas_path %>',
-      data: 'formula_id=' + $('#issued_formula_formula_id').val() + '&resin_big_batch_number=' + $('#issued_formula_resin_big_batch_quantity').val() + '&resin_small_batch_number=' + $('#issued_formula_resin_small_batch_quantity').val() + '&big_batch_quantity=' + $('#issued_formula_big_batch_quantity').val() + '&small_batch_quantity=' + $('#issued_formula_small_batch_quantity').val(),
-      beforeSend: function(request){$('#loader').show();},
-      complete: function(request){$('#loader').hide()}
+      data: 'formula_id=' + formula_id + '&resin_big_batch_number=' + $('#issued_formula_resin_big_batch_quantity').val() + '&resin_small_batch_number=' + $('#issued_formula_resin_small_batch_quantity').val() + '&big_batch_quantity=' + $('#issued_formula_big_batch_quantity').val() + '&small_batch_quantity=' + $('#issued_formula_small_batch_quantity').val(),
+      beforeSend: function(request){$('#item_list_loader').show();},
+      complete: function(request){$('#item_list_loader').hide()}
     });
   }
   
   $(document).ready(function() {
     update_finished_good();
+    update_formula(<%= @issued_formula.finished_good_id %>);
+    update_item_list(<%= @issued_formula.formula_id %>)
   });
 
 <% end %>

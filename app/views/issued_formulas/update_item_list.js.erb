@@ -1,1 +1,5 @@
-$('#item_div').html('<%= escape_javascript(render(:partial => "issued_items.html.erb", :locals => {:items => @items, :resin_big_batch_number => @resin_big_batch_number, :resin_small_batch_number => @resin_small_batch_number})) %>')
+<% if @formula.nil? || params[:resin_big_batch_number].blank? || params[:resin_small_batch_number].blank? || params[:big_batch_quantity].blank? || params[:big_batch_quantity].blank? %>
+  $('#item_div').html('')
+<% else %>
+  $('#item_div').html('<%= escape_javascript(render(:partial => "issued_items.html.erb", :locals => {:items => @items, :resin_big_batch_number => @resin_big_batch_number, :resin_small_batch_number => @resin_small_batch_number})) %>')
+<% end %>

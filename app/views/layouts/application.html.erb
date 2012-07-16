@@ -69,6 +69,9 @@
               <% if can?(:view, Formula) %>
                 <li class="<%= selected_menu "formulas" %>"><%= link_to "Formulas", formulas_path %></li>
               <% end %>
+              <% if can?(:view, IssuedFormula) %>
+                <li class="<%= selected_menu "issued_formulas" %>"><%= link_to "Issued Formulas", issued_formulas_path %></li>
+              <% end %>
             <% end %>
           </ul>
         </div>

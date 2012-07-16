@@ -92,6 +92,11 @@ a.return_bag_link {
   padding: 5px 10px;
 }
 
+.critical {
+  background-color: #FFFF88;
+  padding: 5px 10px;
+}
+
 #search_form {
   float:left;
   padding-right: 10px;

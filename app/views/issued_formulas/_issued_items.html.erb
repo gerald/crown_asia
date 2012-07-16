@@ -11,6 +11,11 @@
   </thead>
   <tbody>
     <% items.each do |item| %>
+      <% if item.raw_material_type.code == "CMR" %>
+        <% total_items = resin_big_batch_number + resin_small_batch_number %>
+      <% else %>
+        <% total_items = (resin_big_batch_number + resin_small_batch_number) * item.multiplier %>
+      <% end %>
       <tr>
         <td><%= item.raw_material.name %></td>
         <td>
@@ -27,15 +32,17 @@
             <%= resin_small_batch_number * item.multiplier %>
           <% end %>
         </td>
+        <td><%= total_items %></td>
+        <td><%= item.raw_material.quantity_on_hand %></td>
         <td>
-          <% if item.raw_material_type.code == "CMR" %>
-            <%= resin_big_batch_number + resin_small_batch_number %>
+          <% if item.raw_material.quantity_on_hand - total_items <= 0 %>
+            <span class="negative">Insufficient</span>
+          <% elsif item.raw_material.quantity_on_hand - total_items <= item.raw_material.critical_quantity.to_f %>
+            <span class="critical">Critical</span>
           <% else %>
-            <%= (resin_big_batch_number + resin_small_batch_number) * item.multiplier %>
+            <span class="positive">OK</span>
           <% end %>
         </td>
-        <td><%= item.raw_material.quantity_on_hand %></td>
-        <td></td>
       </tr>
     <% end %>
   </tbody>
