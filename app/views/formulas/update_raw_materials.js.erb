@@ -1,1 +1,1 @@
-$('#formula_item_rm_<%= @index %>').html('<%= escape_javascript(select_tag("formula[formula_items_attributes][#{@index}][raw_material_id]", options_from_collection_for_select(@raw_materials, "id", "name"))) %>')
+$('#formula_item_rm_<%= @index %>').html('<%= escape_javascript(select_tag("formula[formula_items_attributes][#{@index}][raw_material_id]", options_from_collection_for_select(@raw_materials, "id", "name_with_code"))) %>')

@@ -46,4 +46,8 @@ class RawMaterial < ActiveRecord::Base
     return false if self.critical_quantity.nil?
     self.quantity_on_hand <= self.critical_quantity
   end
+  
+  def name_with_code
+    "#{self.raw_material_type.code} #{self.code}: #{self.name}"
+  end
 end

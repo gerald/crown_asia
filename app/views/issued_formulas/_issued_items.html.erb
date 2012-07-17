@@ -17,7 +17,7 @@
         <% total_items = (resin_big_batch_number + resin_small_batch_number) * item.multiplier %>
       <% end %>
       <tr>
-        <td><%= item.raw_material.name %></td>
+        <td><%= "#{item.raw_material.raw_material_type.code} #{item.raw_material.code}" %></td>
         <td>
           <% if item.raw_material_type.code == "CMR" %>
             <%= resin_big_batch_number %>

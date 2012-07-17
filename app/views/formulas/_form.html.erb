@@ -1,21 +1,40 @@
 <fieldset>
-  <dl>
-    <dd><%= f.label :finished_good_local, "FG Type" %></dd>
-    <dd><%= f.select :finished_good_local, [["Local", 1], ["Export", 0]], {}, :onchange => "update_finished_good()" %></dd>
-  </dl>
-  
-  <dl>
-    <dd>
-      <%= f.label :finished_good_id, "FG" %>
-      <%= loader %>
-    </dd>
-    <dd id="fg_select"></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :formula_type %></dd>
-    <dd><%= f.select :formula_type, formula_type_options, :include_blank => true %></dd>
-  </dl>
+  <% if @formula.new_record? %>
+    <dl>
+      <dd><%= f.label :finished_good_local, "FG Type" %></dd>
+      <dd><%= f.select :finished_good_local, [["Local", 1], ["Export", 0]], {}, :onchange => "update_finished_good()" %></dd>
+    </dl>
+    
+    <dl>
+      <dd>
+        <%= f.label :finished_good_id, "FG" %>
+        <%= loader %>
+      </dd>
+      <dd id="fg_select"></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :formula_type %></dd>
+      <dd><%= f.select :formula_type, formula_type_options, :include_blank => true %></dd>
+    </dl>
+  <% else %>
+    <dl>
+      <dd><%= f.label :finished_good_local, "FG Type" %>:</dd>
+      <dd><%= @formula.finished_good_local ? "Local" : "Export" %></dd>
+    </dl>
+    
+    <dl>
+      <dd>
+        <%= f.label :finished_good_id, "FG" %>:
+      </dd>
+      <dd><%= @formula.finished_good.name %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :formula_type %>:</dd>
+      <dd><%= @formula.formula_type %></dd>
+    </dl>
+  <% end %>
   
   <dl>
     <dd>
@@ -37,6 +56,14 @@
                 <%= render "formula_item_form", :f => builder, :index => index %>
               <% end %>
             <% end %>
+            <tr>
+              <% if !@formula.new_record? %>
+                <td></td>
+              <% end %>
+              <td></td>
+              <td></td>
+              <td id="rm_sum"></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -67,6 +94,16 @@
 
   $(document).ready(function() {
     update_finished_good();
+    
+    $('.rm_quantity').blur(function(){
+      var sum = 0;
+      $('.rm_quantity').each(function() {
+        if($(this).val() != "") {
+          sum += parseFloat($(this).val());
+        }
+      });
+      $('#rm_sum').html(sum);
+    });
   });
 
 <% end %>
