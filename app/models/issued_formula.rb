@@ -16,6 +16,10 @@ class IssuedFormula < ActiveRecord::Base
   
   after_save :create_items
   
+  def cancel!
+    self.update_attribute(:canceled, true)
+  end
+  
   protected
     def resin_quantity
       errors.add(:base, "Resin quantities must be divisible by 25.") if self.resin_big_batch_quantity % 25 != 0 || self.resin_small_batch_quantity % 25 != 0

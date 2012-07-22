@@ -3,6 +3,7 @@ CrownAsia::Application.routes.draw do
     post 'update_finished_good', :on => :collection
     post 'update_formula', :on => :collection
     post 'update_item_list', :on => :collection
+    get 'cancel', :on => :member
   end
 
   resources :formulas do

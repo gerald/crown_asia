@@ -15,6 +15,7 @@
       <tr>
         <th>Control #</th>
         <th>Finished Good</th>
+        <th>Issuance Date</th>
         <th>Production Date</th>
         <th>Lot #</th>
         <th>&nbsp;</th>
@@ -25,9 +26,18 @@
       <tr class="<%= cycle("light", "dark") %>">
         <td><%= issued_formula.control_number %></td>
         <td><%= issued_formula.finished_good.name %></td>
-        <td><%= issued_formula.issuance_date.strftime('%m/%d/%Y') %></td>
-        <td><%= issued_formula.lot_number %></td>
-        <td></td>
+        <td><%= issued_formula.issuance_date.strftime("%m/%d/%Y") %></td>
+        <% if !issued_formula.canceled %>
+          <td><%= issued_formula.production_date.strftime("%m/%d/%Y") if issued_formula.production_date %></td>
+          <td><%= issued_formula.lot_number %></td>
+        <% else %>
+          <td colspan="2">Canceled</td>
+        <% end %>
+        <td>
+          <% if !issued_formula.canceled %>
+            <%= link_to "Cancel", cancel_issued_formula_path(issued_formula), :class => "delete_link", :confirm => "Are you sure you want to cancel this formula?" if can?(:cancel, IssuedFormula) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
     </tbody>

@@ -43,6 +43,12 @@ class IssuedFormulasController < ApplicationController
     @resin_small_batch_number = params[:resin_small_batch_number].to_f * params[:small_batch_quantity].to_f
   end
   
+  def cancel
+    @issued_formula = IssuedFormula.find(params[:id])
+    @issued_formula.cancel!
+    redirect_to issued_formulas_path
+  end
+  
   protected
   
     def authorize_view

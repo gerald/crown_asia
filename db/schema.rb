@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716070106) do
+ActiveRecord::Schema.define(:version => 20120722143015) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -177,6 +177,8 @@ ActiveRecord::Schema.define(:version => 20120716070106) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "lot_number"
+    t.date     "production_date"
+    t.boolean  "canceled",                                                  :default => false
   end
 
   create_table "mixers", :force => true do |t|
