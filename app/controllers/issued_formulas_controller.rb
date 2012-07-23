@@ -25,6 +25,17 @@ class IssuedFormulasController < ApplicationController
     end
   end
   
+  def update
+    @issued_formula = IssuedFormula.find(params[:id])
+    if @issued_formula.update_attributes(params[:issued_formula])
+      flash[:notice] = "Formula has been issued"
+      redirect_to issued_formulas_path
+    else
+      @issued_formulas = IssuedFormula.paginate(:per_page => 20, :page => params[:page], :conditions => ["issuance_date = ?", session[:search][:issuance_date]])
+      render :action => "index"
+    end
+  end
+  
   def update_finished_good
     @local = params[:local].to_i == 1
     @finished_good_id = params[:finished_good_id]

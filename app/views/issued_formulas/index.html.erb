@@ -9,6 +9,8 @@
 
 <br class="clear"/><br/>
 
+<%= render :partial => "shared/error_messages", :locals => {:target => @issued_formula} %>
+
 <% if @issued_formulas %>
   <table>
     <thead>
@@ -24,17 +26,29 @@
     <tbody>
     <% @issued_formulas.each do |issued_formula| %>  
       <tr class="<%= cycle("light", "dark") %>">
-        <td><%= issued_formula.control_number %></td>
+        <td>
+          <%= form_for issued_formula do |f| %>
+            <%= f.hidden_field :production_date %>
+            <%= f.hidden_field :lot_number %>
+          <% end %>
+          <%= issued_formula.control_number %>
+        </td>
         <td><%= issued_formula.finished_good.name %></td>
         <td><%= issued_formula.issuance_date.strftime("%m/%d/%Y") %></td>
         <% if !issued_formula.canceled %>
-          <td><%= issued_formula.production_date.strftime("%m/%d/%Y") if issued_formula.production_date %></td>
-          <td><%= issued_formula.lot_number %></td>
+          <% if !issued_formula.issued? %>
+            <td><%= text_field_tag "production_date_#{issued_formula.id}", "", :class => "production_date_field" %></td>
+            <td><%= text_field_tag "lot_number_#{issued_formula.id}" %></td>
+          <% else %>
+            <td><%= issued_formula.production_date.strftime("%m/%d/%Y") if issued_formula.production_date %></td>
+            <td><%= issued_formula.lot_number %></td>
+          <% end %>
         <% else %>
           <td colspan="2">Canceled</td>
         <% end %>
         <td>
-          <% if !issued_formula.canceled %>
+          <% if !issued_formula.canceled && !issued_formula.issued? %>
+            <%= link_to_function "Update", "submit_issued_formula(#{issued_formula.id})", :class => "edit_link" %>
             <%= link_to "Cancel", cancel_issued_formula_path(issued_formula), :class => "delete_link", :confirm => "Are you sure you want to cancel this formula?" if can?(:cancel, IssuedFormula) %>
           <% end %>
         </td>
@@ -49,4 +63,11 @@
 <script type="text/javascript">
   Date.format = 'yyyy-mm-dd';
   $('#issuance_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+  $('.production_date_field').datePicker({clickInput:true, startDate:'2000-01-01'});
+  
+  function submit_issued_formula(issued_formula_id) {
+    $('#edit_issued_formula_' + issued_formula_id + ' #issued_formula_production_date').val($('#production_date_' + issued_formula_id).val());
+    $('#edit_issued_formula_' + issued_formula_id + ' #issued_formula_lot_number').val($('#lot_number_' + issued_formula_id).val());
+    $('#edit_issued_formula_' + issued_formula_id).submit();
+  }
 </script>

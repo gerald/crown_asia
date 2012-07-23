@@ -9,6 +9,7 @@ class IssuedFormula < ActiveRecord::Base
   validates :resin_big_batch_quantity, :resin_small_batch_quantity, :numericality => true
   validates :big_batch_quantity, :small_batch_quantity, :numericality => true
   validates :issuance_date, :presence => true
+  validates :lot_number, :uniqueness => true
   
   validate :resin_quantity
   
@@ -18,6 +19,10 @@ class IssuedFormula < ActiveRecord::Base
   
   def cancel!
     self.update_attribute(:canceled, true)
+  end
+  
+  def issued?
+    !self.production_date.blank? && !self.lot_number.blank?
   end
   
   protected
