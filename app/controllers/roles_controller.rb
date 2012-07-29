@@ -5,11 +5,8 @@ class RolesController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    if params[:search_text].blank?
-      @roles = Role.paginate(:per_page => 20, :page => params[:page], :order => "name")
-    else
-      @roles = Role.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{params[:search_text]}%"], :order => "name")
-    end
+    @roles = Role.paginate(:per_page => 20, :page => params[:page]).order("name")
+    @roles = @roles.where("name LIKE ?", "%#{params[:search_text]}%") unless params[:search_text].blank?
   end
   
   def new

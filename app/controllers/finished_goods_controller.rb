@@ -8,7 +8,9 @@ class FinishedGoodsController < ApplicationController
   
   def index
     session[:search][:finished_good_search_text] = params[:search_text] if !params[:search_text].nil?
-    @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:search][:finished_good_search_text]}%"], :order => "name")
+    @finished_goods = FinishedGood.paginate(:per_page => 20, :page => params[:page])
+    @finished_goods.where("name LIKE ?", "%#{session[:search][:finished_good_search_text]}%")
+    @finished_goods.order("name")
   end
   
   def new

@@ -5,7 +5,7 @@ class FormulasController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    @formulas = Formula.paginate(:per_page => 20, :page => params[:page], :include => [:finished_good], :order => "finished_goods.name")
+    @formulas = Formula.paginate(:per_page => 20, :page => params[:page]).includes(:finished_good).order("finished_goods.name")
   end
   
   def new
@@ -28,7 +28,7 @@ class FormulasController < ApplicationController
   
   def edit
     @formula = Formula.find(params[:id])
-    (11 - @formula.formula_items.count).times {@formula.formula_items.build}
+    (12 - @formula.formula_items.count).times {@formula.formula_items.build}
   end
   
   def update

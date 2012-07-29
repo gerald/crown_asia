@@ -5,11 +5,8 @@ class RawMaterialTypesController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    if params[:search_text].blank?
-      @raw_material_types = RawMaterialType.paginate(:per_page => 20, :page => params[:page], :order => "code")
-    else
-      @raw_material_types = RawMaterialType.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{params[:search_text]}%"], :order => "code")
-    end
+    @raw_material_types = RawMaterialType.paginate(:per_page => 20, :page => params[:page]).order("code")
+    @raw_material_types = @raw_material_types.where("code LIKE ?", "%#{params[:search_text]}%") unless params[:search_text].blank?
   end
   
   def new

@@ -16,6 +16,7 @@
       <% else %>
         <% total_items = (resin_big_batch_number + resin_small_batch_number) * item.multiplier %>
       <% end %>
+      <% @total += total_items %>
       <tr>
         <td><%= "#{item.raw_material.raw_material_type.code} #{item.raw_material.code}" %></td>
         <td>
@@ -45,5 +46,13 @@
         </td>
       </tr>
     <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= @total %></td>
+      <td></td>
+      <td></td>
+    </tr>
   </tbody>
 </table>

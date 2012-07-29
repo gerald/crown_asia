@@ -1,5 +1,10 @@
 <fieldset>
   <dl>
+    <dd><%= f.label :control_number %></dd>
+    <dd><%= @issued_formula.next_control_number %></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :issuance_date %></dd>
     <dd><%= f.text_field :issuance_date %></dd>
   </dl>

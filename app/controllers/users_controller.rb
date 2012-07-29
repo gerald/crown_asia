@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    @users = User.paginate(:per_page => 20, :page => params[:page], :order => "username")
+    @users = User.paginate(:per_page => 20, :page => params[:page]).order("username")
   end
   
   def new

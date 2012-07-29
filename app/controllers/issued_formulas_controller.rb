@@ -1,18 +1,25 @@
 class IssuedFormulasController < ApplicationController
   before_filter :authorize_view, :only => [:index]
-  before_filter(:only => [:index]) { |c| c.clear_search_session([:issuance_date]) }
+  before_filter(:only => [:index]) { |c| c.clear_search_session([:issuance_date_start, :issuance_date_end]) }
   before_filter :authorize_create, :only => [:new, :create]
   
   def index
-    session[:search][:issuance_date] = params[:issuance_date] if !params[:issuance_date].nil?
+    session[:search][:issuance_date_start] = params[:issuance_date_start] if !params[:issuance_date_start].nil?
+    session[:search][:issuance_date_end] = params[:issuance_date_end] if !params[:issuance_date_end].nil?
+    session[:search][:control_number] = params[:control_number] if !params[:control_number].nil?
     
-    if !session[:search][:issuance_date].blank?
-      @issued_formulas = IssuedFormula.paginate(:per_page => 20, :page => params[:page], :conditions => ["issuance_date = ?", session[:search][:issuance_date]])
+    @issued_formulas = IssuedFormula.paginate(:per_page => 20, :page => params[:page])
+    
+    if !session[:search][:issuance_date_start].blank? && !session[:search][:issuance_date_end].blank?
+      @issued_formulas = @issued_formulas.where("issuance_date >= ? AND issuance_date <= ?", session[:search][:issuance_date_start], session[:search][:issuance_date_end])
     end
+    
+    @issued_formulas = @issued_formulas.where("control_number = ?", session[:search][:control_number]) if !session[:search][:control_number].blank?
   end
   
   def new
     @issued_formula = IssuedFormula.new
+    @issued_formula.issuance_date = Date.today
   end
   
   def create
@@ -52,6 +59,7 @@ class IssuedFormulasController < ApplicationController
     @items = @formula.formula_items
     @resin_big_batch_number = params[:resin_big_batch_number].to_f * params[:big_batch_quantity].to_f
     @resin_small_batch_number = params[:resin_small_batch_number].to_f * params[:small_batch_quantity].to_f
+    @total = 0
   end
   
   def cancel

@@ -1,7 +1,10 @@
 <h1>Issued Formula</h1>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <%= text_field_tag "issuance_date", session[:search][:issuance_date], :readonly => true %> 
+  <label class="float_left">Start Date:</label> <%= text_field_tag "issuance_date_start", session[:search][:issuance_date_start], :readonly => true %> 
+  <label class="float_left">End Date:</label> <%= text_field_tag "issuance_date_end", session[:search][:issuance_date_end], :readonly => true %> 
+  <label class="float_left">Control #:</label> <%= text_field_tag "control_number", session[:search][:control_number] %> 
+  
   <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
@@ -62,7 +65,7 @@
 
 <script type="text/javascript">
   Date.format = 'yyyy-mm-dd';
-  $('#issuance_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+  $('#issuance_date_start, #issuance_date_end').datePicker({clickInput:true, startDate:'2000-01-01'});
   $('.production_date_field').datePicker({clickInput:true, startDate:'2000-01-01'});
   
   function submit_issued_formula(issued_formula_id) {

@@ -7,7 +7,9 @@ class MixersController < ApplicationController
   
   def index
     session[:search][:mixer_search_text] = params[:search_text] if !params[:search_text].nil?
-    @mixers = Mixer.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:search][:mixer_search_text]}%"], :order => "name")
+    @mixers = Mixer.paginate(:per_page => 20, :page => params[:page])
+    @mixers = @mixers.where("name LIKE ?", "%#{session[:search][:mixer_search_text]}%")
+    @mixers = @mixers.order("name")
   end
   
   def new

@@ -7,7 +7,9 @@ class ExtrudersController < ApplicationController
   
   def index
     session[:search][:extruder_search_text] = params[:search_text] if !params[:search_text].nil?
-    @extruders = Extruder.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:search][:extruder_search_text]}%"], :order => "name")
+    @extruders = Extruder.paginate(:per_page => 20, :page => params[:page])
+    @extruders = @extruders.where("name LIKE ?", "%#{session[:search][:extruder_search_text]}%")
+    @extruders = @extruders.order("name")
   end
   
   def new

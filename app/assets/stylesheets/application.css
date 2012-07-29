@@ -47,6 +47,10 @@
     margin-top: 0 !important;
   }
   
+.float_left {
+  float: left;
+}
+  
 a.create_link {
   background: transparent url(icons/add.png) no-repeat 0 0;
   padding-left: 18px;
