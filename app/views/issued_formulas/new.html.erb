@@ -14,5 +14,5 @@
 
 <script type="text/javascript">
   Date.format = 'yyyy-mm-dd';
-  $('#issued_formula_issuance_date').datePicker({clickInput:true, startDate:'<%= Date.today("%Y-%m-%d") %>'});
+  $('#issued_formula_issuance_date').datePicker({clickInput:true, startDate:'<%= Date.today.strftime("%Y-%m-%d") %>'});
 </script>
