@@ -20,6 +20,7 @@
       <tr>
         <th>Control #</th>
         <th>Finished Good</th>
+        <th>Type</th>
         <th>Issuance Date</th>
         <th>Production Date</th>
         <th>Lot #</th>
@@ -37,6 +38,7 @@
           <%= issued_formula.control_number %>
         </td>
         <td><%= issued_formula.finished_good.name %></td>
+        <td><%= issued_formula.formula.formula_type %></td>
         <td><%= issued_formula.issuance_date.strftime("%m/%d/%Y") %></td>
         <% if !issued_formula.canceled %>
           <% if !issued_formula.issued? %>
