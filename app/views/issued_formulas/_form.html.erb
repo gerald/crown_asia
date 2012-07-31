@@ -43,6 +43,11 @@
   </dl>
   
   <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :resin_big_batch_quantity, "Resin (CMR) big batch (Kg)" %></dd>
     <dd><%= f.text_field :resin_big_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
   </dl>

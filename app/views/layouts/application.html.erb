@@ -24,57 +24,77 @@
             <p>Welcome, <%= current_user.name %>. <%= link_to "Logout", destroy_user_session_path, :method => :delete  %></p>
           <% end %>
         </div>
-        <div id="topnav">
-          <ul>
-            <% if user_signed_in? %>
-              <% if can?(:view, Supplier) %>
-                <li class="<%= selected_menu "suppliers" %>"><%= link_to "Suppliers", suppliers_path %></li>
-              <% end %>
-              <% if can?(:view, Customer) %>
-                <li class="<%= selected_menu "customers" %>"><%= link_to "Customers", customers_path %></li>
-              <% end %>
-              <% if can?(:view, UnitOfMeasure) %>
-                <li class="<%= selected_menu "unit_of_measures" %>"><%= link_to "UOM", unit_of_measures_path %></li>
-              <% end %>
-              <% if can?(:view, Department) %>
-                <li class="<%= selected_menu "departments" %>"><%= link_to "Departments", departments_path %></li>
-              <% end %>
-              <% if can?(:view, Role) %>
-                <li class="<%= selected_menu "roles" %>"><%= link_to "Roles", roles_path %></li>
-              <% end %>
-              <% if can?(:view, User) %>
-                <li class="<%= selected_menu "users" %>"><%= link_to "Users", users_path %></li>
-              <% end %>
-              <% if current_user.has_role?("admin") %>
-                <li class="<%= selected_menu "permissions" %>"><%= link_to "Permissions", permissions_path %></li>
-              <% end %>
-              <% if can?(:view, RawMaterialType) %>
-                <li class="<%= selected_menu "raw_material_types" %>"><%= link_to "RM Types", raw_material_types_path %></li>
-              <% end %>
-              <% if can?(:view, RawMaterial) %>
-                <li class="<%= selected_menu "raw_materials" %>"><%= link_to "Raw Materials", raw_materials_path %></li>
-              <% end %>
-              <% if can?(:view, Supply) %>
-                <li class="<%= selected_menu "supplies" %>"><%= link_to "Supplies", supplies_path %></li>
-              <% end %>
-              <% if can?(:view, FinishedGood) %>
-                <li class="<%= selected_menu "finished_goods" %>"><%= link_to "Finished Goods", finished_goods_path %></li>
-              <% end %>
-              <% if can?(:view, Mixer) %>
-                <li class="<%= selected_menu "mixers" %>"><%= link_to "Mixers", mixers_path %></li>
-              <% end %>
-              <% if can?(:view, Extruder) %>
-                <li class="<%= selected_menu "extruders" %>"><%= link_to "Extruders", extruders_path %></li>
-              <% end %>
-              <% if can?(:view, Formula) %>
-                <li class="<%= selected_menu "formulas" %>"><%= link_to "Formulas", formulas_path %></li>
-              <% end %>
-              <% if can?(:view, IssuedFormula) %>
-                <li class="<%= selected_menu "issued_formulas" %>"><%= link_to "Issued Formulas", issued_formulas_path %></li>
-              <% end %>
+        
+        <ul id="nav">
+          <% if user_signed_in? %>
+            <li>
+              <a href="#">MANAGE</a>
+              <ul>
+                <% if can?(:view, Supplier) %>
+                  <li class="<%= selected_menu "suppliers" %>"><%= link_to "Suppliers", suppliers_path %></li>
+                <% end %>
+                <% if can?(:view, Customer) %>
+                  <li class="<%= selected_menu "customers" %>"><%= link_to "Customers", customers_path %></li>
+                <% end %>
+                <% if can?(:view, UnitOfMeasure) %>
+                  <li class="<%= selected_menu "unit_of_measures" %>"><%= link_to "UOM", unit_of_measures_path %></li>
+                <% end %>
+                <% if can?(:view, Department) %>
+                  <li class="<%= selected_menu "departments" %>"><%= link_to "Departments", departments_path %></li>
+                <% end %>
+                <% if can?(:view, RawMaterialType) %>
+                  <li class="<%= selected_menu "raw_material_types" %>"><%= link_to "RM Types", raw_material_types_path %></li>
+                <% end %>
+              </ul>
+            </li>
+            
+            <li>
+              <a href="#">USERS</a>
+              <ul>
+                <% if can?(:view, Role) %>
+                  <li class="<%= selected_menu "roles" %>"><%= link_to "Roles", roles_path %></li>
+                <% end %>
+                <% if can?(:view, User) %>
+                  <li class="<%= selected_menu "users" %>"><%= link_to "Users", users_path %></li>
+                <% end %>
+                <% if current_user.has_role?("admin") %>
+                  <li class="<%= selected_menu "permissions" %>"><%= link_to "Permissions", permissions_path %></li>
+                <% end %>
+              </ul>
+            </li>
+            
+            <li>
+              <a href="#">FORMULA</a>
+              <ul>
+                <% if can?(:view, Mixer) %>
+                  <li class="<%= selected_menu "mixers" %>"><%= link_to "Mixers", mixers_path %></li>
+                <% end %>
+                <% if can?(:view, Extruder) %>
+                  <li class="<%= selected_menu "extruders" %>"><%= link_to "Extruders", extruders_path %></li>
+                <% end %>
+                <% if can?(:view, Formula) %>
+                  <li class="<%= selected_menu "formulas" %>"><%= link_to "Formulas", formulas_path %></li>
+                <% end %>
+                <% if can?(:view, IssuedFormula) %>
+                  <li class="<%= selected_menu "issued_formulas" %>"><%= link_to "Issued Formulas", issued_formulas_path %></li>
+                <% end %>
+              </ul>
+            </li>
+            
+            <% if can?(:view, RawMaterial) %>
+              <li class="<%= selected_menu "raw_materials" %>"><%= link_to "Raw Materials", raw_materials_path %></li>
             <% end %>
-          </ul>
-        </div>
+            
+            <% if can?(:view, Supply) %>
+              <li class="<%= selected_menu "supplies" %>"><%= link_to "Supplies", supplies_path %></li>
+            <% end %>
+            
+            <% if can?(:view, FinishedGood) %>
+              <li class="<%= selected_menu "finished_goods" %>"><%= link_to "Finished Goods", finished_goods_path %></li>
+            <% end %>
+          <% end %>
+        </ul>
+        <div class="clear"/>
       </div>
     </div>
     

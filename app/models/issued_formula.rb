@@ -33,6 +33,14 @@ class IssuedFormula < ActiveRecord::Base
     "#{year}-#{number}"
   end
   
+  def big_batch_total
+    self.resin_big_batch_quantity * self.big_batch_quantity
+  end
+  
+  def small_batch_total
+    self.resin_small_batch_quantity * self.small_batch_quantity
+  end
+  
   protected
     def resin_quantity
       errors.add(:base, "Resin quantities must be divisible by 25.") if self.resin_big_batch_quantity % 25 != 0 || self.resin_small_batch_quantity % 25 != 0

@@ -17,7 +17,7 @@
         <% total_items = (resin_big_batch_number + resin_small_batch_number) * item.multiplier %>
       <% end %>
       <% @total += total_items %>
-      <tr>
+      <tr class="<%= cycle("light", "dark") %>">
         <td><%= "#{item.raw_material.raw_material_type.code} #{item.raw_material.code}" %></td>
         <td>
           <% if item.raw_material_type.code == "CMR" %>
@@ -46,11 +46,11 @@
         </td>
       </tr>
     <% end %>
-    <tr>
+    <tr class="<%= cycle("light", "dark") %>">
       <td></td>
       <td></td>
       <td></td>
-      <td><%= @total %></td>
+      <td><strong><%= @total %></strong></td>
       <td></td>
       <td></td>
     </tr>

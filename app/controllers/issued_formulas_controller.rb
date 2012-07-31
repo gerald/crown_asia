@@ -43,6 +43,11 @@ class IssuedFormulasController < ApplicationController
     end
   end
   
+  def show
+    @issued_formula = IssuedFormula.find(params[:id])
+    @total = 0
+  end
+  
   def update_finished_good
     @local = params[:local].to_i == 1
     @finished_good_id = params[:finished_good_id]

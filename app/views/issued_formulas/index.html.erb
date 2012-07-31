@@ -35,7 +35,7 @@
             <%= f.hidden_field :production_date %>
             <%= f.hidden_field :lot_number %>
           <% end %>
-          <%= issued_formula.control_number %>
+          <%= link_to issued_formula.control_number, issued_formula_path(issued_formula) %>
         </td>
         <td><%= issued_formula.finished_good.name %></td>
         <td><%= issued_formula.formula.formula_type %></td>
