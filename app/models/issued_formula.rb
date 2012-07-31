@@ -9,7 +9,7 @@ class IssuedFormula < ActiveRecord::Base
   validates :resin_big_batch_quantity, :resin_small_batch_quantity, :numericality => true
   validates :big_batch_quantity, :small_batch_quantity, :numericality => true
   validates :issuance_date, :presence => true
-  validates :lot_number, :uniqueness => true
+  validates :lot_number, :uniqueness => true, :allow_nil => true, :allow_blank => true
   
   validate :resin_quantity
   

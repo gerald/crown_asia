@@ -1,5 +1,9 @@
 <h1>Formula</h1>
 
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <%= text_field_tag "search_text", session[:search][:formula_fg_name] %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
 <%= link_to "Add Formula", new_formula_path, :class => "create_link" if can?(:create, Formula) %>
 
 <br class="clear"/><br/>

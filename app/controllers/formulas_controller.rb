@@ -1,11 +1,14 @@
 class FormulasController < ApplicationController
   before_filter :authorize_view, :only => [:index]
+  before_filter(:only => [:index]) { |c| c.clear_search_session([:formula_fg_name]) }
   before_filter :authorize_create, :only => [:new, :create]
   before_filter :authorize_update, :only => [:edit, :update]
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
+    session[:search][:formula_fg_name] = params[:search_text] if !params[:search_text].nil?
     @formulas = Formula.paginate(:per_page => 20, :page => params[:page]).includes(:finished_good).order("finished_goods.name")
+    @formulas = @formulas.where("finished_goods.name LIKE ?", "%#{session[:search][:formula_fg_name]}%")
   end
   
   def new
