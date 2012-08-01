@@ -57,6 +57,13 @@ class IssuedFormulasController < ApplicationController
     redirect_to issued_formulas_path
   end
   
+  def unprocess_formula
+    @issued_formula = IssuedFormula.find(params[:id])
+    @issued_formula.processed = false
+    @issued_formula.save
+    redirect_to issued_formulas_path
+  end
+  
   def update_finished_good
     @local = params[:local].to_i == 1
     @finished_good_id = params[:finished_good_id]

@@ -64,8 +64,12 @@
           <% end %>
         <% end %>
         <td>
-          <% if !issued_formula.canceled && !issued_formula.processed %>
-            <%= link_to "Process", process_formula_issued_formula_path(issued_formula), :class => "process_link" if can?(:process, IssuedFormula) %>
+          <% if !issued_formula.canceled %>
+            <% if issued_formula.processed %>
+              <%= link_to "Unprocess", unprocess_formula_issued_formula_path(issued_formula), :class => "unprocess_link" if can?(:process, IssuedFormula) %>
+            <% else %>
+              <%= link_to "Process", process_formula_issued_formula_path(issued_formula), :class => "process_link" if can?(:process, IssuedFormula) %>
+            <% end %>
           <% end %>
           
           <% if !issued_formula.canceled && !issued_formula.issued? %>
