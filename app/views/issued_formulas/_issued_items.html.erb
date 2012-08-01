@@ -34,11 +34,11 @@
           <% end %>
         </td>
         <td><%= total_items %></td>
-        <td><%= item.raw_material.quantity_on_hand %></td>
+        <td><%= item.raw_material.quantity_on_hand_for_formula %></td>
         <td>
-          <% if item.raw_material.quantity_on_hand - total_items <= 0 %>
+          <% if item.raw_material.quantity_on_hand_for_formula - total_items <= 0 %>
             <span class="negative">Insufficient</span>
-          <% elsif item.raw_material.quantity_on_hand - total_items <= item.raw_material.critical_quantity.to_f %>
+          <% elsif item.raw_material.quantity_on_hand_for_formula - total_items <= item.raw_material.critical_quantity.to_f %>
             <span class="critical">Critical</span>
           <% else %>
             <span class="positive">OK</span>

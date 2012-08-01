@@ -2,6 +2,8 @@ class IssuedFormulasController < ApplicationController
   before_filter :authorize_view, :only => [:index]
   before_filter(:only => [:index]) { |c| c.clear_search_session([:issuance_date_start, :issuance_date_end]) }
   before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:update]
+  before_filter :authorize_process, :only => [:process_formula]
   
   def index
     session[:search][:issuance_date_start] = params[:issuance_date_start] if !params[:issuance_date_start].nil?
@@ -48,6 +50,13 @@ class IssuedFormulasController < ApplicationController
     @total = 0
   end
   
+  def process_formula
+    @issued_formula = IssuedFormula.find(params[:id])
+    @issued_formula.processed = true
+    @issued_formula.save
+    redirect_to issued_formulas_path
+  end
+  
   def update_finished_good
     @local = params[:local].to_i == 1
     @finished_good_id = params[:finished_good_id]
@@ -81,6 +90,14 @@ class IssuedFormulasController < ApplicationController
     
     def authorize_create
       authorize! :create, IssuedFormula
+    end
+    
+    def authorize_update
+      authorize! :update, IssuedFormula
+    end
+    
+    def authorize_process
+      authorize! :process, IssuedFormula
     end
   
 end

@@ -127,7 +127,8 @@ class Ability
       { :action => "view", :desc => "Can view issued formulas"},
       { :action => "create", :desc => "Can create a new issued formula"},
       { :action => "update", :desc => "Can update an issued formula"},
-      { :action => "cancel", :desc => "Can cancel an issued formula"}
+      { :action => "cancel", :desc => "Can cancel an issued formula"},
+      { :action => "process", :desc => "Can process issued formulas"}
     ]}
   ]
 

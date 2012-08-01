@@ -17,6 +17,11 @@
       <dd><%= f.label :formula_type %></dd>
       <dd><%= f.select :formula_type, formula_type_options, :include_blank => true %></dd>
     </dl>
+    
+    <dl>
+      <dd><%= f.label :comments %></dd>
+      <dd><%= f.text_area :comments %></dd>
+    </dl>
   <% else %>
     <dl>
       <dd><%= f.label :finished_good_local, "FG Type" %>:</dd>
@@ -36,8 +41,8 @@
     </dl>
     
     <dl>
-      <dd><%= f.label :comments %></dd>
-      <dd><%= f.text_area :comments %></dd>
+      <dd><%= f.label :comments %>:</dd>
+      <dd><%= simple_format(@formula.comments) %></dd>
     </dl>
   <% end %>
   

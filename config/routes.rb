@@ -4,6 +4,7 @@ CrownAsia::Application.routes.draw do
     post 'update_formula', :on => :collection
     post 'update_item_list', :on => :collection
     get 'cancel', :on => :member
+    get 'process_formula', :on => :member
   end
 
   resources :formulas do
