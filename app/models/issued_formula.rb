@@ -15,7 +15,7 @@ class IssuedFormula < ActiveRecord::Base
   
   before_create :set_control_number
   
-  after_save :create_items
+  after_create :create_items
   
   def cancel!
     self.update_attribute(:canceled, true)
