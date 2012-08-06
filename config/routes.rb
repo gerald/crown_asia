@@ -1,4 +1,22 @@
 CrownAsia::Application.routes.draw do
+  resources :issued_formulas do
+    post 'update_finished_good', :on => :collection
+    post 'update_formula', :on => :collection
+    post 'update_item_list', :on => :collection
+    get 'cancel', :on => :member
+    get 'process_formula', :on => :member
+    get 'unprocess_formula', :on => :member
+  end
+
+  resources :formulas do
+    post 'update_finished_good', :on => :collection
+    post 'update_raw_materials', :on => :collection
+  end
+
+  resources :extruders
+
+  resources :mixers
+
   resources :bags do
     get 'return', :on => :collection
     post 'return', :on => :collection

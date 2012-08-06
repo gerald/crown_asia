@@ -1,0 +1,119 @@
+<fieldset>
+  <% if @formula.new_record? %>
+    <dl>
+      <dd><%= f.label :finished_good_local, "FG Type" %></dd>
+      <dd><%= f.select :finished_good_local, [["Local", 1], ["Export", 0]], {}, :onchange => "update_finished_good()" %></dd>
+    </dl>
+    
+    <dl>
+      <dd>
+        <%= f.label :finished_good_id, "FG" %>
+        <%= loader %>
+      </dd>
+      <dd id="fg_select"></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :formula_type %></dd>
+      <dd><%= f.select :formula_type, formula_type_options, :include_blank => true %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :comments %></dd>
+      <dd><%= f.text_area :comments %></dd>
+    </dl>
+  <% else %>
+    <dl>
+      <dd><%= f.label :finished_good_local, "FG Type" %>:</dd>
+      <dd><%= @formula.finished_good_local ? "Local" : "Export" %></dd>
+    </dl>
+    
+    <dl>
+      <dd>
+        <%= f.label :finished_good_id, "FG" %>:
+      </dd>
+      <dd><%= @formula.finished_good.name %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :formula_type %>:</dd>
+      <dd><%= @formula.formula_type %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :comments %>:</dd>
+      <dd><%= simple_format(@formula.comments) %></dd>
+    </dl>
+  <% end %>
+  
+  <dl>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <% if !@formula.new_record? %>
+                <th>Delete?</th>
+              <% end %>
+              <th>Raw Material Type</th> 
+              <th>Raw Material</th>
+              <th>KG</th> 
+            </tr>
+          </thead>
+          <tbody>
+            <% @formula.formula_items.each_with_index do |item, index| %>
+              <%= f.fields_for :formula_items, item do |builder| %>
+                <%= render "formula_item_form", :f => builder, :index => index %>
+              <% end %>
+            <% end %>
+            <tr>
+              <% if !@formula.new_record? %>
+                <td></td>
+              <% end %>
+              <td></td>
+              <td></td>
+              <td id="rm_sum"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
+</fieldset>
+
+<%= javascript_tag :defer => "defer" do %>
+  function update_finished_good() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_finished_good_formulas_path %>',
+      data: 'local=' + $('#formula_finished_good_local').val() + '&finished_good_id=<%= @formula.finished_good_id %>',
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+  
+  function update_raw_materials(index) {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_raw_materials_formulas_path %>',
+      data: 'index=' + index + '&raw_material_type_id=' + $('#formula_formula_items_attributes_' + index + '_raw_material_type_id').val(),
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+
+  $(document).ready(function() {
+    update_finished_good();
+    
+    $('.rm_quantity').blur(function(){
+      var sum = 0;
+      $('.rm_quantity').each(function() {
+        if($(this).val() != "") {
+          sum += parseFloat($(this).val());
+        }
+      });
+      $('#rm_sum').html(sum);
+    });
+  });
+
+<% end %>

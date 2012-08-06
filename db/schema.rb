@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704133831) do
+ActiveRecord::Schema.define(:version => 20120801024722) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(:version => 20120704133831) do
   end
 
   create_table "formula_items", :force => true do |t|
-    t.float    "quantity"
-    t.float    "multiplier"
+    t.decimal  "quantity",             :precision => 11, :scale => 5
+    t.decimal  "multiplier",           :precision => 11, :scale => 5
     t.integer  "formula_id"
     t.integer  "raw_material_type_id"
     t.integer  "raw_material_id"
@@ -151,6 +151,37 @@ ActiveRecord::Schema.define(:version => 20120704133831) do
     t.integer  "updater_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "comments"
+  end
+
+  create_table "issued_formula_items", :force => true do |t|
+    t.integer  "issued_formula_id"
+    t.integer  "raw_material_id"
+    t.decimal  "big_batch_quantity",   :precision => 11, :scale => 5
+    t.decimal  "small_batch_quantity", :precision => 11, :scale => 5
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issued_formulas", :force => true do |t|
+    t.string   "control_number"
+    t.date     "issuance_date"
+    t.boolean  "finished_good_local",                                       :default => true
+    t.integer  "finished_good_id"
+    t.integer  "formula_id"
+    t.integer  "mixer_id"
+    t.integer  "extruder_id"
+    t.decimal  "resin_big_batch_quantity",   :precision => 11, :scale => 5
+    t.decimal  "resin_small_batch_quantity", :precision => 11, :scale => 5
+    t.decimal  "big_batch_quantity",         :precision => 11, :scale => 5
+    t.decimal  "small_batch_quantity",       :precision => 11, :scale => 5
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "lot_number"
+    t.date     "production_date"
+    t.boolean  "canceled",                                                  :default => false
+    t.text     "comments"
+    t.boolean  "processed",                                                 :default => false
   end
 
   create_table "mixers", :force => true do |t|

@@ -5,11 +5,9 @@ class DepartmentsController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    if params[:search_text].blank?
-      @departments = Department.paginate(:per_page => 20, :page => params[:page], :order => "name")
-    else
-      @departments = Department.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ? OR code LIKE ?", "%#{params[:search_text]}%", "%#{params[:search_text]}%"], :order => "name")
-    end
+    @departments = Department.paginate(:per_page => 20, :page => params[:page])
+    @departments = @departments.order("name")
+    @departments = @departments.where("name LIKE ? OR code LIKE ?", "%#{params[:search_text]}%", "%#{params[:search_text]}%") unless params[:search_text].blank?
   end
   
   def new

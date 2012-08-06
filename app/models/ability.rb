@@ -100,6 +100,35 @@ class Ability
     
     { :subject => "Bag", :label => "Bags", :permissions => [
       { :action => "return", :desc => "Can return bags"}
+    ]},
+    
+    { :subject => "Mixer", :label => "Mixers", :permissions => [
+      { :action => "view", :desc => "Can view mixers"},
+      { :action => "create", :desc => "Can create a new mixer"},
+      { :action => "update", :desc => "Can edit existing mixers"},
+      { :action => "delete", :desc => "Can delete mixers"}
+    ]},
+    
+    { :subject => "Extruder", :label => "Extruders", :permissions => [
+      { :action => "view", :desc => "Can view extruders"},
+      { :action => "create", :desc => "Can create a new extruder"},
+      { :action => "update", :desc => "Can edit existing extruders"},
+      { :action => "delete", :desc => "Can delete extruders"}
+    ]},
+    
+    { :subject => "Formula", :label => "Formulas", :permissions => [
+      { :action => "view", :desc => "Can view formulas"},
+      { :action => "create", :desc => "Can create a new formula"},
+      { :action => "update", :desc => "Can edit existing formulas"},
+      { :action => "delete", :desc => "Can delete formulas"}
+    ]},
+    
+    { :subject => "IssuedFormula", :label => "Issued Formulas", :permissions => [
+      { :action => "view", :desc => "Can view issued formulas"},
+      { :action => "create", :desc => "Can create a new issued formula"},
+      { :action => "update", :desc => "Can update an issued formula"},
+      { :action => "cancel", :desc => "Can cancel an issued formula"},
+      { :action => "process", :desc => "Can process issued formulas"}
     ]}
   ]
 

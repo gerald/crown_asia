@@ -1,0 +1,119 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :control_number %></dd>
+    <dd><%= @issued_formula.next_control_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :issuance_date %></dd>
+    <dd><%= f.text_field :issuance_date %></dd>
+  </dl>
+  
+  <br class="clear"/>
+  
+  <dl>
+    <dd><%= f.label :finished_good_local, "FG Type" %></dd>
+    <dd><%= f.select :finished_good_local, [["Local", 1], ["Export", 0]], {}, :onchange => "update_finished_good()" %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <%= f.label :finished_good_id, "FG" %>
+      <%= loader %>
+    </dd>
+    <dd id="fg_select"></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <%= f.label :formula_id, "Formula Type" %>
+      <%= loader("formula_type_loader") %>
+    </dd>
+    <dd id="formula_type_select"></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :mixer_id, "Mixer" %></dd>
+    <dd><%= f.select :mixer_id, Mixer.active_mixers.collect{|m| [m.name, m.id]}, :include_blank => true %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :extruder_id, "Extruder" %></dd>
+    <dd><%= f.select :extruder_id, Extruder.active_extruders.collect{|e| [e.name, e.id]}, :include_blank => true %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :resin_big_batch_quantity, "Resin (CMR) big batch (Kg)" %></dd>
+    <dd><%= f.text_field :resin_big_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :resin_small_batch_quantity, "Resin (CMR) small batch (Kg)" %></dd>
+    <dd><%= f.text_field :resin_small_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :big_batch_quantity, "# of batches (big)" %></dd>
+    <dd><%= f.text_field :big_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :small_batch_quantity, "# of batches (small)" %></dd>
+    <dd><%= f.text_field :small_batch_quantity, :onchange => "update_item_list($('#issued_formula_formula_id').val())" %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <%= loader("item_list_loader") %>
+      <div id="item_div">
+        
+      </div>
+    </dd>
+  </dl>
+  
+  
+</fieldset>
+
+<%= javascript_tag :defer => "defer" do %>
+  function update_finished_good() {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_finished_good_issued_formulas_path %>',
+      data: 'local=' + $('#issued_formula_finished_good_local').val() + '&finished_good_id=<%= @issued_formula.finished_good_id %>',
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
+    });
+  }
+  
+  function update_formula(finished_good_id) {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_formula_issued_formulas_path %>',
+      data: 'finished_good_id=' + finished_good_id + '&formula_id=<%= @issued_formula.formula_id %>',
+      beforeSend: function(request){$('#formula_type_loader').show();},
+      complete: function(request){$('#formula_type_loader').hide()}
+    });
+  }
+  
+  function update_item_list(formula_id) {
+    $.ajax({
+      type: 'POST',
+      url: '<%= update_item_list_issued_formulas_path %>',
+      data: 'formula_id=' + formula_id + '&resin_big_batch_number=' + $('#issued_formula_resin_big_batch_quantity').val() + '&resin_small_batch_number=' + $('#issued_formula_resin_small_batch_quantity').val() + '&big_batch_quantity=' + $('#issued_formula_big_batch_quantity').val() + '&small_batch_quantity=' + $('#issued_formula_small_batch_quantity').val(),
+      beforeSend: function(request){$('#item_list_loader').show();},
+      complete: function(request){$('#item_list_loader').hide()}
+    });
+  }
+  
+  $(document).ready(function() {
+    update_finished_good();
+    update_formula(<%= @issued_formula.finished_good_id %>);
+    update_item_list(<%= @issued_formula.formula_id %>)
+  });
+
+<% end %>

@@ -7,7 +7,8 @@ class UnitOfMeasuresController < ApplicationController
   
   def index
     session[:search][:uom_search_text] = params[:search_text] if !params[:search_text].nil?
-    @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page], :conditions => ["code LIKE ?", "%#{session[:search][:uom_search_text]}%"], :order => "code")
+    @unit_of_measures = UnitOfMeasure.paginate(:per_page => 20, :page => params[:page])
+    @unit_of_measures = @unit_of_measures.where("code LIKE ?", "%#{session[:search][:uom_search_text]}%").order("code")
   end
   
   def new

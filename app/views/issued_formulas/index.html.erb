@@ -1,0 +1,98 @@
+<h1>Issued Formula</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <label class="float_left">Start Date:</label> <%= text_field_tag "issuance_date_start", session[:search][:issuance_date_start], :readonly => true %> 
+  <label class="float_left">End Date:</label> <%= text_field_tag "issuance_date_end", session[:search][:issuance_date_end], :readonly => true %> 
+  <label class="float_left">Control #:</label> <%= text_field_tag "control_number", session[:search][:control_number] %> 
+  
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Issued Formula", new_issued_formula_path, :class => "create_link" if can?(:create, Formula) %>
+
+<br class="clear"/><br/>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @issued_formula} %>
+
+<% if @issued_formulas %>
+  <table>
+    <thead>
+      <tr>
+        <th>Control #</th>
+        <th>Finished Good</th>
+        <th>Type</th>
+        <th>Processed</th>
+        <th>Issuance Date</th>
+        <% if can?(:update, IssuedFormula) || can?(:cancel, IssuedFormula) %>
+          <th>Production Date</th>
+          <th>Lot #</th>
+        <% end %>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @issued_formulas.each do |issued_formula| %>  
+      <tr class="<%= cycle("light", "dark") %>">
+        <td>
+          <%= form_for issued_formula do |f| %>
+            <%= f.hidden_field :production_date %>
+            <%= f.hidden_field :lot_number %>
+          <% end %>
+          <%= link_to issued_formula.control_number, issued_formula_path(issued_formula) %>
+        </td>
+        <td><%= issued_formula.finished_good.name %></td>
+        <td><%= issued_formula.formula.formula_type %></td>
+        <td>
+          <% if issued_formula.processed %>
+            <%= image_tag "icons/accept.png" %>
+          <% else %>
+            <%= image_tag "icons/cancel.png" %>
+          <% end %>
+        </td>
+        <td><%= issued_formula.issuance_date.strftime("%m/%d/%Y") %></td>
+        <% if can?(:update, IssuedFormula) || can?(:cancel, IssuedFormula) %>
+          <% if !issued_formula.canceled %>
+            <% if !issued_formula.issued? %>
+              <td><%= text_field_tag "production_date_#{issued_formula.id}", "", :class => "production_date_field" %></td>
+              <td><%= text_field_tag "lot_number_#{issued_formula.id}" %></td>
+            <% else %>
+              <td><%= issued_formula.production_date.strftime("%m/%d/%Y") if issued_formula.production_date %></td>
+              <td><%= issued_formula.lot_number %></td>
+            <% end %>
+          <% else %>
+            <td colspan="2">Canceled</td>
+          <% end %>
+        <% end %>
+        <td>
+          <% if !issued_formula.canceled %>
+            <% if issued_formula.processed %>
+              <%= link_to "Unprocess", unprocess_formula_issued_formula_path(issued_formula), :class => "unprocess_link" if can?(:process, IssuedFormula) %>
+            <% else %>
+              <%= link_to "Process", process_formula_issued_formula_path(issued_formula), :class => "process_link" if can?(:process, IssuedFormula) %>
+            <% end %>
+          <% end %>
+          
+          <% if !issued_formula.canceled && !issued_formula.issued? %>
+            <%= link_to_function "Update", "submit_issued_formula(#{issued_formula.id})", :class => "edit_link" if can?(:update, IssuedFormula) %>
+            <%= link_to "Cancel", cancel_issued_formula_path(issued_formula), :class => "delete_link", :confirm => "Are you sure you want to cancel this formula?" if can?(:cancel, IssuedFormula) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  
+  <%= will_paginate @issued_formulas %>
+<% end %>
+
+<script type="text/javascript">
+  Date.format = 'yyyy-mm-dd';
+  $('#issuance_date_start, #issuance_date_end').datePicker({clickInput:true, startDate:'2000-01-01'});
+  $('.production_date_field').datePicker({clickInput:true, startDate:'2000-01-01'});
+  
+  function submit_issued_formula(issued_formula_id) {
+    $('#edit_issued_formula_' + issued_formula_id + ' #issued_formula_production_date').val($('#production_date_' + issued_formula_id).val());
+    $('#edit_issued_formula_' + issued_formula_id + ' #issued_formula_lot_number').val($('#lot_number_' + issued_formula_id).val());
+    $('#edit_issued_formula_' + issued_formula_id).submit();
+  }
+</script>

@@ -1,0 +1,5 @@
+<% if @local %>
+  $('#fg_select').html('<%= escape_javascript(select_tag("formula[finished_good_id]", options_from_collection_for_select(FinishedGood.active.all(:conditions => ["local = 1"]), "id", "name", @finished_good_id.blank? ? "" : @finished_good_id))) %>');
+<% else %>
+  $('#fg_select').html('<%= escape_javascript(select_tag("formula[finished_good_id]", options_from_collection_for_select(FinishedGood.active.all(:conditions => ["local = 0"]), "id", "name", @finished_good_id.blank? ? "" : @finished_good_id))) %>');
+<% end %>

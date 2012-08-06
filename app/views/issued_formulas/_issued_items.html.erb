@@ -1,0 +1,58 @@
+<table>
+  <thead>
+    <tr>
+      <th>RM</th> 
+      <th>Big Batch (kg)</th>
+      <th>Small Batch (kg)</th>
+      <th>Total (kg)</th>
+      <th>Available (kg)</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.each do |item| %>
+      <% if item.raw_material_type.code == "CMR" %>
+        <% total_items = resin_big_batch_number + resin_small_batch_number %>
+      <% else %>
+        <% total_items = (resin_big_batch_number + resin_small_batch_number) * item.multiplier %>
+      <% end %>
+      <% @total += total_items %>
+      <tr class="<%= cycle("light", "dark") %>">
+        <td><%= "#{item.raw_material.raw_material_type.code} #{item.raw_material.code}" %></td>
+        <td>
+          <% if item.raw_material_type.code == "CMR" %>
+            <%= resin_big_batch_number %>
+          <% else %>
+            <%= resin_big_batch_number * item.multiplier %>
+          <% end %>
+        </td>
+        <td>
+          <% if item.raw_material_type.code == "CMR" %>
+            <%= resin_small_batch_number %>
+          <% else %>
+            <%= resin_small_batch_number * item.multiplier %>
+          <% end %>
+        </td>
+        <td><%= total_items %></td>
+        <td><%= item.raw_material.quantity_on_hand_for_formula %></td>
+        <td>
+          <% if item.raw_material.quantity_on_hand_for_formula - total_items <= 0 %>
+            <span class="negative">Insufficient</span>
+          <% elsif item.raw_material.quantity_on_hand_for_formula - total_items <= item.raw_material.critical_quantity.to_f %>
+            <span class="critical">Critical</span>
+          <% else %>
+            <span class="positive">OK</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><strong><%= @total %></strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

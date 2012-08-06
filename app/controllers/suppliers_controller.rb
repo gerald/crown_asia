@@ -7,7 +7,9 @@ class SuppliersController < ApplicationController
   
   def index
     session[:search][:supplier_search_text] = params[:search_text] if !params[:search_text].nil?
-    @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:search][:supplier_search_text]}%"], :order => "name")
+    @suppliers = Supplier.paginate(:per_page => 20, :page => params[:page])
+    @suppliers = @suppliers.where("name LIKE ?", "%#{session[:search][:supplier_search_text]}%")
+    @suppliers = @suppliers.order("name")
   end
   
   def new

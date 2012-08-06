@@ -10,7 +10,9 @@ class SuppliesController < ApplicationController
     session[:search][:supply_name] = params[:search_text] if !params[:search_text].nil?
     session[:search][:supply_type] = params[:type_text] if !params[:type_text].nil?
     
-    @supplies = Supply.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ? AND supply_type LIKE ?", "%#{session[:search][:supply_name]}%", "%#{session[:search][:supply_type]}%"], :order => "name")
+    @supplies = Supply.paginate(:per_page => 20, :page => params[:page])
+    @supplies = @supplies.where("name LIKE ? AND supply_type LIKE ?", "%#{session[:search][:supply_name]}%", "%#{session[:search][:supply_type]}%")
+    @supplies = @supplies.order("name")
   end
   
   def new

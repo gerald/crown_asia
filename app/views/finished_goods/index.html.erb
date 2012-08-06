@@ -6,8 +6,6 @@
 
 <%= link_to "Add Finished Good", new_finished_good_path, :class => "create_link" if can?(:create, FinishedGood) %>
 
-<%# link_to "Return Bags", return_bags_path, :class => "return_bag_link" if can?(:return, Bag) %>
-
 <br class="clear"/><br/>
 
 <table>
@@ -27,7 +25,7 @@
   <tbody>
   <% @finished_goods.each do |finished_good| %>
     <tr class="<%= cycle("light", "dark") %>">
-      <td><%= finished_good.name %></td>\
+      <td><%= finished_good.name %></td>
       <td><%= finished_good.active ? "Yes" : "No" %></td>
       <td><%= finished_good.unit_of_measure.name %></td>
       <td><%= finished_good.customer.name %></td>

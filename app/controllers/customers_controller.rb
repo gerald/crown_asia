@@ -7,7 +7,7 @@ class CustomersController < ApplicationController
   
   def index
     session[:search][:customer_search_text] = params[:search_text] if !params[:search_text].nil?
-    @customers = Customer.paginate(:per_page => 20, :page => params[:page], :conditions => ["name LIKE ?", "%#{session[:search][:customer_search_text]}%"], :order => "name")
+    @customers = Customer.paginate(:per_page => 20, :page => params[:page]).where("name LIKE ?", "%#{session[:search][:customer_search_text]}%").order("name")
   end
   
   def new
