@@ -8,7 +8,7 @@
   <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
-<%= link_to "Add Issued Formula", new_issued_formula_path, :class => "create_link" if can?(:create, Formula) %>
+<%= link_to "Add Issued Formula", new_issued_formula_path, :class => "create_link" if can?(:create, IssuedFormula) %>
 
 <br class="clear"/><br/>
 
