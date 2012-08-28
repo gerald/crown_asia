@@ -33,6 +33,13 @@
   </dl>
   
   <dl>
+    <dd>
+      <%= loader("formula_comment_loader") %>
+    </dd>
+    <dd id="formula_comment"></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :mixer_id, "Mixer" %></dd>
     <dd><%= f.select :mixer_id, Mixer.active_mixers.collect{|m| [m.name, m.id]}, :include_blank => true %></dd>
   </dl>
@@ -107,6 +114,16 @@
       data: 'formula_id=' + formula_id + '&resin_big_batch_number=' + $('#issued_formula_resin_big_batch_quantity').val() + '&resin_small_batch_number=' + $('#issued_formula_resin_small_batch_quantity').val() + '&big_batch_quantity=' + $('#issued_formula_big_batch_quantity').val() + '&small_batch_quantity=' + $('#issued_formula_small_batch_quantity').val(),
       beforeSend: function(request){$('#item_list_loader').show();},
       complete: function(request){$('#item_list_loader').hide()}
+    });
+  }
+  
+  function show_formula_comment(formula_id) {
+    $.ajax({
+      type: 'POST',
+      url: '<%= show_formula_comment_issued_formulas_path %>',
+      data: 'formula_id=' + formula_id,
+      beforeSend: function(request){$('#formula_comment_loader').show();},
+      complete: function(request){$('#formula_comment_loader').hide()}
     });
   }
   

@@ -83,6 +83,10 @@ class IssuedFormulasController < ApplicationController
     @total = 0
   end
   
+  def show_formula_comment
+    @formula = Formula.find(params[:formula_id])
+  end
+  
   def cancel
     @issued_formula = IssuedFormula.find(params[:id])
     @issued_formula.cancel!

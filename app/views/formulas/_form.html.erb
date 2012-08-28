@@ -17,11 +17,6 @@
       <dd><%= f.label :formula_type %></dd>
       <dd><%= f.select :formula_type, formula_type_options, :include_blank => true %></dd>
     </dl>
-    
-    <dl>
-      <dd><%= f.label :comments %></dd>
-      <dd><%= f.text_area :comments %></dd>
-    </dl>
   <% else %>
     <dl>
       <dd><%= f.label :finished_good_local, "FG Type" %>:</dd>
@@ -39,12 +34,12 @@
       <dd><%= f.label :formula_type %>:</dd>
       <dd><%= @formula.formula_type %></dd>
     </dl>
-    
-    <dl>
-      <dd><%= f.label :comments %>:</dd>
-      <dd><%= simple_format(@formula.comments) %></dd>
-    </dl>
   <% end %>
+  
+  <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
   
   <dl>
     <dd>
@@ -101,18 +96,23 @@
       complete: function(request){$('#loader').hide()}
     });
   }
+  
+  function update_rm_sum() {
+    var sum = 0;
+    $('.rm_quantity').each(function() {
+      if($(this).val() != "") {
+        sum += parseFloat($(this).val());
+      }
+    });
+    $('#rm_sum').html(sum);
+  }
 
   $(document).ready(function() {
     update_finished_good();
+    update_rm_sum();
     
     $('.rm_quantity').blur(function(){
-      var sum = 0;
-      $('.rm_quantity').each(function() {
-        if($(this).val() != "") {
-          sum += parseFloat($(this).val());
-        }
-      });
-      $('#rm_sum').html(sum);
+      update_rm_sum();
     });
   });
 

@@ -19,7 +19,7 @@
       <%= f.select :raw_material_id, RawMaterial.all(:include => [:raw_material_type], :conditions => "raw_material_types.code = 'CMR'", :order => "name").collect{|rm| [rm.name_with_code, rm.id]}, :include_blank => true %>
     <% else %>
       <% if f.object.raw_material_type %>
-        <%= f.select :raw_material_id, RawMaterial.all(:conditions => ["raw_material_type_id = ?", f.object.raw_material_type_id]).collect{|rm| [rm.name, rm.id]}, :include_blank => true %>
+        <%= f.select :raw_material_id, RawMaterial.all(:conditions => ["raw_material_type_id = ?", f.object.raw_material_type_id]).collect{|rm| [rm.name_with_code, rm.id]}, :include_blank => true %>
       <% end %>
     <% end %>
   </td>
