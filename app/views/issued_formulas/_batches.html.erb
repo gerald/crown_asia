@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <tr>
+      <th>Start Batch</th> 
+      <th>End Batch</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% batches.each do |batch| %>
+      <tr>
+        <td><%= batch.start_batch %></td>
+        <td><%= batch.end_batch %></td>
+        <td><%= batch.batch_date.strftime("%m/%d/%Y") %></td>
+        <td>
+          <%= link_to "Edit", edit_issued_formula_batch_path(batch), :class => "edit_link" if can?(:update, IssuedFormulaBatch) %> &nbsp;&nbsp;
+          <%= link_to "Delete", issued_formula_batch_path(batch), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, IssuedFormulaBatch) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

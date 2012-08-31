@@ -22,4 +22,12 @@
   <dd><%= simple_format(@issued_formula.comments) %></dd>
 </dl>
 
+<h1>Items</h1>
+
 <%= render(:partial => "issued_items", :locals => {:items => @issued_formula.formula.formula_items, :resin_big_batch_number => @issued_formula.big_batch_total, :resin_small_batch_number => @issued_formula.small_batch_total}) %>
+
+<h1>Batches</h1>
+
+<%= link_to "Add Batch", new_issued_formula_batch_path(:issued_formula_id => @issued_formula), :class => "create_link" if can?(:create, IssuedFormula) %>
+
+<%= render(:partial => "batches", :locals => {:batches => @issued_formula.issued_formula_batches}) %>

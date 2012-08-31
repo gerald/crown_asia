@@ -129,6 +129,13 @@ class Ability
       { :action => "update", :desc => "Can update an issued formula"},
       { :action => "cancel", :desc => "Can cancel an issued formula"},
       { :action => "process", :desc => "Can process issued formulas"}
+    ]},
+    
+    { :subject => "IssuedFormulaBatch", :label => "Issued Formula Batches", :permissions => [
+      { :action => "view", :desc => "Can view issued formula batches"},
+      { :action => "create", :desc => "Can create a new issued formula batch"},
+      { :action => "update", :desc => "Can update an issued formula batch"},
+      { :action => "delete", :desc => "Can delete an issued formula batch"}
     ]}
   ]
 

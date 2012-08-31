@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :issued_formula_batches
+  
   resources :issued_formulas do
     post 'update_finished_good', :on => :collection
     post 'update_formula', :on => :collection

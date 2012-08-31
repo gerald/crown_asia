@@ -1,0 +1,18 @@
+<h1>Update Issued Formula batch</h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @issued_formula_batch} %>
+
+<%= form_for @issued_formula_batch do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$(this).closest('form')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{issued_formula_path(@issued_formula)}')" %>
+  </p>
+<% end %>
+
+<script type="text/javascript">
+  Date.format = 'yyyy-mm-dd';
+  $('#issued_formula_batch_batch_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+</script>

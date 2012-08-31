@@ -5,6 +5,7 @@ class IssuedFormula < ActiveRecord::Base
   belongs_to :extruder
   
   has_many :issued_formula_items
+  has_many :issued_formula_batches
   
   validates :resin_big_batch_quantity, :resin_small_batch_quantity, :numericality => true
   validates :big_batch_quantity, :small_batch_quantity, :numericality => true
