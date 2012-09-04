@@ -78,6 +78,8 @@ class IssuedFormulasController < ApplicationController
   def update_item_list
     @formula = Formula.find(params[:formula_id])
     @items = @formula.formula_items
+    @resin_big_batch_single = params[:resin_big_batch_number]
+    @resin_small_batch_single = params[:resin_small_batch_number]
     @resin_big_batch_number = params[:resin_big_batch_number].to_f * params[:big_batch_quantity].to_f
     @resin_small_batch_number = params[:resin_small_batch_number].to_f * params[:small_batch_quantity].to_f
     @total = 0

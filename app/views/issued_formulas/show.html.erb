@@ -24,7 +24,7 @@
 
 <h1>Items</h1>
 
-<%= render(:partial => "issued_items", :locals => {:items => @issued_formula.formula.formula_items, :resin_big_batch_number => @issued_formula.big_batch_total, :resin_small_batch_number => @issued_formula.small_batch_total}) %>
+<%= render(:partial => "issued_items", :locals => {:items => @issued_formula.formula.formula_items, :resin_big_batch_single => @issued_formula.resin_big_batch_quantity, :resin_small_batch_single => @issued_formula.resin_small_batch_quantity, :resin_big_batch_number => @issued_formula.big_batch_total, :resin_small_batch_number => @issued_formula.small_batch_total}) %>
 
 <h1>Batches</h1>
 

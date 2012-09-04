@@ -2,7 +2,9 @@
   <thead>
     <tr>
       <th>RM</th> 
-      <th>Big Batch (kg)</th>
+      <th>Big Batch Qty (kg)</th>
+      <th>Big Batch Total (kg)</th>
+      <th>Small Batch Qty (kg)</th>
       <th>Small Batch (kg)</th>
       <th>Total (kg)</th>
       <th>Available (kg)</th>
@@ -21,9 +23,23 @@
         <td><%= "#{item.raw_material.raw_material_type.code} #{item.raw_material.code}" %></td>
         <td>
           <% if item.raw_material_type.code == "CMR" %>
+            <%= resin_big_batch_single %>
+          <% else %>
+            <%= resin_big_batch_single.to_f * item.multiplier %>
+          <% end %>
+        </td>
+        <td>
+          <% if item.raw_material_type.code == "CMR" %>
             <%= resin_big_batch_number %>
           <% else %>
             <%= resin_big_batch_number * item.multiplier %>
+          <% end %>
+        </td>
+        <td>
+          <% if item.raw_material_type.code == "CMR" %>
+            <%= resin_small_batch_single %>
+          <% else %>
+            <%= resin_small_batch_single.to_f * item.multiplier %>
           <% end %>
         </td>
         <td>
@@ -47,6 +63,8 @@
       </tr>
     <% end %>
     <tr class="<%= cycle("light", "dark") %>">
+      <td></td>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
