@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831094854) do
+ActiveRecord::Schema.define(:version => 20120904032116) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -135,7 +135,7 @@ ActiveRecord::Schema.define(:version => 20120831094854) do
 
   create_table "formula_items", :force => true do |t|
     t.decimal  "quantity",             :precision => 11, :scale => 5
-    t.decimal  "multiplier",           :precision => 11, :scale => 5
+    t.decimal  "multiplier",           :precision => 11, :scale => 8
     t.integer  "formula_id"
     t.integer  "raw_material_type_id"
     t.integer  "raw_material_id"
