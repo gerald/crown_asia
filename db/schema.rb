@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904032116) do
+ActiveRecord::Schema.define(:version => 20120910030124) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -161,6 +161,9 @@ ActiveRecord::Schema.define(:version => 20120904032116) do
     t.integer  "issued_formula_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "start_small_batch"
+    t.integer  "end_small_batch"
+    t.date     "small_batch_date"
   end
 
   create_table "issued_formula_items", :force => true do |t|
