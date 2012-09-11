@@ -15,10 +15,10 @@
       <tr>
         <td><%= batch.start_batch %></td>
         <td><%= batch.end_batch %></td>
-        <td><%= batch.batch_date.strftime("%m/%d/%Y") %></td>
+        <td><%= batch.batch_date.strftime("%m/%d/%Y") if batch.batch_date %></td>
         <td><%= batch.start_small_batch %></td>
         <td><%= batch.end_small_batch %></td>
-        <td><%= batch.small_batch_date.strftime("%m/%d/%Y") %></td>
+        <td><%= batch.small_batch_date.strftime("%m/%d/%Y") if batch.small_batch_date %></td>
         <td>
           <%= link_to "Edit", edit_issued_formula_batch_path(batch), :class => "edit_link" if can?(:update, IssuedFormulaBatch) %> &nbsp;&nbsp;
           <%= link_to "Delete", issued_formula_batch_path(batch), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, IssuedFormulaBatch) %>
