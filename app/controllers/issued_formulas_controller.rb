@@ -48,6 +48,8 @@ class IssuedFormulasController < ApplicationController
   def show
     @issued_formula = IssuedFormula.find(params[:id])
     @total = 0
+    @big_batch_total = 0
+    @small_batch_total = 0
   end
   
   def process_formula
@@ -83,6 +85,8 @@ class IssuedFormulasController < ApplicationController
     @resin_big_batch_number = params[:resin_big_batch_number].to_f * params[:big_batch_quantity].to_f
     @resin_small_batch_number = params[:resin_small_batch_number].to_f * params[:small_batch_quantity].to_f
     @total = 0
+    @big_batch_total = 0
+    @small_batch_total = 0
   end
   
   def show_formula_comment
