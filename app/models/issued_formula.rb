@@ -18,9 +18,9 @@ class IssuedFormula < ActiveRecord::Base
   
   after_create :create_items
   
-  def cancel!
-    self.update_attribute(:canceled, true)
-  end
+  # def cancel!
+    # self.update_attribute(:canceled, true)
+  # end
   
   def issued?
     !self.production_date.blank? && !self.lot_number.blank?

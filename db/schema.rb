@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910030124) do
+ActiveRecord::Schema.define(:version => 20120924102203) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -164,6 +164,8 @@ ActiveRecord::Schema.define(:version => 20120910030124) do
     t.integer  "start_small_batch"
     t.integer  "end_small_batch"
     t.date     "small_batch_date"
+    t.boolean  "processed",         :default => false
+    t.boolean  "canceled",          :default => false
   end
 
   create_table "issued_formula_items", :force => true do |t|
@@ -191,9 +193,7 @@ ActiveRecord::Schema.define(:version => 20120910030124) do
     t.datetime "updated_at"
     t.string   "lot_number"
     t.date     "production_date"
-    t.boolean  "canceled",                                                  :default => false
     t.text     "comments"
-    t.boolean  "processed",                                                 :default => false
   end
 
   create_table "mixers", :force => true do |t|

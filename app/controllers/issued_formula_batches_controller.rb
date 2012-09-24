@@ -43,6 +43,27 @@ class IssuedFormulaBatchesController < ApplicationController
     redirect_to issued_formula_path(@issued_formula_batch.issued_formula)
   end
   
+  def process_batch
+    @issued_formula_batch = IssuedFormulaBatch.find(params[:id])
+    @issued_formula_batch.processed = true
+    @issued_formula_batch.save
+    redirect_to issued_formula_path(@issued_formula_batch.issued_formula)
+  end
+  
+  def unprocess_batch
+    @issued_formula_batch = IssuedFormulaBatch.find(params[:id])
+    @issued_formula_batch.processed = false
+    @issued_formula_batch.save
+    redirect_to issued_formula_path(@issued_formula_batch.issued_formula)
+  end
+  
+  def cancel
+    @issued_formula_batch = IssuedFormulaBatch.find(params[:id])
+    @issued_formula_batch.canceled = true
+    @issued_formula_batch.save
+    redirect_to issued_formula_path(@issued_formula_batch.issued_formula)
+  end
+  
   protected
   
     def authorize_view

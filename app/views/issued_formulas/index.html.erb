@@ -21,7 +21,6 @@
         <th>Control #</th>
         <th>Finished Good</th>
         <th>Type</th>
-        <th>Processed</th>
         <th>Issuance Date</th>
         <% if can?(:update, IssuedFormula) || can?(:cancel, IssuedFormula) %>
           <th>Production Date</th>
@@ -42,39 +41,19 @@
         </td>
         <td><%= issued_formula.finished_good.name %></td>
         <td><%= issued_formula.formula.formula_type %></td>
-        <td>
-          <% if issued_formula.processed %>
-            <%= image_tag "icons/accept.png" %>
-          <% else %>
-            <%= image_tag "icons/cancel.png" %>
-          <% end %>
-        </td>
         <td><%= issued_formula.issuance_date.strftime("%m/%d/%Y") %></td>
         <% if can?(:update, IssuedFormula) || can?(:cancel, IssuedFormula) %>
-          <% if !issued_formula.canceled %>
-            <% if !issued_formula.issued? %>
-              <td><%= text_field_tag "production_date_#{issued_formula.id}", "", :class => "production_date_field" %></td>
-              <td><%= text_field_tag "lot_number_#{issued_formula.id}" %></td>
-            <% else %>
-              <td><%= issued_formula.production_date.strftime("%m/%d/%Y") if issued_formula.production_date %></td>
-              <td><%= issued_formula.lot_number %></td>
-            <% end %>
+          <% if !issued_formula.issued? %>
+            <td><%= text_field_tag "production_date_#{issued_formula.id}", "", :class => "production_date_field" %></td>
+            <td><%= text_field_tag "lot_number_#{issued_formula.id}" %></td>
           <% else %>
-            <td colspan="2">Canceled</td>
+            <td><%= issued_formula.production_date.strftime("%m/%d/%Y") if issued_formula.production_date %></td>
+            <td><%= issued_formula.lot_number %></td>
           <% end %>
         <% end %>
         <td>
-          <% if !issued_formula.canceled %>
-            <% if issued_formula.processed %>
-              <%= link_to "Unprocess", unprocess_formula_issued_formula_path(issued_formula), :class => "unprocess_link" if can?(:process, IssuedFormula) %>
-            <% else %>
-              <%= link_to "Process", process_formula_issued_formula_path(issued_formula), :class => "process_link" if can?(:process, IssuedFormula) %>
-            <% end %>
-          <% end %>
-          
-          <% if !issued_formula.canceled && !issued_formula.issued? %>
+          <% if !issued_formula.issued? %>
             <%= link_to_function "Update", "submit_issued_formula(#{issued_formula.id})", :class => "edit_link" if can?(:update, IssuedFormula) %>
-            <%= link_to "Cancel", cancel_issued_formula_path(issued_formula), :class => "delete_link", :confirm => "Are you sure you want to cancel this formula?" if can?(:cancel, IssuedFormula) %>
           <% end %>
         </td>
       </tr>

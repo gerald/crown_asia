@@ -20,8 +20,20 @@
         <td><%= batch.end_small_batch %></td>
         <td><%= batch.small_batch_date.strftime("%m/%d/%Y") if batch.small_batch_date %></td>
         <td>
-          <%= link_to "Edit", edit_issued_formula_batch_path(batch), :class => "edit_link" if can?(:update, IssuedFormulaBatch) %> &nbsp;&nbsp;
-          <%= link_to "Delete", issued_formula_batch_path(batch), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, IssuedFormulaBatch) %>
+          <% if !batch.canceled %>
+            <% if batch.processed %>
+              <%= link_to "Unprocess", unprocess_batch_issued_formula_batch_path(batch), :class => "unprocess_link" if can?(:process, IssuedFormula) %>
+            <% else %>
+              <%= link_to "Process", process_batch_issued_formula_batch_path(batch), :class => "process_link" if can?(:process, IssuedFormula) %>
+            <% end %>
+            
+            <%= link_to "Cancel", cancel_issued_formula_batch_path(batch), :class => "delete_link", :confirm => "Are you sure you want to cancel this batch?" if can?(:cancel, IssuedFormula) %>
+          
+            <%= link_to "Edit", edit_issued_formula_batch_path(batch), :class => "edit_link" if can?(:update, IssuedFormulaBatch) %> &nbsp;&nbsp;
+            <%= link_to "Delete", issued_formula_batch_path(batch), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, IssuedFormulaBatch) %>
+          <% else %>
+            Canceled
+          <% end %>
         </td>
       </tr>
     <% end %>

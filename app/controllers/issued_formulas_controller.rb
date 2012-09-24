@@ -52,20 +52,6 @@ class IssuedFormulasController < ApplicationController
     @small_batch_total = 0
   end
   
-  def process_formula
-    @issued_formula = IssuedFormula.find(params[:id])
-    @issued_formula.processed = true
-    @issued_formula.save
-    redirect_to issued_formulas_path
-  end
-  
-  def unprocess_formula
-    @issued_formula = IssuedFormula.find(params[:id])
-    @issued_formula.processed = false
-    @issued_formula.save
-    redirect_to issued_formulas_path
-  end
-  
   def update_finished_good
     @local = params[:local].to_i == 1
     @finished_good_id = params[:finished_good_id]

@@ -30,8 +30,8 @@ class RawMaterial < ActiveRecord::Base
   end
   
   def quantity_on_hand_for_formula
-    total_big_batch = IssuedFormulaItem.includes(:issued_formula).where("issued_formulas.canceled = 0 AND issued_formulas.processed = 0 AND issued_formula_items.raw_material_id = ?", self.id).sum("big_batch_quantity")
-    total_small_batch = IssuedFormulaItem.includes(:issued_formula).where("issued_formulas.canceled = 0 AND issued_formulas.processed = 0 AND issued_formula_items.raw_material_id = ?", self.id).sum("small_batch_quantity")
+    total_big_batch = IssuedFormulaItem.includes({:issued_formula => :issued_formula_batches}).where("issued_formula_batches.canceled = 0 AND issued_formula_batches.processed = 0 AND issued_formula_items.raw_material_id = ?", self.id).sum("big_batch_quantity")
+    total_small_batch = IssuedFormulaItem.includes({:issued_formula => :issued_formula_batches}).where("issued_formula_batches.canceled = 0 AND issued_formula_batches.processed = 0 AND issued_formula_items.raw_material_id = ?", self.id).sum("small_batch_quantity")
     self.quantity_on_hand - (total_big_batch + total_small_batch)
   end
   
