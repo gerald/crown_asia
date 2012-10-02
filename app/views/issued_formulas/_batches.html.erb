@@ -7,32 +7,47 @@
       <th>Start Small Batch</th> 
       <th>End Small Batch</th>
       <th>Small Batch Date</th>
+      <th>Processed</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% batches.each do |batch| %>
       <tr>
-        <td><%= batch.start_batch %></td>
-        <td><%= batch.end_batch %></td>
-        <td><%= batch.batch_date.strftime("%m/%d/%Y") if batch.batch_date %></td>
-        <td><%= batch.start_small_batch %></td>
-        <td><%= batch.end_small_batch %></td>
-        <td><%= batch.small_batch_date.strftime("%m/%d/%Y") if batch.small_batch_date %></td>
+        <% unless issued_formula.canceled_big_batch %>
+          <td><%= batch.start_batch %></td>
+          <td><%= batch.end_batch %></td>
+          <td><%= batch.batch_date.strftime("%m/%d/%Y") if batch.batch_date %></td>
+        <% else %>
+          <td colspan="3">Canceled</td>
+        <% end %>
+        
+        <% unless issued_formula.canceled_small_batch %>
+          <td><%= batch.start_small_batch %></td>
+          <td><%= batch.end_small_batch %></td>
+          <td><%= batch.small_batch_date.strftime("%m/%d/%Y") if batch.small_batch_date %></td>
+        <% else %>
+          <td colspan="3">Canceled</td>
+        <% end %>
+        
         <td>
-          <% if !batch.canceled %>
+          <% if batch.processed %>
+            <%= image_tag "icons/accept.png" %>
+          <% else %>
+            <%= image_tag "icons/cancel.png" %>
+          <% end %>
+        </td>
+        
+        <td>
+          <% unless issued_formula.canceled_small_batch && issued_formula.canceled_big_batch %>
             <% if batch.processed %>
               <%= link_to "Unprocess", unprocess_batch_issued_formula_batch_path(batch), :class => "unprocess_link" if can?(:process, IssuedFormula) %>
             <% else %>
               <%= link_to "Process", process_batch_issued_formula_batch_path(batch), :class => "process_link" if can?(:process, IssuedFormula) %>
             <% end %>
-            
-            <%= link_to "Cancel", cancel_issued_formula_batch_path(batch), :class => "delete_link", :confirm => "Are you sure you want to cancel this batch?" if can?(:cancel, IssuedFormula) %>
           
             <%= link_to "Edit", edit_issued_formula_batch_path(batch), :class => "edit_link" if can?(:update, IssuedFormulaBatch) %> &nbsp;&nbsp;
             <%= link_to "Delete", issued_formula_batch_path(batch), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, IssuedFormulaBatch) %>
-          <% else %>
-            Canceled
           <% end %>
         </td>
       </tr>

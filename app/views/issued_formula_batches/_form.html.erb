@@ -1,35 +1,39 @@
 <%= f.hidden_field :issued_formula_id %>
 
 <fieldset>
-  <dl>
-    <dd><%= f.label :start_batch %></dd>
-    <dd><%= f.text_field :start_batch %></dd>
-  </dl>
+  <% if !@issued_formula.canceled_big_batch %>
+    <dl>
+      <dd><%= f.label :start_batch %></dd>
+      <dd><%= f.text_field :start_batch %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :end_batch %></dd>
+      <dd><%= f.text_field :end_batch %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :batch_date %></dd>
+      <dd><%= f.text_field :batch_date %></dd>
+    </dl>
+    
+    <br class="clear"/>
+  <% end %>
   
-  <dl>
-    <dd><%= f.label :end_batch %></dd>
-    <dd><%= f.text_field :end_batch %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :batch_date %></dd>
-    <dd><%= f.text_field :batch_date %></dd>
-  </dl>
-  
-  <br class="clear"/>
-  
-  <dl>
-    <dd><%= f.label :start_small_batch %></dd>
-    <dd><%= f.text_field :start_small_batch %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :end_small_batch %></dd>
-    <dd><%= f.text_field :end_small_batch %></dd>
-  </dl>
-  
-  <dl>
-    <dd><%= f.label :small_batch_date %></dd>
-    <dd><%= f.text_field :small_batch_date %></dd>
-  </dl>
+  <% if !@issued_formula.canceled_small_batch %>
+    <dl>
+      <dd><%= f.label :start_small_batch %></dd>
+      <dd><%= f.text_field :start_small_batch %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :end_small_batch %></dd>
+      <dd><%= f.text_field :end_small_batch %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :small_batch_date %></dd>
+      <dd><%= f.text_field :small_batch_date %></dd>
+    </dl>
+  <% end %>
 </fieldset>

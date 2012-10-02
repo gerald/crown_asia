@@ -79,9 +79,15 @@ class IssuedFormulasController < ApplicationController
     @formula = Formula.find(params[:formula_id])
   end
   
-  def cancel
+  def cancel_big_batch
     @issued_formula = IssuedFormula.find(params[:id])
-    @issued_formula.cancel!
+    @issued_formula.cancel_big_batch!
+    redirect_to issued_formulas_path
+  end
+  
+  def cancel_small_batch
+    @issued_formula = IssuedFormula.find(params[:id])
+    @issued_formula.cancel_small_batch!
     redirect_to issued_formulas_path
   end
   

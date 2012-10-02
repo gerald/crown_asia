@@ -50,4 +50,4 @@
 
 <%= link_to "Add Batch", new_issued_formula_batch_path(:issued_formula_id => @issued_formula), :class => "create_link" if can?(:create, IssuedFormula) %>
 
-<%= render(:partial => "batches", :locals => {:batches => @issued_formula.issued_formula_batches}) %>
+<%= render(:partial => "batches", :locals => {:issued_formula => @issued_formula, :batches => @issued_formula.issued_formula_batches}) %>

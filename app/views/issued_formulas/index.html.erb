@@ -53,6 +53,14 @@
         <% end %>
         <td>
           <% if !issued_formula.issued? %>
+            <% if !issued_formula.canceled_big_batch %>
+              <%= link_to "Cancel Big Batch", cancel_big_batch_issued_formula_path(issued_formula), :class => "delete_link", :confirm => "Are you sure you want to cancel the big batch this formula?" if can?(:cancel, IssuedFormula) %>
+            <% end %>
+            
+            <% if !issued_formula.canceled_small_batch %>
+              <%= link_to "Cancel Small Batch", cancel_small_batch_issued_formula_path(issued_formula), :class => "delete_link", :confirm => "Are you sure you want to cancel the small batch formula?" if can?(:cancel, IssuedFormula) %>
+            <% end %>
+          
             <%= link_to_function "Update", "submit_issued_formula(#{issued_formula.id})", :class => "edit_link" if can?(:update, IssuedFormula) %>
           <% end %>
         </td>

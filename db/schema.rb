@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120924102203) do
+ActiveRecord::Schema.define(:version => 20121002060557) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -165,7 +166,6 @@ ActiveRecord::Schema.define(:version => 20120924102203) do
     t.integer  "end_small_batch"
     t.date     "small_batch_date"
     t.boolean  "processed",         :default => false
-    t.boolean  "canceled",          :default => false
   end
 
   create_table "issued_formula_items", :force => true do |t|
@@ -194,6 +194,8 @@ ActiveRecord::Schema.define(:version => 20120924102203) do
     t.string   "lot_number"
     t.date     "production_date"
     t.text     "comments"
+    t.boolean  "canceled_big_batch",                                        :default => false
+    t.boolean  "canceled_small_batch",                                      :default => false
   end
 
   create_table "mixers", :force => true do |t|

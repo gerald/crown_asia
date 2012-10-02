@@ -1,6 +1,5 @@
 CrownAsia::Application.routes.draw do
   resources :issued_formula_batches do
-    get 'cancel', :on => :member
     get 'process_batch', :on => :member
     get 'unprocess_batch', :on => :member
   end
@@ -10,6 +9,8 @@ CrownAsia::Application.routes.draw do
     post 'update_formula', :on => :collection
     post 'update_item_list', :on => :collection
     post 'show_formula_comment', :on => :collection
+    get 'cancel_big_batch', :on => :member
+    get 'cancel_small_batch', :on => :member
   end
 
   resources :formulas do
