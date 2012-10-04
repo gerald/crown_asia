@@ -26,6 +26,10 @@ class IssuedFormula < ActiveRecord::Base
     self.update_attribute(:canceled_small_batch, true)
   end
   
+  def canceled?
+    self.canceled_big_batch && self.canceled_small_batch
+  end
+  
   def issued?
     !self.production_date.blank? && !self.lot_number.blank?
   end

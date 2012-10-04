@@ -10,7 +10,7 @@ class IssuedFormulasController < ApplicationController
     session[:search][:issuance_date_end] = params[:issuance_date_end] if !params[:issuance_date_end].nil?
     session[:search][:control_number] = params[:control_number] if !params[:control_number].nil?
     
-    @issued_formulas = IssuedFormula.paginate(:per_page => 20, :page => params[:page])
+    @issued_formulas = IssuedFormula.paginate(:per_page => 20, :page => params[:page]).order("control_number DESC")
     
     if !session[:search][:issuance_date_start].blank? && !session[:search][:issuance_date_end].blank?
       @issued_formulas = @issued_formulas.where("issuance_date >= ? AND issuance_date <= ?", session[:search][:issuance_date_start], session[:search][:issuance_date_end])
