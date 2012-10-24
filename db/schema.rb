@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.string   "lot_number"
   end
 
-<<<<<<< HEAD
   create_table "calendar", :primary_key => "calID", :force => true do |t|
     t.date    "calDate"
     t.integer "calYear"
@@ -57,8 +56,6 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
 
   add_index "calendar", ["calDate"], :name => "days", :unique => true
 
-=======
->>>>>>> Update for costing period,
   create_table "costing_period_items", :force => true do |t|
     t.integer  "raw_material_id"
     t.integer  "costing_period_id"
@@ -416,6 +413,6 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["username"], :name => "index_users_on_username"
+  add_index "users", ["username"], :name => "index_users_on_username" 
 
 end
