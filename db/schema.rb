@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002060557) do
+ActiveRecord::Schema.define(:version => 20121024133239) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -44,6 +44,25 @@ ActiveRecord::Schema.define(:version => 20121002060557) do
     t.datetime "updated_at"
     t.integer  "finished_good_transaction_item_id"
     t.string   "lot_number"
+  end
+
+  create_table "costing_period_items", :force => true do |t|
+    t.integer  "raw_material_id"
+    t.integer  "costing_period_id"
+    t.decimal  "quote",             :precision => 11, :scale => 2
+    t.decimal  "fg",                :precision => 11, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "costing_periods", :force => true do |t|
+    t.date     "costing_date"
+    t.decimal  "manufacturing_quote", :precision => 11, :scale => 2
+    t.decimal  "manufacturing_fg",    :precision => 11, :scale => 2
+    t.decimal  "forex_quote",         :precision => 11, :scale => 2
+    t.decimal  "forex_fg",            :precision => 11, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "customers", :force => true do |t|

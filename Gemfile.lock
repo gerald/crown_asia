@@ -64,6 +64,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.0.4)
     mysql (2.8.1)
+    mysql (2.8.1-x86-mingw32)
     orm_adapter (0.0.5)
     paranoia (1.1.0)
       activerecord (>= 3.0.0)
@@ -120,7 +121,8 @@ GEM
 
 PLATFORMS
   ruby
-  
+  x86-mingw32
+
 DEPENDENCIES
   acts_as_audited (= 2.0.0)
   cancan

@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :costing_periods
+
   resources :issued_formula_batches do
     get 'process_batch', :on => :member
     get 'unprocess_batch', :on => :member
