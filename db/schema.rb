@@ -46,6 +46,35 @@ ActiveRecord::Schema.define(:version => 20121002060557) do
     t.string   "lot_number"
   end
 
+  create_table "calendar", :primary_key => "calID", :force => true do |t|
+    t.date    "calDate"
+    t.integer "calYear"
+    t.integer "calMonth"
+    t.string  "calMonthShort", :limit => 3
+    t.string  "calMonthLong",  :limit => 15
+  end
+
+  add_index "calendar", ["calDate"], :name => "days", :unique => true
+
+  create_table "costing_period_items", :force => true do |t|
+    t.integer  "raw_material_id"
+    t.integer  "costing_period_id"
+    t.decimal  "quote",             :precision => 11, :scale => 2
+    t.decimal  "fg",                :precision => 11, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "costing_periods", :force => true do |t|
+    t.date     "costing_date"
+    t.decimal  "manufacturing_quote", :precision => 11, :scale => 2
+    t.decimal  "manufacturing_fg",    :precision => 11, :scale => 2
+    t.decimal  "forex_quote",         :precision => 11, :scale => 2
+    t.decimal  "forex_fg",            :precision => 11, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "customers", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -344,6 +373,10 @@ ActiveRecord::Schema.define(:version => 20121002060557) do
     t.string   "misc_sales_number"
     t.string   "sr_number"
     t.integer  "issued_customer_id"
+  end
+
+  create_table "temp", :id => false, :force => true do |t|
+    t.integer "id", :null => false
   end
 
   create_table "unit_of_measures", :force => true do |t|
