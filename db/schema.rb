@@ -11,6 +11,7 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20121024133239) do
+<<<<<<< HEAD
 
   create_table "Batch", :id => false, :force => true do |t|
     t.integer "FormulaID"
@@ -119,6 +120,8 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.integer "IssuedRMID"
     t.decimal "BatchSize",                   :precision => 12, :scale => 5
   end
+=======
+>>>>>>> 46aa80ca7b839c6bb9b6afe9e9df996ae6e37420
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -153,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.string   "lot_number"
   end
 
+<<<<<<< HEAD
   create_table "calendar", :primary_key => "calID", :force => true do |t|
     t.date    "calDate"
     t.integer "calYear"
@@ -163,6 +167,8 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
 
   add_index "calendar", ["calDate"], :name => "days", :unique => true
 
+=======
+>>>>>>> 46aa80ca7b839c6bb9b6afe9e9df996ae6e37420
   create_table "costing_period_items", :force => true do |t|
     t.integer  "raw_material_id"
     t.integer  "costing_period_id"
