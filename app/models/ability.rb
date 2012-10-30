@@ -136,6 +136,13 @@ class Ability
       { :action => "create", :desc => "Can create a new issued formula batch"},
       { :action => "update", :desc => "Can update an issued formula batch"},
       { :action => "delete", :desc => "Can delete an issued formula batch"}
+    ]},
+    
+    { :subject => "CostingPeriod", :label => "Costing Period", :permissions => [
+      { :action => "view", :desc => "Can view costing periods"},
+      { :action => "create", :desc => "Can create a new costing period"},
+      { :action => "update", :desc => "Can update a costing period"},
+      { :action => "delete", :desc => "Can delete a costing period"}
     ]}
   ]
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002060557) do
+ActiveRecord::Schema.define(:version => 20121024133239) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20121002060557) do
     t.string   "lot_number"
   end
 
+<<<<<<< HEAD
   create_table "calendar", :primary_key => "calID", :force => true do |t|
     t.date    "calDate"
     t.integer "calYear"
@@ -56,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20121002060557) do
 
   add_index "calendar", ["calDate"], :name => "days", :unique => true
 
+=======
+>>>>>>> Update for costing period,
   create_table "costing_period_items", :force => true do |t|
     t.integer  "raw_material_id"
     t.integer  "costing_period_id"

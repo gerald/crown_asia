@@ -1,0 +1,43 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :costing_date %></dd>
+    <dd><%= f.date_select :costing_date, :discard_day => true, :use_month_numbers => true %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <th>RM</th> 
+              <th>Last Month</th>
+              <th>Last Price</th>
+              <th>Current(Quote)</th>
+              <th>Current(FG)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.fields_for :costing_period_items do |builder| %>
+              <%= render "item_form", :f => builder %>
+            <% end %>
+            <tr>
+              <td>Manufacturing</td>
+              <td></td>
+              <td></td>
+              <td><%= f.text_field :manufacturing_quote %></td>
+              <td><%= f.text_field :manufacturing_fg %></td>
+            </tr>
+            <tr>
+              <td>FOREX</td>
+              <td></td>
+              <td></td>
+              <td><%= f.text_field :forex_quote %></td>
+              <td><%= f.text_field :forex_fg %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
+</fieldset>

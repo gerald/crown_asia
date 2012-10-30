@@ -1,0 +1,13 @@
+<tr>
+  <td>
+    <%= f.select :raw_material_id, [["", ""]] + RawMaterial.all.collect{|rm| [rm.name, rm.id]} %>
+  </td>
+  <td></td>
+  <td></td>
+  <td>
+    <%= f.text_field :quote %>
+  </td>
+  <td>
+    <%= f.text_field :fg %>
+  </td>
+</tr>

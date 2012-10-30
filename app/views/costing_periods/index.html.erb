@@ -1,0 +1,42 @@
+<h1>Costing Period</h1>
+
+<%= link_to "Add Costing Period", new_costing_period_path, :class => "create_link" if can?(:create, CostingPeriod) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th colspan="2">Manufacturing</th>
+      <th colspan="2">Forex</th>
+      <th></th>
+    </tr>
+  </thead>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Quote</th>
+      <th>FG</th>
+      <th>Quote</th>
+      <th>FG</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @costing_periods.each do |costing_period| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= costing_period.costing_date.strftime("%Y-%m") %></td>
+      <td><%= number_to_currency(costing_period.manufacturing_quote) %></td>
+      <td><%= number_to_currency(costing_period.manufacturing_fg) %></td>
+      <td><%= number_to_currency(costing_period.forex_quote) %></td>
+      <td><%= number_to_currency(costing_period.forex_fg) %></td>
+      <td>
+        <%= link_to "Edit", edit_costing_period_path(costing_period), :class => "edit_link" if can?(:update, CostingPeriod) %> &nbsp;&nbsp;
+        <%= link_to "Delete", costing_period_path(costing_period), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, CostingPeriod) %> <br/>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @costing_periods %>
