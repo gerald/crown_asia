@@ -56,4 +56,22 @@ class RawMaterial < ActiveRecord::Base
   def name_with_code
     "#{self.raw_material_type.code} #{self.code}: #{self.name}"
   end
+  
+  def last_costing_period_date(costing_date = nil)
+    c = CostingPeriod.includes(:costing_period_items)
+    c = c.where("costing_period_items.raw_material_id = ? AND costing_period_items.quote IS NOT NULL AND costing_period_items.quote <> ''", self.id)
+    c = c.where("costing_periods.costing_date < ?", costing_date) if costing_date
+    c = c.order("costing_date").first
+    return nil if c.nil?
+    return c.costing_date
+  end
+  
+  def last_costing_period_price(costing_date = nil)
+    c = CostingPeriodItem.includes(:costing_period)
+    c = c.where("costing_period_items.raw_material_id = ? AND costing_period_items.quote IS NOT NULL AND costing_period_items.quote <> ''", self.id)
+    c = c.where("costing_periods.costing_date < ?", costing_date) if costing_date
+    c = c.order("costing_periods.costing_date").first
+    return nil if c.nil?
+    return c.quote
+  end
 end

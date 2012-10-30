@@ -1,9 +1,13 @@
+<% rm = f.object.raw_material %>
 <tr>
   <td>
-    <%= f.select :raw_material_id, [["", ""]] + RawMaterial.all.collect{|rm| [rm.name, rm.id]} %>
+    <%= f.hidden_field :raw_material_id %>
+    <%= rm.raw_material_type.name %> <%= rm.code %>
   </td>
-  <td></td>
-  <td></td>
+  <td><%= rm.name %></td>
+  <td><%= rm.description %></td>
+  <td><%= rm.last_costing_period_date(@costing_period.costing_date).strftime("%Y-%m") if rm.last_costing_period_date(@costing_period.costing_date) %></td>
+  <td><%= number_to_currency(rm.last_costing_period_price(@costing_period.costing_date)) if rm.last_costing_period_price(@costing_period.costing_date) %></td>
   <td>
     <%= f.text_field :quote %>
   </td>

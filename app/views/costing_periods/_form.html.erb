@@ -10,7 +10,9 @@
         <table>
           <thead>
             <tr>
-              <th>RM</th> 
+              <th>RM Code</th>
+              <th>RM Item</th>
+              <th>RM Description</th> 
               <th>Last Month</th>
               <th>Last Price</th>
               <th>Current(Quote)</th>
@@ -22,14 +24,14 @@
               <%= render "item_form", :f => builder %>
             <% end %>
             <tr>
-              <td>Manufacturing</td>
+              <td colspan="3">Manufacturing</td>
               <td></td>
               <td></td>
               <td><%= f.text_field :manufacturing_quote %></td>
               <td><%= f.text_field :manufacturing_fg %></td>
             </tr>
             <tr>
-              <td>FOREX</td>
+              <td colspan="3">FOREX</td>
               <td></td>
               <td></td>
               <td><%= f.text_field :forex_quote %></td>

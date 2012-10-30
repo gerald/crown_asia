@@ -5,12 +5,14 @@ class CostingPeriodsController < ApplicationController
   before_filter :authorize_delete, :only => [:destroy]
   
   def index
-    @costing_periods = CostingPeriod.paginate(:per_page => 20, :page => params[:page])
+    @costing_periods = CostingPeriod.order("costing_date DESC").paginate(:per_page => 20, :page => params[:page])
   end
   
   def new
     @costing_period = CostingPeriod.new
-    25.times {@costing_period.costing_period_items.build}
+    RawMaterial.all.each do |rm|
+      @costing_period.costing_period_items.build(:raw_material => rm)
+    end
   end
   
   def create
