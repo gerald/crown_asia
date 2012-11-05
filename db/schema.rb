@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,118 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024133239) do
-<<<<<<< HEAD
-
-  create_table "Batch", :id => false, :force => true do |t|
-    t.integer "FormulaID"
-    t.integer "FromBatch"
-    t.integer "ToBatch"
-    t.integer "Batches"
-    t.date    "BatchDate"
-    t.string  "BatchType", :limit => 1
-  end
-
-  create_table "RM", :id => false, :force => true do |t|
-    t.integer "RMID"
-    t.integer "RMTypeID"
-    t.string  "RMType",     :limit => 5
-    t.string  "RMTypeDesc", :limit => 20
-    t.string  "RMItem",     :limit => 20
-    t.date    "CompDate"
-  end
-
-  create_table "Row1", :id => false, :force => true do |t|
-    t.integer "Row1"
-    t.string  "FG1",            :limit => 80
-    t.string  "FG2",            :limit => 80
-    t.string  "FG3",            :limit => 80
-    t.string  "FG4",            :limit => 80
-    t.string  "FG5",            :limit => 80
-    t.string  "FG6",            :limit => 80
-    t.string  "FG7",            :limit => 80
-    t.string  "FG8",            :limit => 80
-    t.string  "FG9",            :limit => 80
-    t.string  "FG10",           :limit => 80
-    t.string  "FG11",           :limit => 80
-    t.string  "FG12",           :limit => 80
-    t.string  "FG13",           :limit => 80
-    t.string  "FG14",           :limit => 80
-    t.string  "FGLoc1",         :limit => 12
-    t.string  "FGLoc2",         :limit => 12
-    t.string  "FGLoc3",         :limit => 12
-    t.string  "FGLoc4",         :limit => 12
-    t.string  "FGLoc5",         :limit => 12
-    t.string  "FGLoc6",         :limit => 12
-    t.string  "FGLoc7",         :limit => 12
-    t.string  "FGLoc8",         :limit => 12
-    t.string  "FGLoc9",         :limit => 12
-    t.string  "FGLoc10",        :limit => 12
-    t.string  "FGLoc11",        :limit => 12
-    t.string  "FGLoc12",        :limit => 12
-    t.string  "FGLoc13",        :limit => 12
-    t.string  "FGLoc14",        :limit => 12
-    t.integer "FromBatch1"
-    t.integer "FromBatch2"
-    t.integer "FromBatch3"
-    t.integer "FromBatch4"
-    t.integer "FromBatch5"
-    t.integer "FromBatch6"
-    t.integer "FromBatch7"
-    t.integer "FromBatch8"
-    t.integer "FromBatch9"
-    t.integer "FromBatch10"
-    t.integer "FromBatch11"
-    t.integer "FromBatch12"
-    t.integer "FromBatch13"
-    t.integer "FromBatch14"
-    t.integer "ToBatch1"
-    t.integer "ToBatch2"
-    t.integer "ToBatch3"
-    t.integer "ToBatch4"
-    t.integer "ToBatch5"
-    t.integer "ToBatch6"
-    t.integer "ToBatch7"
-    t.integer "ToBatch8"
-    t.integer "ToBatch9"
-    t.integer "ToBatch10"
-    t.integer "ToBatch11"
-    t.integer "ToBatch12"
-    t.integer "ToBatch13"
-    t.integer "ToBatch14"
-    t.integer "OrigBatchQty1"
-    t.integer "OrigBatchQty2"
-    t.integer "OrigBatchQty3"
-    t.integer "OrigBatchQty4"
-    t.integer "OrigBatchQty5"
-    t.integer "OrigBatchQty6"
-    t.integer "OrigBatchQty7"
-    t.integer "OrigBatchQty8"
-    t.integer "OrigBatchQty9"
-    t.integer "OrigBatchQty10"
-    t.integer "OrigBatchQty11"
-    t.integer "OrigBatchQty12"
-    t.integer "OrigBatchQty13"
-    t.integer "OrigBatchQty14"
-  end
-
-  create_table "TEMP_P003", :id => false, :force => true do |t|
-    t.integer "RowNumNew"
-    t.integer "RowNo"
-    t.integer "FormulaID"
-    t.integer "FromBatch"
-    t.integer "ToBatch"
-    t.integer "Batches"
-    t.string  "FGLocalBatch", :limit => 12
-    t.string  "FGItem",       :limit => 100
-    t.decimal "OrigBatchQty",                :precision => 10, :scale => 0
-    t.string  "Mixer",        :limit => 5
-    t.string  "Extruder",     :limit => 5
-    t.integer "IssuedRMID"
-    t.decimal "BatchSize",                   :precision => 12, :scale => 5
-  end
-=======
->>>>>>> 46aa80ca7b839c6bb9b6afe9e9df996ae6e37420
+ActiveRecord::Schema.define(:version => 20121105042145) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -156,7 +46,11 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.string   "lot_number"
   end
 
-<<<<<<< HEAD
+  add_index "bags", ["finished_good_id"], :name => "index_bags_on_finished_good_id"
+  add_index "bags", ["finished_good_transaction_item_id"], :name => "index_bags_on_finished_good_transaction_item_id"
+  add_index "bags", ["lot_number"], :name => "index_bags_on_lot_number"
+  add_index "bags", ["removing_transaction_id"], :name => "index_bags_on_removing_transaction_id"
+
   create_table "calendar", :primary_key => "calID", :force => true do |t|
     t.date    "calDate"
     t.integer "calYear"
@@ -167,8 +61,6 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
 
   add_index "calendar", ["calDate"], :name => "days", :unique => true
 
-=======
->>>>>>> 46aa80ca7b839c6bb9b6afe9e9df996ae6e37420
   create_table "costing_period_items", :force => true do |t|
     t.integer  "raw_material_id"
     t.integer  "costing_period_id"
@@ -177,6 +69,9 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "costing_period_items", ["costing_period_id"], :name => "index_costing_period_items_on_costing_period_id"
+  add_index "costing_period_items", ["raw_material_id"], :name => "index_costing_period_items_on_raw_material_id"
 
   create_table "costing_periods", :force => true do |t|
     t.date     "costing_date"
@@ -238,6 +133,9 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.string   "transaction_type"
   end
 
+  add_index "finished_good_transaction_items", ["finished_good_transaction_id"], :name => "fg_transaction_index"
+  add_index "finished_good_transaction_items", ["lot_number"], :name => "index_finished_good_transaction_items_on_lot_number"
+
   create_table "finished_good_transactions", :force => true do |t|
     t.string   "transaction_type"
     t.string   "reference_type"
@@ -261,6 +159,10 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.string   "mirs_number"
   end
 
+  add_index "finished_good_transactions", ["finished_good_id"], :name => "index_finished_good_transactions_on_finished_good_id"
+  add_index "finished_good_transactions", ["issued_to_id", "issued_to_type"], :name => "issued_to_index"
+  add_index "finished_good_transactions", ["sender_id", "sender_type"], :name => "sender_index"
+
   create_table "finished_goods", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -276,6 +178,9 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.boolean  "active",             :default => true
   end
 
+  add_index "finished_goods", ["customer_id"], :name => "index_finished_goods_on_customer_id"
+  add_index "finished_goods", ["unit_of_measure_id"], :name => "index_finished_goods_on_unit_of_measure_id"
+
   create_table "formula_items", :force => true do |t|
     t.decimal  "quantity",             :precision => 11, :scale => 5
     t.decimal  "multiplier",           :precision => 11, :scale => 8
@@ -285,6 +190,10 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "formula_items", ["formula_id"], :name => "index_formula_items_on_formula_id"
+  add_index "formula_items", ["raw_material_id"], :name => "index_formula_items_on_raw_material_id"
+  add_index "formula_items", ["raw_material_type_id"], :name => "index_formula_items_on_raw_material_type_id"
 
   create_table "formulas", :force => true do |t|
     t.string   "formula_type"
@@ -296,6 +205,8 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.datetime "updated_at"
     t.text     "comments"
   end
+
+  add_index "formulas", ["finished_good_id"], :name => "index_formulas_on_finished_good_id"
 
   create_table "issued_formula_batches", :force => true do |t|
     t.integer  "start_batch"
@@ -310,6 +221,8 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.boolean  "processed",         :default => false
   end
 
+  add_index "issued_formula_batches", ["issued_formula_id"], :name => "index_issued_formula_batches_on_issued_formula_id"
+
   create_table "issued_formula_items", :force => true do |t|
     t.integer  "issued_formula_id"
     t.integer  "raw_material_id"
@@ -318,6 +231,9 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "issued_formula_items", ["issued_formula_id"], :name => "index_issued_formula_items_on_issued_formula_id"
+  add_index "issued_formula_items", ["raw_material_id"], :name => "index_issued_formula_items_on_raw_material_id"
 
   create_table "issued_formulas", :force => true do |t|
     t.string   "control_number"
@@ -340,6 +256,12 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.boolean  "canceled_small_batch",                                      :default => false
   end
 
+  add_index "issued_formulas", ["extruder_id"], :name => "index_issued_formulas_on_extruder_id"
+  add_index "issued_formulas", ["finished_good_id"], :name => "index_issued_formulas_on_finished_good_id"
+  add_index "issued_formulas", ["formula_id"], :name => "index_issued_formulas_on_formula_id"
+  add_index "issued_formulas", ["lot_number"], :name => "index_issued_formulas_on_lot_number"
+  add_index "issued_formulas", ["mixer_id"], :name => "index_issued_formulas_on_mixer_id"
+
   create_table "mixers", :force => true do |t|
     t.string   "name"
     t.string   "brand"
@@ -358,6 +280,9 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
   end
+
+  add_index "raw_material_transaction_items", ["lot_number"], :name => "index_raw_material_transaction_items_on_lot_number"
+  add_index "raw_material_transaction_items", ["raw_material_transaction_id"], :name => "rm_transaction_index"
 
   create_table "raw_material_transactions", :force => true do |t|
     t.string   "transaction_type"
@@ -383,6 +308,11 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.string   "si_number"
   end
 
+  add_index "raw_material_transactions", ["issued_department_id"], :name => "index_raw_material_transactions_on_issued_department_id"
+  add_index "raw_material_transactions", ["issued_to_id", "issued_to_type"], :name => "issued_to_index"
+  add_index "raw_material_transactions", ["raw_material_id"], :name => "index_raw_material_transactions_on_raw_material_id"
+  add_index "raw_material_transactions", ["sender_id", "sender_type"], :name => "sender_index"
+
   create_table "raw_material_types", :force => true do |t|
     t.string   "code"
     t.text     "description"
@@ -407,7 +337,12 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.decimal  "critical_quantity",    :precision => 11, :scale => 5
     t.boolean  "trading_good",                                        :default => false
     t.boolean  "active",                                              :default => true
+    t.boolean  "costing",                                             :default => false
   end
+
+  add_index "raw_materials", ["raw_material_type_id"], :name => "index_raw_materials_on_raw_material_type_id"
+  add_index "raw_materials", ["supplier_id"], :name => "index_raw_materials_on_supplier_id"
+  add_index "raw_materials", ["unit_of_measure_id"], :name => "index_raw_materials_on_unit_of_measure_id"
 
   create_table "role_users", :force => true do |t|
     t.integer  "role_id"
@@ -415,6 +350,9 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "role_users", ["role_id"], :name => "index_role_users_on_role_id"
+  add_index "role_users", ["user_id"], :name => "index_role_users_on_user_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -453,6 +391,8 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.boolean  "active",             :default => true
   end
 
+  add_index "supplies", ["unit_of_measure_id"], :name => "index_supplies_on_unit_of_measure_id"
+
   create_table "supply_transaction_items", :force => true do |t|
     t.decimal  "quantity",              :precision => 11, :scale => 5
     t.decimal  "unit_price",            :precision => 11, :scale => 5
@@ -462,6 +402,9 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "supply_transaction_items", ["supply_id"], :name => "index_supply_transaction_items_on_supply_id"
+  add_index "supply_transaction_items", ["supply_transaction_id"], :name => "index_supply_transaction_items_on_supply_transaction_id"
 
   create_table "supply_transactions", :force => true do |t|
     t.string   "transaction_type"
@@ -487,6 +430,12 @@ ActiveRecord::Schema.define(:version => 20121024133239) do
     t.string   "sr_number"
     t.integer  "issued_customer_id"
   end
+
+  add_index "supply_transactions", ["issued_customer_id"], :name => "index_supply_transactions_on_issued_customer_id"
+  add_index "supply_transactions", ["issued_department_id"], :name => "index_supply_transactions_on_issued_department_id"
+  add_index "supply_transactions", ["issued_user_id"], :name => "index_supply_transactions_on_issued_user_id"
+  add_index "supply_transactions", ["lot_number"], :name => "index_supply_transactions_on_lot_number"
+  add_index "supply_transactions", ["supplier_id"], :name => "index_supply_transactions_on_supplier_id"
 
   create_table "temp", :id => false, :force => true do |t|
     t.integer "id", :null => false

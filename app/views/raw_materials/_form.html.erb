@@ -45,6 +45,11 @@
   </dl>
   
   <dl>
+    <dd><%= f.label :costing %></dd>
+    <dd><%= f.check_box :costing %></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :supplier %></dd>
     <dd><%= f.select :supplier_id, Supplier.active_suppliers.collect{|s| [s.name, s.id]}, {:include_blank => true} %></dd>
   </dl>

@@ -1,7 +1,41 @@
 <fieldset>
   <dl>
     <dd><%= f.label :costing_date %></dd>
-    <dd><%= f.date_select :costing_date, :discard_day => true, :use_month_numbers => true %></dd>
+    <dd>
+      <% if @costing_period.new_record? %>
+        <%= f.date_select :costing_date, :discard_day => true, :use_month_numbers => true %>
+      <% else %>
+        <%= @costing_period.costing_date.strftime("%Y-%m") %>
+      <% end %>
+    </dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Current(Quote)</th>
+              <th>Current(FG)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Manufacturing</td>
+              <td><%= f.text_field :manufacturing_quote %></td>
+              <td><%= f.text_field :manufacturing_fg %></td>
+            </tr>
+            <tr>
+              <td>FOREX</td>
+              <td><%= f.text_field :forex_quote %></td>
+              <td><%= f.text_field :forex_fg %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </dd>
   </dl>
   
   <dl>
@@ -23,20 +57,6 @@
             <%= f.fields_for :costing_period_items do |builder| %>
               <%= render "item_form", :f => builder %>
             <% end %>
-            <tr>
-              <td colspan="3">Manufacturing</td>
-              <td></td>
-              <td></td>
-              <td><%= f.text_field :manufacturing_quote %></td>
-              <td><%= f.text_field :manufacturing_fg %></td>
-            </tr>
-            <tr>
-              <td colspan="3">FOREX</td>
-              <td></td>
-              <td></td>
-              <td><%= f.text_field :forex_quote %></td>
-              <td><%= f.text_field :forex_fg %></td>
-            </tr>
           </tbody>
         </table>
       </div>

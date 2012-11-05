@@ -10,7 +10,7 @@ class CostingPeriodsController < ApplicationController
   
   def new
     @costing_period = CostingPeriod.new
-    RawMaterial.all.each do |rm|
+    RawMaterial.where("costing = 1").all.each do |rm|
       @costing_period.costing_period_items.build(:raw_material => rm)
     end
   end

@@ -27,10 +27,10 @@
   <% @costing_periods.each do |costing_period| %>
     <tr class="<%= cycle("light", "dark") %>">
       <td><%= costing_period.costing_date.strftime("%Y-%m") %></td>
-      <td><%= number_to_currency(costing_period.manufacturing_quote) %></td>
-      <td><%= number_to_currency(costing_period.manufacturing_fg) %></td>
-      <td><%= number_to_currency(costing_period.forex_quote) %></td>
-      <td><%= number_to_currency(costing_period.forex_fg) %></td>
+      <td><%= number_to_currency(costing_period.manufacturing_quote, :unit => "Php ") %></td>
+      <td><%= number_to_currency(costing_period.manufacturing_fg, :unit => "Php ") %></td>
+      <td><%= number_to_currency(costing_period.forex_quote, :unit => "Php ") %></td>
+      <td><%= number_to_currency(costing_period.forex_fg, :unit => "Php ") %></td>
       <td>
         <%= link_to "Edit", edit_costing_period_path(costing_period), :class => "edit_link" if can?(:update, CostingPeriod) %> &nbsp;&nbsp;
         <%= link_to "Delete", costing_period_path(costing_period), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, CostingPeriod) %> <br/>
