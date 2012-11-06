@@ -27,6 +27,9 @@ class CostingPeriodsController < ApplicationController
   
   def edit
     @costing_period = CostingPeriod.find(params[:id])
+    RawMaterial.where("costing = 1 AND id NOT IN(?)", @costing_period.costing_period_items.collect{|c| c.raw_material_id}).all.each do |rm|
+      @costing_period.costing_period_items.build(:raw_material => rm)
+    end
   end
   
   def update
