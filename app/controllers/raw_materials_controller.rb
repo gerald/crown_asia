@@ -7,12 +7,15 @@ class RawMaterialsController < ApplicationController
   before_filter :authorize_transactions, :only => [:transactions]
   
   def index
+    session[:search][:rm_name] = params[:name_text] if !params[:name_text].nil?
     session[:search][:rm_code] = params[:search_text] if !params[:search_text].nil?
     session[:search][:rm_type] = params[:type_text] if !params[:type_text].nil?
     
     @raw_materials = RawMaterial.paginate(:per_page => 20, :page => params[:page])
-    @raw_materials = @raw_materials.where("code LIKE ?", "%#{session[:search][:rm_code]}%").order("name")
+    @raw_materials = @raw_materials.where("name LIKE ?", "%#{session[:search][:rm_name]}%")
+    @raw_materials = @raw_materials.where("code LIKE ?", "%#{session[:search][:rm_code]}%")
     @raw_materials = @raw_materials.where("raw_material_type_id = ?", session[:search][:rm_type]) unless session[:search][:rm_type].blank?
+    @raw_materials = @raw_materials.order("name")
   end
   
   def new
