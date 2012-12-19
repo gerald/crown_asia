@@ -1,5 +1,5 @@
 class CostingPeriod < ActiveRecord::Base
-  has_many :costing_period_items, :include => [{:raw_material => :raw_material_type}], :order => "raw_material_types.code, raw_materials.name", :dependent => :destroy_all
+  has_many :costing_period_items, :include => [{:raw_material => :raw_material_type}], :order => "raw_material_types.id, raw_materials.name", :dependent => :destroy
   
   validates :costing_date, :uniqueness => true
   validates :manufacturing_quote, :manufacturing_fg, :forex_quote, :forex_fg, :numericality => true, :allow_nil => true, :allow_blank => true
