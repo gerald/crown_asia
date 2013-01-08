@@ -7,4 +7,9 @@ namespace :formula do
       fi.update_attribute(:multiplier, fi.quantity/rm_fi.quantity)
     end
   end
+  
+  desc 'Remove space from issued formulas lot number'
+  task :fix_lot_numbers => :environment do
+    IssuedFormula.where("lot_number LIKE ?", "% %").all.each{|f| f.update_attribute(:lot_number, f.lot_number.gsub(" ", ""))}
+  end
 end
