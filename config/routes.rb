@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :sales_quotes
+
   resources :costing_periods
 
   resources :issued_formula_batches do

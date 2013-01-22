@@ -96,6 +96,10 @@
             <% if can?(:view, CostingPeriod) %>
               <li class="<%= selected_menu "costing_periods" %>"><%= link_to "Costing", costing_periods_path %></li>
             <% end %>
+            
+            <% if can?(:view, SalesQuote) %>
+              <li class="<%= selected_menu "sales_quotes" %>"><%= link_to "Sales Quote", sales_quotes_path %></li>
+            <% end %>
           <% end %>
         </ul>
         <div class="clear"/>

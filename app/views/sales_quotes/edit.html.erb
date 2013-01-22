@@ -1,0 +1,13 @@
+<h1>Update Sales Quote <%= @sales_quote.quote_date.strftime("%Y-%m") %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @sales_quote} %>
+
+<%= form_for @sales_quote do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$(this).closest('form')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{sales_quotes_path}')" %>
+  </p>
+<% end %>

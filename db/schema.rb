@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105042145) do
+ActiveRecord::Schema.define(:version => 20130122113609) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20121105042145) do
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.boolean  "active",             :default => true
+    t.boolean  "sales_quote",        :default => false
   end
 
   add_index "finished_goods", ["customer_id"], :name => "index_finished_goods_on_customer_id"
@@ -360,6 +361,20 @@ ActiveRecord::Schema.define(:version => 20121105042145) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "code"
+  end
+
+  create_table "sales_quote_items", :force => true do |t|
+    t.integer  "finished_good_id"
+    t.integer  "sales_quote_id"
+    t.decimal  "quote",            :precision => 11, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sales_quotes", :force => true do |t|
+    t.date     "quote_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "suppliers", :force => true do |t|

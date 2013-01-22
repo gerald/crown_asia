@@ -1,0 +1,13 @@
+<h1>New Sales Quote</h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @sales_quote} %>
+
+<%= form_for @sales_quote do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$('#new_sales_quote')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{sales_quotes_path}')" %>
+  </p>
+<% end %>
