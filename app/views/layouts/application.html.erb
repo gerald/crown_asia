@@ -100,6 +100,15 @@
             <% if can?(:view, SalesQuote) %>
               <li class="<%= selected_menu "sales_quotes" %>"><%= link_to "Sales Quote", sales_quotes_path %></li>
             <% end %>
+            
+            <li>
+              <a href="#">COQ</a>
+              <ul>
+                <% if can?(:view, CoqProperty) %>
+                  <li class="<%= selected_menu "coq_properties" %>"><%= link_to "Properties", coq_properties_path %></li>
+                <% end %>
+              </ul>
+            </li>
           <% end %>
         </ul>
         <div class="clear"/>

@@ -1,0 +1,13 @@
+<h1>Update Sales Quote <%= @coq_property.quote_date.strftime("%Y-%m") %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @coq_property} %>
+
+<%= form_for @coq_property do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$(this).closest('form')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{coq_properties_path}')" %>
+  </p>
+<% end %>

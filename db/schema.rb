@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130122113609) do
+ActiveRecord::Schema.define(:version => 20130125102138) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(:version => 20130122113609) do
   end
 
   add_index "calendar", ["calDate"], :name => "days", :unique => true
+
+  create_table "coq_properties", :force => true do |t|
+    t.string   "name"
+    t.string   "test_method"
+    t.boolean  "soft",        :default => false
+    t.boolean  "rigid",       :default => false
+    t.integer  "position"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "costing_period_items", :force => true do |t|
     t.integer  "raw_material_id"
@@ -177,6 +188,7 @@ ActiveRecord::Schema.define(:version => 20130122113609) do
     t.integer  "updater_id"
     t.boolean  "active",             :default => true
     t.boolean  "sales_quote",        :default => false
+    t.boolean  "soft_pvc",           :default => false
   end
 
   add_index "finished_goods", ["customer_id"], :name => "index_finished_goods_on_customer_id"
