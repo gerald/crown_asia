@@ -66,8 +66,4 @@ class SalesQuotesController < ApplicationController
     def authorize_delete
       authorize! :delete, SalesQuote
     end
-    
-    def authorize_transactions
-      authorize! :transactions, SalesQuote
-    end
 end

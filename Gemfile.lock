@@ -32,6 +32,7 @@ GEM
       multi_json (~> 1.0)
     acts_as_audited (2.0.0)
       rails (>= 3.0.3)
+    acts_as_tree_rails3 (0.1.0)
     arel (2.2.1)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
@@ -125,6 +126,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_audited (= 2.0.0)
+  acts_as_tree_rails3 (~> 0.1.0)
   cancan
   coffee-rails (~> 3.1.0)
   devise

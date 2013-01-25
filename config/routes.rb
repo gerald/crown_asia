@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :coq_properties
+
   resources :sales_quotes
 
   resources :costing_periods

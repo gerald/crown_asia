@@ -146,10 +146,17 @@ class Ability
     ]},
     
     { :subject => "SalesQuote", :label => "Sales Quote", :permissions => [
-      { :action => "view", :desc => "Can view sales_quotes"},
+      { :action => "view", :desc => "Can view sales quotes"},
       { :action => "create", :desc => "Can create a new sales quote"},
       { :action => "update", :desc => "Can update a sales quote"},
       { :action => "delete", :desc => "Can delete a sales quote"}
+    ]},
+    
+    { :subject => "CoqProperty", :label => "COQ Properties", :permissions => [
+      { :action => "view", :desc => "Can view coq properties"},
+      { :action => "create", :desc => "Can create a new coq property"},
+      { :action => "update", :desc => "Can update a coq property"},
+      { :action => "delete", :desc => "Can delete a coq property"}
     ]}
   ]
 
