@@ -1,0 +1,5 @@
+<h1>COQ for <%= @finished_good.name %></h1>
+
+<%= form_tag "", :id => "search_form" do %>
+  <%= text_field_tag "lot_number", @lot_number %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>

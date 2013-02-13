@@ -1,4 +1,9 @@
 CrownAsia::Application.routes.draw do
+  resources :certificate_of_qualities do
+    get 'search', :on => :collection
+    post 'search', :on => :collection
+  end
+
   resources :coq_properties
 
   resources :sales_quotes

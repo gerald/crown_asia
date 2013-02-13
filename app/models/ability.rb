@@ -157,6 +157,13 @@ class Ability
       { :action => "create", :desc => "Can create a new coq property"},
       { :action => "update", :desc => "Can update a coq property"},
       { :action => "delete", :desc => "Can delete a coq property"}
+    ]},
+    
+    { :subject => "CertificateOfQuality", :label => "Certificate of Quality", :permissions => [
+      { :action => "view", :desc => "Can view COQs"},
+      { :action => "create", :desc => "Can create a new COQ"},
+      { :action => "update", :desc => "Can update a COQ"},
+      { :action => "delete", :desc => "Can delete a COQ"}
     ]}
   ]
 
