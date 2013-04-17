@@ -3,3 +3,9 @@
 <%= form_tag "", :id => "search_form" do %>
   <%= text_field_tag "lot_number", @lot_number %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
+
+<br class="clear"/><br/>
+
+<% if @coq %>
+  <%= render :partial => "form" %>
+<% end %>
