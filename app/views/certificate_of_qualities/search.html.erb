@@ -8,4 +8,27 @@
 
 <% if @coq %>
   <%= render :partial => "form" %>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>COQ Date</th>
+        <th>Production Date</th>
+        <th>Bag Number</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @coqs.each do |coq| %>
+      <tr class="<%= cycle("light", "dark") %>">
+        <td><%= coq.coq_date.strftime("%m/%d/%Y") %></td>
+        <td><%= coq.production_date.strftime("%m/%d/%Y") %></td>
+        <td><%= coq.bag_number %></td>
+        <td>
+          <%= link_to "Edit", edit_certificate_of_quality_path(coq), :class => "edit_link" if can?(:update, CertificateOfQuality) %> &nbsp;&nbsp;
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 <% end %>

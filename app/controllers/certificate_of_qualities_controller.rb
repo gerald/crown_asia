@@ -11,6 +11,8 @@ class CertificateOfQualitiesController < ApplicationController
       @coq.lot_number = params[:lot_number]
       @coq.finished_good_transaction_id = @fg_transaction_item.finished_good_transaction_id if @fg_transaction_item
       
+      @coqs = CertificateOfQuality.includes({:finished_good_transaction => :finished_good}).where("finished_goods.id = ? AND lot_number = ?", @finished_good.try(:id), @lot_number)
+      
       CoqProperty.where("parent_id IS NULL").all.each do |coq_property|
         @coq.certificate_of_quality_items.build(:coq_property => coq_property)
         
@@ -34,6 +36,21 @@ class CertificateOfQualitiesController < ApplicationController
       redirect_to finished_goods_path
     else
       render :action => "search"
+    end
+  end
+  
+  def edit
+    @coq = CertificateOfQuality.find(params[:id])
+  end
+  
+  def update
+    @coq = CertificateOfQuality.find(params[:id])
+    
+    if @coq.update_attributes(params[:certificate_of_quality])
+      flash[:notice] = "COQ was updated successfully"
+      redirect_to finished_goods_path
+    else
+      render :action => "edit"
     end
   end
 end
