@@ -1,6 +1,8 @@
 class CertificateOfQualitiesController < ApplicationController
 
   def search
+    authorize! :create, CertificateOfQuality
+    
     @finished_good = FinishedGood.find(params[:finished_good_id])
     
     if request.post? && !params[:lot_number].blank?
@@ -26,6 +28,8 @@ class CertificateOfQualitiesController < ApplicationController
   end
   
   def create
+    authorize! :create, CertificateOfQuality
+    
     @coq = CertificateOfQuality.new(params[:certificate_of_quality])
     
     @finished_good = FinishedGood.find(params[:finished_good_id])
@@ -40,10 +44,14 @@ class CertificateOfQualitiesController < ApplicationController
   end
   
   def edit
+    authorize! :update, CertificateOfQuality
+    
     @coq = CertificateOfQuality.find(params[:id])
   end
   
   def update
+    authorize! :update, CertificateOfQuality
+    
     @coq = CertificateOfQuality.find(params[:id])
     
     if @coq.update_attributes(params[:certificate_of_quality])

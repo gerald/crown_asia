@@ -164,6 +164,10 @@ class Ability
       { :action => "create", :desc => "Can create a new COQ"},
       { :action => "update", :desc => "Can update a COQ"},
       { :action => "delete", :desc => "Can delete a COQ"}
+    ]},
+    
+    { :subject => "GeneratedCertificateOfQuality", :label => "Generated Certificate of Quality", :permissions => [
+      { :action => "create", :desc => "Can create a new generated COQ"}
     ]}
   ]
 

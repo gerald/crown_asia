@@ -1,0 +1,44 @@
+<%= render :partial => "shared/error_messages", :locals => {:target => @coq} %>
+
+<%= form_for @generated_coq do |f| %>
+  <%= hidden_field_tag "finished_good_id", @finished_good.id %>
+  <%= f.hidden_field :lot_number %>
+  
+  <fieldset>
+    <dl>
+      <dd><%= f.label :delivery_date %></dd>
+      <dd><%= f.text_field :delivery_date %></dd>
+    </dl>
+    
+    <br class="clear"/>
+    
+    <dl>
+      <dd><%= f.label :customer_id, "Customer" %></dd>
+      <dd><%= f.select :customer_id, Customer.where("active = 1").order("name").collect{|c| [c.name, c.id]}, :include_blank => true %></dd>
+    </dl>
+    
+    <br class="clear"/>
+    
+    <dl>
+      <dd><%= f.label :start_bag %></dd>
+      <dd><%= f.text_field :start_bag %></dd>
+    </dl>
+    
+    <dl>
+      <dd><%= f.label :end_bag %></dd>
+      <dd><%= f.text_field :end_bag %></dd>
+    </dl>
+  </fieldset>
+
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$('#new_certificate_of_quality')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{finished_goods_path}')" %>
+  </p>
+<% end %>
+
+<%= javascript_tag :defer => "defer" do %>
+  Date.format = 'yyyy-mm-dd';
+  $('#generated_certificate_of_quality_delivery_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+<% end %>
