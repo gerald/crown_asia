@@ -19,7 +19,7 @@ class FinishedGoodTransactionItem < ActiveRecord::Base
   protected
   
     def associate_coq
-      coqs = CertificateOfQuality.where("lot_number = ? AND finished_good_transaction_id IS NULL", self.lot_number)
+      coqs = CertificateOfQuality.where("lot_number = ? AND finished_good_transaction_id IS NULL AND finished_good_id = ?", self.lot_number, self.finished_good_transaction.try(:finished_good_id))
       coqs.each do |coq|
         coq.update_attribute(:finished_good_transaction, self.finished_good_transaction)
       end

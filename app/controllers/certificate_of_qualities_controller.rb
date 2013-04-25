@@ -12,8 +12,9 @@ class CertificateOfQualitiesController < ApplicationController
       @coq = CertificateOfQuality.new
       @coq.lot_number = params[:lot_number]
       @coq.finished_good_transaction_id = @fg_transaction_item.finished_good_transaction_id if @fg_transaction_item
+      @coq.finished_good = @finished_good
       
-      @coqs = CertificateOfQuality.includes({:finished_good_transaction => :finished_good}).where("finished_goods.id = ? AND lot_number = ?", @finished_good.try(:id), @lot_number)
+      @coqs = CertificateOfQuality.where("finished_good_id = ? AND lot_number = ?", @finished_good.try(:id), @lot_number)
       
       CoqProperty.where("parent_id IS NULL").all.each do |coq_property|
         @coq.certificate_of_quality_items.build(:coq_property => coq_property)

@@ -2,6 +2,7 @@ class CertificateOfQuality < ActiveRecord::Base
 
   has_many :certificate_of_quality_items
   belongs_to :finished_good_transaction
+  belongs_to :finished_good
   
   accepts_nested_attributes_for :certificate_of_quality_items, :allow_destroy => true
   

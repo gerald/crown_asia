@@ -1,5 +1,6 @@
 class GeneratedCertificateOfQuality < ActiveRecord::Base
   belongs_to :customer
+  belongs_to :finished_good
   
   validates :delivery_date, :presence => true
   validates :start_bag, :presence => true

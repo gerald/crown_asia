@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,115 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130423132434) do
+ActiveRecord::Schema.define(:version => 20130425133542) do
+
+  create_table "Batch", :id => false, :force => true do |t|
+    t.integer "FormulaID"
+    t.integer "FromBatch"
+    t.integer "ToBatch"
+    t.integer "Batches"
+    t.date    "BatchDate"
+    t.string  "BatchType", :limit => 1
+  end
+
+  create_table "RM", :id => false, :force => true do |t|
+    t.integer "RMID"
+    t.integer "RMTypeID"
+    t.string  "RMType",     :limit => 5
+    t.string  "RMTypeDesc", :limit => 20
+    t.string  "RMItem",     :limit => 20
+    t.date    "CompDate"
+  end
+
+  create_table "Row1", :id => false, :force => true do |t|
+    t.integer "Row1"
+    t.string  "FG1",            :limit => 80
+    t.string  "FG2",            :limit => 80
+    t.string  "FG3",            :limit => 80
+    t.string  "FG4",            :limit => 80
+    t.string  "FG5",            :limit => 80
+    t.string  "FG6",            :limit => 80
+    t.string  "FG7",            :limit => 80
+    t.string  "FG8",            :limit => 80
+    t.string  "FG9",            :limit => 80
+    t.string  "FG10",           :limit => 80
+    t.string  "FG11",           :limit => 80
+    t.string  "FG12",           :limit => 80
+    t.string  "FG13",           :limit => 80
+    t.string  "FG14",           :limit => 80
+    t.string  "FGLoc1",         :limit => 12
+    t.string  "FGLoc2",         :limit => 12
+    t.string  "FGLoc3",         :limit => 12
+    t.string  "FGLoc4",         :limit => 12
+    t.string  "FGLoc5",         :limit => 12
+    t.string  "FGLoc6",         :limit => 12
+    t.string  "FGLoc7",         :limit => 12
+    t.string  "FGLoc8",         :limit => 12
+    t.string  "FGLoc9",         :limit => 12
+    t.string  "FGLoc10",        :limit => 12
+    t.string  "FGLoc11",        :limit => 12
+    t.string  "FGLoc12",        :limit => 12
+    t.string  "FGLoc13",        :limit => 12
+    t.string  "FGLoc14",        :limit => 12
+    t.integer "FromBatch1"
+    t.integer "FromBatch2"
+    t.integer "FromBatch3"
+    t.integer "FromBatch4"
+    t.integer "FromBatch5"
+    t.integer "FromBatch6"
+    t.integer "FromBatch7"
+    t.integer "FromBatch8"
+    t.integer "FromBatch9"
+    t.integer "FromBatch10"
+    t.integer "FromBatch11"
+    t.integer "FromBatch12"
+    t.integer "FromBatch13"
+    t.integer "FromBatch14"
+    t.integer "ToBatch1"
+    t.integer "ToBatch2"
+    t.integer "ToBatch3"
+    t.integer "ToBatch4"
+    t.integer "ToBatch5"
+    t.integer "ToBatch6"
+    t.integer "ToBatch7"
+    t.integer "ToBatch8"
+    t.integer "ToBatch9"
+    t.integer "ToBatch10"
+    t.integer "ToBatch11"
+    t.integer "ToBatch12"
+    t.integer "ToBatch13"
+    t.integer "ToBatch14"
+    t.integer "OrigBatchQty1"
+    t.integer "OrigBatchQty2"
+    t.integer "OrigBatchQty3"
+    t.integer "OrigBatchQty4"
+    t.integer "OrigBatchQty5"
+    t.integer "OrigBatchQty6"
+    t.integer "OrigBatchQty7"
+    t.integer "OrigBatchQty8"
+    t.integer "OrigBatchQty9"
+    t.integer "OrigBatchQty10"
+    t.integer "OrigBatchQty11"
+    t.integer "OrigBatchQty12"
+    t.integer "OrigBatchQty13"
+    t.integer "OrigBatchQty14"
+  end
+
+  create_table "TEMP_P003", :id => false, :force => true do |t|
+    t.integer "RowNumNew"
+    t.integer "RowNo"
+    t.integer "FormulaID"
+    t.integer "FromBatch"
+    t.integer "ToBatch"
+    t.integer "Batches"
+    t.string  "FGLocalBatch", :limit => 12
+    t.string  "FGItem",       :limit => 100
+    t.decimal "OrigBatchQty",                :precision => 10, :scale => 0
+    t.string  "Mixer",        :limit => 5
+    t.string  "Extruder",     :limit => 5
+    t.integer "IssuedRMID"
+    t.decimal "BatchSize",                   :precision => 12, :scale => 5
+  end
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -69,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20130423132434) do
     t.integer  "bag_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "finished_good_id"
   end
 
   create_table "certificate_of_quality_items", :force => true do |t|
@@ -247,6 +355,7 @@ ActiveRecord::Schema.define(:version => 20130423132434) do
     t.integer  "end_bag"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "finished_good_id"
   end
 
   create_table "issued_formula_batches", :force => true do |t|

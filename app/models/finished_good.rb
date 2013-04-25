@@ -8,6 +8,8 @@ class FinishedGood < ActiveRecord::Base
   has_many :finished_good_transactions
   has_many :bags
   has_many :formulas
+  has_many :certificate_of_qualities
+  has_many :generated_certificate_of_qualities
   
   validates :name, :unit_of_measure, :customer, :presence => true
   

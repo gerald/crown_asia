@@ -3,6 +3,7 @@
 <%= form_for @generated_coq do |f| %>
   <%= hidden_field_tag "finished_good_id", @finished_good.id %>
   <%= f.hidden_field :lot_number %>
+  <%= f.hidden_field :finished_good_id %>
   
   <fieldset>
     <dl>
