@@ -14,4 +14,15 @@ class FinishedGoodTransactionItem < ActiveRecord::Base
   
   acts_as_audited :except => [:deleted_at]
   
+  after_save :associate_coq
+  
+  protected
+  
+    def associate_coq
+      coqs = CertificateOfQuality.where("lot_number = ? AND finished_good_transaction_id IS NULL", self.lot_number)
+      coqs.each do |coq|
+        coq.update_attribute(:finished_good_transaction, self.finished_good_transaction)
+      end
+    end
+  
 end

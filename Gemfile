@@ -24,6 +24,10 @@ gem 'paranoia'
 gem "cancan"
 gem "acts_as_audited", "2.0.0"
 gem "acts_as_tree_rails3", "~> 0.1.0"
+<<<<<<< HEAD
+=======
+gem "rake", "10.0.3"
+>>>>>>> 47ab13ab1cee8651af449bc326d9ca20d781a5bf
 
 # Use unicorn as the web server
 # gem 'unicorn'

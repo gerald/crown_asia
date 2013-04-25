@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130125102138) do
+ActiveRecord::Schema.define(:version => 20130423132434) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
@@ -60,6 +60,24 @@ ActiveRecord::Schema.define(:version => 20130125102138) do
   end
 
   add_index "calendar", ["calDate"], :name => "days", :unique => true
+
+  create_table "certificate_of_qualities", :force => true do |t|
+    t.string   "lot_number"
+    t.integer  "finished_good_transaction_id"
+    t.date     "coq_date"
+    t.date     "production_date"
+    t.integer  "bag_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "certificate_of_quality_items", :force => true do |t|
+    t.integer  "certificate_of_quality_id"
+    t.integer  "coq_property_id"
+    t.string   "result"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "coq_properties", :force => true do |t|
     t.string   "name"
@@ -220,6 +238,16 @@ ActiveRecord::Schema.define(:version => 20130125102138) do
   end
 
   add_index "formulas", ["finished_good_id"], :name => "index_formulas_on_finished_good_id"
+
+  create_table "generated_certificate_of_qualities", :force => true do |t|
+    t.string   "lot_number"
+    t.integer  "customer_id"
+    t.date     "delivery_date"
+    t.integer  "start_bag"
+    t.integer  "end_bag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "issued_formula_batches", :force => true do |t|
     t.integer  "start_batch"
