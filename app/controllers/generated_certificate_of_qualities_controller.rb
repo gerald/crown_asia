@@ -6,7 +6,7 @@ class GeneratedCertificateOfQualitiesController < ApplicationController
     
     if request.post? && !params[:lot_number].blank?
       @lot_number = params[:lot_number]
-      @coq = CertificateOfQuality.where("lot_number = ? AND finished_good_transactions.finished_good_id = ?", params[:lot_number], @finished_good.id).first
+      @coq = CertificateOfQuality.where("lot_number = ? AND finished_good_id = ?", params[:lot_number], @finished_good.id).first
       
       if @coq
         @generated_coq = GeneratedCertificateOfQuality.new
