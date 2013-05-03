@@ -1,0 +1,27 @@
+<h1>Sales Quote</h1>
+
+<%= link_to "Add Sales Quote", new_sales_quote_path, :class => "create_link" if can?(:create, SalesQuote) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @sales_quotes.each do |sales_quote| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= sales_quote.quote_date.strftime("%Y-%m") %></td>
+      <td>
+        <%= link_to "Edit", edit_sales_quote_path(sales_quote), :class => "edit_link" if can?(:update, SalesQuote) %> &nbsp;&nbsp;
+        <%= link_to "Delete", sales_quote_path(sales_quote), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, SalesQuote) %> <br/>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @sales_quotes %>

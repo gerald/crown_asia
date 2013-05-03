@@ -1,0 +1,34 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :quote_date %></dd>
+    <dd>
+      <% if @sales_quote.new_record? %>
+        <%= f.date_select :quote_date, :discard_day => true, :use_month_numbers => true %>
+      <% else %>
+        <%= @sales_quote.quote_date.strftime("%Y-%m") %>
+      <% end %>
+    </dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <th>Finished Good</th>
+              <th>Last Month</th>
+              <th>Last Price</th>
+              <th>Current(Quote)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.fields_for :sales_quote_items do |builder| %>
+              <%= render "item_form", :f => builder %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
+</fieldset>

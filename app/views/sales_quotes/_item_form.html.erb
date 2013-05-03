@@ -1,0 +1,12 @@
+<% fg = f.object.finished_good %>
+<tr>
+  <td>
+    <%= f.hidden_field :finished_good_id %>
+    <%= fg.name %>
+  </td>
+  <td><%= fg.last_sales_quote_date(@sales_quote.quote_date).strftime("%Y-%m") if fg.last_sales_quote_date(@sales_quote.quote_date) %></td>
+  <td><%= number_to_currency(fg.last_sales_quote_price(@sales_quote.quote_date)) if fg.last_sales_quote_price(@sales_quote.quote_date) %></td>
+  <td>
+    <%= f.text_field :quote %>
+  </td>
+</tr>

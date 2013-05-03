@@ -8,6 +8,8 @@ class FinishedGood < ActiveRecord::Base
   has_many :finished_good_transactions
   has_many :bags
   has_many :formulas
+  has_many :certificate_of_qualities
+  has_many :generated_certificate_of_qualities
   
   validates :name, :unit_of_measure, :customer, :presence => true
   
@@ -32,6 +34,24 @@ class FinishedGood < ActiveRecord::Base
     return "F" if Date.today - self.last_transaction_date < 30
     return "S" if Date.today - self.last_transaction_date >= 30 && Date.today - self.last_transaction_date < 365
     return "N" if Date.today - self.last_transaction_date >= 365
+  end
+  
+  def last_sales_quote_date(quote_date = nil)
+    c = SalesQuote.includes(:sales_quote_items)
+    c = c.where("sales_quote_items.finished_good_id = ? AND sales_quote_items.quote IS NOT NULL AND sales_quote_items.quote <> ''", self.id)
+    c = c.where("sales_quotes.quote_date < ?", quote_date) if quote_date
+    c = c.order("quote_date").first
+    return nil if c.nil?
+    return c.quote_date
+  end
+  
+  def last_sales_quote_price(quote_date = nil)
+    c = SalesQuoteItem.includes(:sales_quote)
+    c = c.where("sales_quote_items.finished_good_id = ? AND sales_quote_items.quote IS NOT NULL AND sales_quote_items.quote <> ''", self.id)
+    c = c.where("sales_quotes.quote_date < ?", quote_date) if quote_date
+    c = c.order("sales_quotes.quote_date").first
+    return nil if c.nil?
+    return c.quote
   end
 
 end

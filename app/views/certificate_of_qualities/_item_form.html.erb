@@ -1,0 +1,14 @@
+<tr>
+  <td style="<%= f.object.coq_property.parent ? "padding-left:40px;" : "" %>">
+    <%= f.object.coq_property.name %>
+    <%= f.hidden_field :coq_property_id %>
+  </td>
+  <td>
+    <%= f.object.coq_property.test_method %>
+  </td>
+  <td>
+    <% if f.object.coq_property.children.empty? %>
+      <%= f.text_field :result %>
+    <% end %>
+  </td>
+</tr>

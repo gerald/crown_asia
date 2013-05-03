@@ -1,0 +1,31 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :name %></dd>
+    <dd><%= f.text_field :name %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :test_method %></dd>
+    <dd><%= f.text_field :test_method %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :position %></dd>
+    <dd><%= f.text_field :position %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :soft %></dd>
+    <dd><%= f.check_box :soft %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :rigid %></dd>
+    <dd><%= f.check_box :rigid %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :parent_id, "Parent" %></dd>
+    <dd><%= f.select :parent_id, [["", ""]] + CoqProperty.where("parent_id IS NULL").order("position").collect{|c| [c.name, c.id]} %></dd>
+  </dl>
+</fieldset>

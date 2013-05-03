@@ -1,0 +1,2 @@
+module CertificateOfQualitiesHelper
+end

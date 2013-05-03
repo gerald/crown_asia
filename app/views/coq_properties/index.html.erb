@@ -1,0 +1,63 @@
+<h1>COQ Properties</h1>
+
+<%= link_to "Add COQ Property", new_coq_property_path, :class => "create_link" if can?(:create, CoqProperty) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Test Method</th>
+      <th>Soft</th>
+      <th>Rigid</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @coq_properties.each do |coq_property| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td>
+        <% if coq_property.children.any? %>
+          <%= link_to_function image_tag("icons/arrow_right.png", :id => "#{coq_property.id}_toggle"), "toggle_children(#{coq_property.id})" %>
+        <% end %>
+        <%= coq_property.name %>
+      </td>
+      <td><%= coq_property.test_method %></td>
+      <td><%= coq_property.soft ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
+      <td><%= coq_property.rigid ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
+      <td>
+        <%= link_to "Edit", edit_coq_property_path(coq_property), :class => "edit_link" if can?(:update, CoqProperty) %> &nbsp;&nbsp;
+      </td>
+    </tr>
+    
+    <% unless coq_property.children.empty? %>
+      <% coq_property.children.each do |child| %>
+        <tr class="children_<%= coq_property.id %>" style="display:none">
+          <td><%= child.name %></td>
+          <td><%= coq_property.test_method %></td>
+          <td><%= child.soft ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
+          <td><%= child.rigid ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
+          <td>
+            <%= link_to "Edit", edit_coq_property_path(coq_property), :class => "edit_link" if can?(:update, CoqProperty) %> &nbsp;&nbsp;
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @coq_properties %>
+
+<%= javascript_tag do %>
+  function toggle_children(id) {
+    $('.children_' + id).slideToggle();
+    
+    if($('#' + id + '_toggle').attr("src") == "/assets/icons/arrow_right.png") {
+      $('#' + id + '_toggle').attr("src", "/assets/icons/arrow_down.png");
+    } else {
+      $('#' + id + '_toggle').attr("src", "/assets/icons/arrow_right.png");
+    }
+  }
+<% end %>

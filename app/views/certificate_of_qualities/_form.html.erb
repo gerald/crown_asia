@@ -1,0 +1,63 @@
+<%= render :partial => "shared/error_messages", :locals => {:target => @coq} %>
+
+<%= form_for @coq do |f| %>
+  <%= hidden_field_tag "finished_good_id", @finished_good.id %>
+  <%= f.hidden_field :lot_number %>
+  <%= f.hidden_field :finished_good_transaction_id %>
+  <%= f.hidden_field :finished_good_id %>
+  
+  <fieldset>
+    <dl>
+      <dd><%= f.label :coq_date %></dd>
+      <dd><%= f.text_field :coq_date %></dd>
+    </dl>
+    
+    <br class="clear"/>
+    
+    <dl>
+      <dd><%= f.label :production_date %></dd>
+      <dd><%= f.text_field :production_date %></dd>
+    </dl>
+    
+    <br class="clear"/>
+    
+    <dl>
+      <dd><%= f.label :bag_number %></dd>
+      <dd><%= f.text_field :bag_number %></dd>
+    </dl>
+    
+    <dl>
+      <dd>
+        <div id="item_div">
+          <table>
+            <thead>
+              <tr>
+                <th>Properties</th>
+                <th>Test Method</th> 
+                <th>Results</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :certificate_of_quality_items do |builder| %>
+                <%= render "item_form", :f => builder %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </dd>
+    </dl>
+  </fieldset>
+
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$('#new_certificate_of_quality')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{finished_goods_path}')" %>
+  </p>
+<% end %>
+
+<%= javascript_tag :defer => "defer" do %>
+  Date.format = 'yyyy-mm-dd';
+  $('#certificate_of_quality_coq_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+  $('#certificate_of_quality_production_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+<% end %>

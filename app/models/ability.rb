@@ -143,6 +143,31 @@ class Ability
       { :action => "create", :desc => "Can create a new costing period"},
       { :action => "update", :desc => "Can update a costing period"},
       { :action => "delete", :desc => "Can delete a costing period"}
+    ]},
+    
+    { :subject => "SalesQuote", :label => "Sales Quote", :permissions => [
+      { :action => "view", :desc => "Can view sales quotes"},
+      { :action => "create", :desc => "Can create a new sales quote"},
+      { :action => "update", :desc => "Can update a sales quote"},
+      { :action => "delete", :desc => "Can delete a sales quote"}
+    ]},
+    
+    { :subject => "CoqProperty", :label => "COQ Properties", :permissions => [
+      { :action => "view", :desc => "Can view coq properties"},
+      { :action => "create", :desc => "Can create a new coq property"},
+      { :action => "update", :desc => "Can update a coq property"},
+      { :action => "delete", :desc => "Can delete a coq property"}
+    ]},
+    
+    { :subject => "CertificateOfQuality", :label => "Certificate of Quality", :permissions => [
+      { :action => "view", :desc => "Can view COQs"},
+      { :action => "create", :desc => "Can create a new COQ"},
+      { :action => "update", :desc => "Can update a COQ"},
+      { :action => "delete", :desc => "Can delete a COQ"}
+    ]},
+    
+    { :subject => "GeneratedCertificateOfQuality", :label => "Generated Certificate of Quality", :permissions => [
+      { :action => "create", :desc => "Can create a new generated COQ"}
     ]}
   ]
 
