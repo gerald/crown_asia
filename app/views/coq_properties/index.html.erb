@@ -39,7 +39,7 @@
           <td><%= child.soft ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
           <td><%= child.rigid ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
           <td>
-            <%= link_to "Edit", edit_coq_property_path(coq_property), :class => "edit_link" if can?(:update, CoqProperty) %> &nbsp;&nbsp;
+            <%= link_to "Edit", edit_coq_property_path(child), :class => "edit_link" if can?(:update, CoqProperty) %> &nbsp;&nbsp;
           </td>
         </tr>
       <% end %>

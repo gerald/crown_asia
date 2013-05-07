@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -13,6 +14,7 @@
 ActiveRecord::Schema.define(:version => 20130425133542) do
 
   create_table "Batch", :id => false, :force => true do |t|
+    t.string  "CtrlNo",    :limit => 10
     t.integer "FormulaID"
     t.integer "FromBatch"
     t.integer "ToBatch"
@@ -32,6 +34,20 @@ ActiveRecord::Schema.define(:version => 20130425133542) do
 
   create_table "Row1", :id => false, :force => true do |t|
     t.integer "Row1"
+    t.string  "CtrlNo1",        :limit => 10
+    t.string  "CtrlNo2",        :limit => 10
+    t.string  "CtrlNo3",        :limit => 10
+    t.string  "CtrlNo4",        :limit => 10
+    t.string  "CtrlNo5",        :limit => 10
+    t.string  "CtrlNo6",        :limit => 10
+    t.string  "CtrlNo7",        :limit => 10
+    t.string  "CtrlNo8",        :limit => 10
+    t.string  "CtrlNo9",        :limit => 10
+    t.string  "CtrlNo10",       :limit => 10
+    t.string  "CtrlNo11",       :limit => 10
+    t.string  "CtrlNo12",       :limit => 10
+    t.string  "CtrlNo13",       :limit => 10
+    t.string  "CtrlNo14",       :limit => 10
     t.string  "FG1",            :limit => 80
     t.string  "FG2",            :limit => 80
     t.string  "FG3",            :limit => 80
@@ -107,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20130425133542) do
   create_table "TEMP_P003", :id => false, :force => true do |t|
     t.integer "RowNumNew"
     t.integer "RowNo"
+    t.string  "CtrlNo",       :limit => 10
     t.integer "FormulaID"
     t.integer "FromBatch"
     t.integer "ToBatch"
@@ -118,6 +135,23 @@ ActiveRecord::Schema.define(:version => 20130425133542) do
     t.string  "Extruder",     :limit => 5
     t.integer "IssuedRMID"
     t.decimal "BatchSize",                   :precision => 12, :scale => 5
+  end
+
+  create_table "X001", :id => false, :force => true do |t|
+    t.integer "FGID"
+    t.string  "FGItem",        :limit => 50
+    t.integer "FGLocal"
+    t.integer "RMID"
+    t.string  "RMCode",        :limit => 10
+    t.string  "RMName",        :limit => 50
+    t.decimal "Quantity",                    :precision => 25, :scale => 5
+    t.integer "CostingPeriod"
+    t.decimal "ManufCost",                   :precision => 10, :scale => 4
+    t.decimal "Forex",                       :precision => 10, :scale => 4
+    t.decimal "RMUnitCost",                  :precision => 10, :scale => 4
+    t.decimal "BatchSize",                   :precision => 25, :scale => 5
+    t.decimal "RMOrigCost",                  :precision => 25, :scale => 5
+    t.decimal "RMCost",                      :precision => 25, :scale => 5
   end
 
   create_table "audits", :force => true do |t|
@@ -235,410 +269,3 @@ ActiveRecord::Schema.define(:version => 20130425133542) do
     t.boolean  "applicable_to_supplies_scrap",       :default => true
   end
 
-  create_table "departments", :force => true do |t|
-    t.string   "name"
-    t.string   "code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "active",     :default => true
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.boolean  "rm_rr",      :default => true
-    t.boolean  "fg_tos",     :default => true
-  end
-
-  create_table "extruders", :force => true do |t|
-    t.string   "name"
-    t.string   "brand"
-    t.boolean  "active",     :default => true
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "finished_good_transaction_items", :force => true do |t|
-    t.string   "lot_number"
-    t.integer  "start_bag_number"
-    t.integer  "end_bag_number"
-    t.decimal  "quantity",                     :precision => 11, :scale => 5
-    t.boolean  "underpack",                                                   :default => false
-    t.integer  "finished_good_transaction_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "transaction_type"
-  end
-
-  add_index "finished_good_transaction_items", ["finished_good_transaction_id"], :name => "fg_transaction_index"
-  add_index "finished_good_transaction_items", ["lot_number"], :name => "index_finished_good_transaction_items_on_lot_number"
-
-  create_table "finished_good_transactions", :force => true do |t|
-    t.string   "transaction_type"
-    t.string   "reference_type"
-    t.string   "reference_number"
-    t.date     "transaction_date"
-    t.string   "dr_number"
-    t.string   "si_number"
-    t.integer  "finished_good_id"
-    t.integer  "sender_id"
-    t.string   "sender_type"
-    t.text     "comments"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "quantity_per_bag"
-    t.string   "issue_type"
-    t.integer  "issued_to_id"
-    t.string   "issued_to_type"
-    t.string   "mirs_number"
-  end
-
-  add_index "finished_good_transactions", ["finished_good_id"], :name => "index_finished_good_transactions_on_finished_good_id"
-  add_index "finished_good_transactions", ["issued_to_id", "issued_to_type"], :name => "issued_to_index"
-  add_index "finished_good_transactions", ["sender_id", "sender_type"], :name => "sender_index"
-
-  create_table "finished_goods", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "unit_of_measure_id"
-    t.integer  "customer_id"
-    t.boolean  "local"
-    t.text     "comments"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.boolean  "active",             :default => true
-    t.boolean  "sales_quote",        :default => false
-    t.boolean  "soft_pvc",           :default => false
-  end
-
-  add_index "finished_goods", ["customer_id"], :name => "index_finished_goods_on_customer_id"
-  add_index "finished_goods", ["unit_of_measure_id"], :name => "index_finished_goods_on_unit_of_measure_id"
-
-  create_table "formula_items", :force => true do |t|
-    t.decimal  "quantity",             :precision => 11, :scale => 5
-    t.decimal  "multiplier",           :precision => 11, :scale => 8
-    t.integer  "formula_id"
-    t.integer  "raw_material_type_id"
-    t.integer  "raw_material_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "formula_items", ["formula_id"], :name => "index_formula_items_on_formula_id"
-  add_index "formula_items", ["raw_material_id"], :name => "index_formula_items_on_raw_material_id"
-  add_index "formula_items", ["raw_material_type_id"], :name => "index_formula_items_on_raw_material_type_id"
-
-  create_table "formulas", :force => true do |t|
-    t.string   "formula_type"
-    t.boolean  "finished_good_local", :default => true
-    t.integer  "finished_good_id"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "comments"
-  end
-
-  add_index "formulas", ["finished_good_id"], :name => "index_formulas_on_finished_good_id"
-
-  create_table "generated_certificate_of_qualities", :force => true do |t|
-    t.string   "lot_number"
-    t.integer  "customer_id"
-    t.date     "delivery_date"
-    t.integer  "start_bag"
-    t.integer  "end_bag"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "finished_good_id"
-  end
-
-  create_table "issued_formula_batches", :force => true do |t|
-    t.integer  "start_batch"
-    t.integer  "end_batch"
-    t.date     "batch_date"
-    t.integer  "issued_formula_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "start_small_batch"
-    t.integer  "end_small_batch"
-    t.date     "small_batch_date"
-    t.boolean  "processed",         :default => false
-  end
-
-  add_index "issued_formula_batches", ["issued_formula_id"], :name => "index_issued_formula_batches_on_issued_formula_id"
-
-  create_table "issued_formula_items", :force => true do |t|
-    t.integer  "issued_formula_id"
-    t.integer  "raw_material_id"
-    t.decimal  "big_batch_quantity",   :precision => 11, :scale => 5
-    t.decimal  "small_batch_quantity", :precision => 11, :scale => 5
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "issued_formula_items", ["issued_formula_id"], :name => "index_issued_formula_items_on_issued_formula_id"
-  add_index "issued_formula_items", ["raw_material_id"], :name => "index_issued_formula_items_on_raw_material_id"
-
-  create_table "issued_formulas", :force => true do |t|
-    t.string   "control_number"
-    t.date     "issuance_date"
-    t.boolean  "finished_good_local",                                       :default => true
-    t.integer  "finished_good_id"
-    t.integer  "formula_id"
-    t.integer  "mixer_id"
-    t.integer  "extruder_id"
-    t.decimal  "resin_big_batch_quantity",   :precision => 11, :scale => 5
-    t.decimal  "resin_small_batch_quantity", :precision => 11, :scale => 5
-    t.decimal  "big_batch_quantity",         :precision => 11, :scale => 5
-    t.decimal  "small_batch_quantity",       :precision => 11, :scale => 5
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "lot_number"
-    t.date     "production_date"
-    t.text     "comments"
-    t.boolean  "canceled_big_batch",                                        :default => false
-    t.boolean  "canceled_small_batch",                                      :default => false
-  end
-
-  add_index "issued_formulas", ["extruder_id"], :name => "index_issued_formulas_on_extruder_id"
-  add_index "issued_formulas", ["finished_good_id"], :name => "index_issued_formulas_on_finished_good_id"
-  add_index "issued_formulas", ["formula_id"], :name => "index_issued_formulas_on_formula_id"
-  add_index "issued_formulas", ["lot_number"], :name => "index_issued_formulas_on_lot_number"
-  add_index "issued_formulas", ["mixer_id"], :name => "index_issued_formulas_on_mixer_id"
-
-  create_table "mixers", :force => true do |t|
-    t.string   "name"
-    t.string   "brand"
-    t.boolean  "active",     :default => true
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "raw_material_transaction_items", :force => true do |t|
-    t.string   "lot_number"
-    t.decimal  "quantity",                    :precision => 11, :scale => 5
-    t.integer  "raw_material_transaction_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-  end
-
-  add_index "raw_material_transaction_items", ["lot_number"], :name => "index_raw_material_transaction_items_on_lot_number"
-  add_index "raw_material_transaction_items", ["raw_material_transaction_id"], :name => "rm_transaction_index"
-
-  create_table "raw_material_transactions", :force => true do |t|
-    t.string   "transaction_type"
-    t.string   "reference_type"
-    t.string   "reference_number"
-    t.date     "transaction_date"
-    t.string   "po_number"
-    t.string   "mirs_number"
-    t.integer  "raw_material_id"
-    t.integer  "issued_department_id"
-    t.integer  "sender_id"
-    t.string   "sender_type"
-    t.text     "comments"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.string   "issue_type"
-    t.integer  "issued_to_id"
-    t.string   "issued_to_type"
-    t.string   "dr_number"
-    t.string   "si_number"
-  end
-
-  add_index "raw_material_transactions", ["issued_department_id"], :name => "index_raw_material_transactions_on_issued_department_id"
-  add_index "raw_material_transactions", ["issued_to_id", "issued_to_type"], :name => "issued_to_index"
-  add_index "raw_material_transactions", ["raw_material_id"], :name => "index_raw_material_transactions_on_raw_material_id"
-  add_index "raw_material_transactions", ["sender_id", "sender_type"], :name => "sender_index"
-
-  create_table "raw_material_types", :force => true do |t|
-    t.string   "code"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-  end
-
-  create_table "raw_materials", :force => true do |t|
-    t.string   "name"
-    t.string   "code"
-    t.text     "description"
-    t.integer  "raw_material_type_id"
-    t.integer  "unit_of_measure_id"
-    t.integer  "supplier_id"
-    t.boolean  "local"
-    t.text     "comments"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.decimal  "critical_quantity",    :precision => 11, :scale => 5
-    t.boolean  "trading_good",                                        :default => false
-    t.boolean  "active",                                              :default => true
-    t.boolean  "costing",                                             :default => false
-  end
-
-  add_index "raw_materials", ["raw_material_type_id"], :name => "index_raw_materials_on_raw_material_type_id"
-  add_index "raw_materials", ["supplier_id"], :name => "index_raw_materials_on_supplier_id"
-  add_index "raw_materials", ["unit_of_measure_id"], :name => "index_raw_materials_on_unit_of_measure_id"
-
-  create_table "role_users", :force => true do |t|
-    t.integer  "role_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "role_users", ["role_id"], :name => "index_role_users_on_role_id"
-  add_index "role_users", ["user_id"], :name => "index_role_users_on_user_id"
-
-  create_table "roles", :force => true do |t|
-    t.string   "name"
-    t.text     "permissions"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "code"
-  end
-
-  create_table "sales_quote_items", :force => true do |t|
-    t.integer  "finished_good_id"
-    t.integer  "sales_quote_id"
-    t.decimal  "quote",            :precision => 11, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "sales_quotes", :force => true do |t|
-    t.date     "quote_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "suppliers", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "active",                             :default => false
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.boolean  "applicable_to_rm",                   :default => true
-    t.boolean  "applicable_to_fg",                   :default => true
-    t.boolean  "applicable_to_supplies_oc",          :default => true
-    t.boolean  "applicable_to_supplies_engineering", :default => true
-    t.boolean  "applicable_to_supplies_packaging",   :default => true
-    t.boolean  "applicable_to_supplies_scrap",       :default => true
-  end
-
-  create_table "supplies", :force => true do |t|
-    t.string   "name"
-    t.string   "supply_type"
-    t.text     "description"
-    t.text     "comments"
-    t.integer  "unit_of_measure_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.boolean  "active",             :default => true
-  end
-
-  add_index "supplies", ["unit_of_measure_id"], :name => "index_supplies_on_unit_of_measure_id"
-
-  create_table "supply_transaction_items", :force => true do |t|
-    t.decimal  "quantity",              :precision => 11, :scale => 5
-    t.decimal  "unit_price",            :precision => 11, :scale => 5
-    t.integer  "supply_id"
-    t.integer  "supply_transaction_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "supply_transaction_items", ["supply_id"], :name => "index_supply_transaction_items_on_supply_id"
-  add_index "supply_transaction_items", ["supply_transaction_id"], :name => "index_supply_transaction_items_on_supply_transaction_id"
-
-  create_table "supply_transactions", :force => true do |t|
-    t.string   "transaction_type"
-    t.date     "transaction_date"
-    t.integer  "supplier_id"
-    t.string   "usage"
-    t.string   "rr_number"
-    t.string   "pre_number"
-    t.string   "mirs_number"
-    t.string   "lot_number"
-    t.integer  "issued_department_id"
-    t.integer  "issued_user_id"
-    t.text     "comments"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "supply_type"
-    t.string   "po_number"
-    t.string   "reference_type"
-    t.string   "misc_sales_number"
-    t.string   "sr_number"
-    t.integer  "issued_customer_id"
-  end
-
-  add_index "supply_transactions", ["issued_customer_id"], :name => "index_supply_transactions_on_issued_customer_id"
-  add_index "supply_transactions", ["issued_department_id"], :name => "index_supply_transactions_on_issued_department_id"
-  add_index "supply_transactions", ["issued_user_id"], :name => "index_supply_transactions_on_issued_user_id"
-  add_index "supply_transactions", ["lot_number"], :name => "index_supply_transactions_on_lot_number"
-  add_index "supply_transactions", ["supplier_id"], :name => "index_supply_transactions_on_supplier_id"
-
-  create_table "temp", :id => false, :force => true do |t|
-    t.integer "id", :null => false
-  end
-
-  create_table "unit_of_measures", :force => true do |t|
-    t.string   "code"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.boolean  "applicable_to_rm",                   :default => true
-    t.boolean  "applicable_to_fg",                   :default => true
-    t.boolean  "applicable_to_supplies_oc",          :default => true
-    t.boolean  "applicable_to_supplies_engineering", :default => true
-    t.boolean  "applicable_to_supplies_packaging",   :default => true
-    t.boolean  "applicable_to_supplies_scrap",       :default => true
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "username"
-    t.string   "first_name"
-    t.string   "last_name"
-  end
-
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["username"], :name => "index_users_on_username"
-
-end
