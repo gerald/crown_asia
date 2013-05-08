@@ -13,7 +13,7 @@ class GeneratedCertificateOfQualitiesController < ApplicationController
         @generated_coq.lot_number = @lot_number
         @generated_coq.finished_good = @finished_good
       else
-        flash[:error] = "No COQ found for given lot number"
+        flash.now[:error] = "No COQ found for given lot number"
       end
     end
   end

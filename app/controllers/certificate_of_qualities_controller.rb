@@ -16,7 +16,10 @@ class CertificateOfQualitiesController < ApplicationController
       
       @coqs = CertificateOfQuality.where("finished_good_id = ? AND lot_number = ?", @finished_good.try(:id), @lot_number)
       
-      CoqProperty.where("parent_id IS NULL").all.each do |coq_property|
+      @properties = @finished_good.soft_pvc ? CoqProperty.where("parent_id IS NULL AND soft = 1") : CoqProperty.where("parent_id IS NULL AND rigid = 1")
+      @properties = @properties.order("position")
+      
+      @properties.each do |coq_property|
         @coq.certificate_of_quality_items.build(:coq_property => coq_property)
         
         unless coq_property.children.empty?
