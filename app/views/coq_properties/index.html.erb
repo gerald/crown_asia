@@ -35,7 +35,7 @@
       <% coq_property.children.each do |child| %>
         <tr class="children_<%= coq_property.id %>" style="display:none">
           <td><%= child.name %></td>
-          <td><%= coq_property.test_method %></td>
+          <td><%= child.test_method %></td>
           <td><%= child.soft ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
           <td><%= child.rigid ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
           <td>
