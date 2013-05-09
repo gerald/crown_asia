@@ -5,8 +5,13 @@ class CertificateOfQualitiesController < ApplicationController
     
     @finished_good = FinishedGood.find(params[:finished_good_id])
     
-    if request.post? && !params[:lot_number].blank?
-      @lot_number = params[:lot_number]
+    if request.post? && (!params[:lot_number_text].blank? || !params[:lot_number_select].blank?)
+      if !params[:lot_number_text].blank?
+        @lot_number = params[:lot_number_text]
+      else
+        @lot_number = params[:lot_number_select]
+      end
+      
       @fg_transaction_item = FinishedGoodTransactionItem.includes(:finished_good_transaction).where("lot_number = ? AND finished_good_transactions.finished_good_id = ?", params[:lot_number], @finished_good.id).first
       
       @coq = CertificateOfQuality.new

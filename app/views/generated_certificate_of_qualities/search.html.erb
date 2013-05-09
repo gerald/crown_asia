@@ -1,7 +1,9 @@
 <h1>Generate COQ for <%= @finished_good.name %></h1>
 
 <%= form_tag "", :id => "search_form" do %>
-  <%= text_field_tag "lot_number", @lot_number %> <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+  <%= select_tag "lot_number_select", options_for_select(@finished_good.last_lot_number_options, @lot_number) %>
+  <%= text_field_tag "lot_number_text", @lot_number %> 
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 
 <br class="clear"/><br/>

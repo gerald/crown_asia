@@ -4,9 +4,14 @@ class GeneratedCertificateOfQualitiesController < ApplicationController
     
     @finished_good = FinishedGood.find(params[:finished_good_id])
     
-    if request.post? && !params[:lot_number].blank?
-      @lot_number = params[:lot_number]
-      @coq = CertificateOfQuality.where("lot_number = ? AND finished_good_id = ?", params[:lot_number], @finished_good.id).first
+    if request.post? && (!params[:lot_number_text].blank? || !params[:lot_number_select].blank?)
+      if !params[:lot_number_text].blank?
+        @lot_number = params[:lot_number_text]
+      else
+        @lot_number = params[:lot_number_select]
+      end
+      
+      @coq = CertificateOfQuality.where("lot_number = ? AND finished_good_id = ?", @lot_number, @finished_good.id).first
       
       if @coq
         @generated_coq = GeneratedCertificateOfQuality.new
