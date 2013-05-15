@@ -59,8 +59,18 @@ class FinishedGood < ActiveRecord::Base
     l = l.includes(:finished_good_transaction)
     l = l.where("finished_good_transactions.finished_good_id = ?", self.id)
     l = l.group("lot_number")
+    l = l.limit(10)
     l = l.order("finished_good_transaction_items.created_at DESC")
     [""] + l.collect{|fg_item| fg_item.lot_number}
+  end
+  
+  def last_coq_lot_number_options
+    l = CertificateOfQuality.select("lot_number, created_at")
+    l = l.where("finished_good_id = ?", self.id)
+    l = l.group("lot_number")
+    l = l.limit(10)
+    l = l.order("created_at DESC")
+    [""] + l.collect{|c| c.lot_number}
   end
 
 end

@@ -9,6 +9,7 @@
     <tr>
       <th>Name</th>
       <th>Test Method</th>
+      <th>Specification</th>
       <th>Soft</th>
       <th>Rigid</th>
       <th></th>
@@ -24,6 +25,7 @@
         <%= coq_property.name %>
       </td>
       <td><%= coq_property.test_method %></td>
+      <td><%= coq_property.specifications %></td>
       <td><%= coq_property.soft ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
       <td><%= coq_property.rigid ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
       <td>

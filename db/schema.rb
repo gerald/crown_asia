@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130425133542) do
+ActiveRecord::Schema.define(:version => 20130515094431) do
 
   create_table "Batch", :id => false, :force => true do |t|
     t.string  "CtrlNo",    :limit => 10
@@ -224,12 +224,14 @@ ActiveRecord::Schema.define(:version => 20130425133542) do
   create_table "coq_properties", :force => true do |t|
     t.string   "name"
     t.string   "test_method"
-    t.boolean  "soft",        :default => false
-    t.boolean  "rigid",       :default => false
+    t.boolean  "soft",           :default => false
+    t.boolean  "rigid",          :default => false
     t.integer  "position"
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "specifications"
+    t.string   "order"
   end
 
   create_table "costing_period_items", :force => true do |t|
