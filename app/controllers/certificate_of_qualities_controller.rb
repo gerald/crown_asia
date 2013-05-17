@@ -12,10 +12,10 @@ class CertificateOfQualitiesController < ApplicationController
         @lot_number = params[:lot_number_select]
       end
       
-      @fg_transaction_item = FinishedGoodTransactionItem.includes(:finished_good_transaction).where("lot_number = ? AND finished_good_transactions.finished_good_id = ?", params[:lot_number], @finished_good.id).first
+      @fg_transaction_item = FinishedGoodTransactionItem.includes(:finished_good_transaction).where("lot_number = ? AND finished_good_transactions.finished_good_id = ?", @lot_number, @finished_good.id).first
       
       @coq = CertificateOfQuality.new
-      @coq.lot_number = params[:lot_number]
+      @coq.lot_number = @lot_number
       @coq.finished_good_transaction_id = @fg_transaction_item.finished_good_transaction_id if @fg_transaction_item
       @coq.finished_good = @finished_good
       
