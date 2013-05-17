@@ -1,4 +1,4 @@
-<%= render :partial => "shared/error_messages", :locals => {:target => @coq} %>
+<%= render :partial => "shared/error_messages", :locals => {:target => @generated_coq} %>
 
 <%= form_for @generated_coq do |f| %>
   <%= hidden_field_tag "finished_good_id", @finished_good.id %>

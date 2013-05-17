@@ -17,6 +17,8 @@ class GeneratedCertificateOfQualitiesController < ApplicationController
         @generated_coq = GeneratedCertificateOfQuality.new
         @generated_coq.lot_number = @lot_number
         @generated_coq.finished_good = @finished_good
+        
+        @generated_coqs = GeneratedCertificateOfQuality.where("finished_good_id = ? AND lot_number = ?", @finished_good.try(:id), @lot_number)
       else
         flash.now[:error] = "No COQ found for given lot number"
       end
@@ -33,8 +35,9 @@ class GeneratedCertificateOfQualitiesController < ApplicationController
     
     if @generated_coq.save
       flash[:notice] = "COQ Generated"
-      redirect_to finished_goods_path
+      redirect_to search_generated_certificate_of_qualities_path(:finished_good_id => @finished_good.id)
     else
+      @generated_coqs = GeneratedCertificateOfQuality.where("finished_good_id = ? AND lot_number = ?", @finished_good.try(:id), @lot_number)
       render :action => "search"
     end
   end

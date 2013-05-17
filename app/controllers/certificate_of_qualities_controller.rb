@@ -46,8 +46,9 @@ class CertificateOfQualitiesController < ApplicationController
     
     if @coq.save
       flash[:notice] = "COQ added for #{@finished_good.name}"
-      redirect_to finished_goods_path
+      redirect_to search_certificate_of_qualities_path(:finished_good_id => @finished_good.id)
     else
+      @coqs = CertificateOfQuality.where("finished_good_id = ? AND lot_number = ?", @finished_good.try(:id), @lot_number)
       render :action => "search"
     end
   end
@@ -65,7 +66,7 @@ class CertificateOfQualitiesController < ApplicationController
     
     if @coq.update_attributes(params[:certificate_of_quality])
       flash[:notice] = "COQ was updated successfully"
-      redirect_to finished_goods_path
+      redirect_to search_certificate_of_qualities_path(:finished_good_id => @finished_good.id)
     else
       render :action => "edit"
     end

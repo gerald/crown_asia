@@ -9,11 +9,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
   
-  def clear_search_session(excluded_keys)
+  def clear_search_session(excluded_keys = nil)
     session[:search] = {} if session[:search].nil?
-    session[:search].each_pair do |key, value|
-      next if excluded_keys.include?(key)
-      session[:search][key] = ""
+    if excluded_keys
+      session[:search].each_pair do |key, value|
+        next if excluded_keys.include?(key)
+        session[:search][key] = ""
+      end
+    else
+      session[:search] = {}
     end
   end
   

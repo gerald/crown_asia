@@ -1,5 +1,6 @@
 class CoqPropertiesController < ApplicationController 
   before_filter :authorize_view, :only => [:index]
+  before_filter(:only => [:index]) { |c| c.clear_search_session }
   before_filter :authorize_create, :only => [:new, :create]
   before_filter :authorize_update, :only => [:edit, :update]
   before_filter :authorize_delete, :only => [:destroy]
