@@ -49,7 +49,7 @@
   <p class="buttons">
     <%= submit_tag "Save" %>
     <%= button_to_function "Reset", "$('#new_certificate_of_quality')[0].reset()" %>
-    <%= button_to_function "Cancel", "window.location.replace('#{finished_goods_path}')" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{search_certificate_of_qualities_path(:finished_good_id => @coq.finished_good_id)}')" %>
   </p>
 <% end %>
 
