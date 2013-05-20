@@ -40,8 +40,8 @@
         <tr class="children_<%= coq_property.id %>" style="display:none">
           <td style="padding-left:40px;"><%= child.name %></td>
           <td><%= child.test_method %></td>
-          <td><%= coq_property.specifications %></td>
-          <td><%= coq_property.order %></td>
+          <td><%= child.specifications %></td>
+          <td><%= child.order %></td>
           <td><%= child.soft ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
           <td><%= child.rigid ? image_tag("icons/accept.png") : image_tag("icons/cancel.png") %></td>
           <td>
