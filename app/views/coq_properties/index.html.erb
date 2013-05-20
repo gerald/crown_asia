@@ -36,7 +36,7 @@
     </tr>
     
     <% unless coq_property.children.empty? %>
-      <% coq_property.children.each do |child| %>
+      <% coq_property.children.order("position").each do |child| %>
         <tr class="children_<%= coq_property.id %>" style="display:none">
           <td style="padding-left:40px;"><%= child.name %></td>
           <td><%= child.test_method %></td>
