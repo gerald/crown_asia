@@ -61,7 +61,7 @@ class RawMaterial < ActiveRecord::Base
     c = CostingPeriod.includes(:costing_period_items)
     c = c.where("costing_period_items.raw_material_id = ? AND costing_period_items.quote IS NOT NULL AND costing_period_items.quote <> ''", self.id)
     c = c.where("costing_periods.costing_date < ?", costing_date) if costing_date
-    c = c.order("costing_date").first
+    c = c.order("costing_date DESC").first
     return nil if c.nil?
     return c.costing_date
   end
@@ -70,7 +70,7 @@ class RawMaterial < ActiveRecord::Base
     c = CostingPeriodItem.includes(:costing_period)
     c = c.where("costing_period_items.raw_material_id = ? AND costing_period_items.quote IS NOT NULL AND costing_period_items.quote <> ''", self.id)
     c = c.where("costing_periods.costing_date < ?", costing_date) if costing_date
-    c = c.order("costing_periods.costing_date").first
+    c = c.order("costing_periods.costing_date DESC").first
     return nil if c.nil?
     return c.quote
   end
