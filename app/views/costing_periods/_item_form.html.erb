@@ -6,12 +6,14 @@
   </td>
   <td><%= rm.name %></td>
   <td><%= rm.description %></td>
-  <td><%= rm.last_costing_period_date(@costing_period.costing_date).strftime("%Y-%m") if rm.last_costing_period_date(@costing_period.costing_date) %></td>
-  <td><%= number_to_currency(rm.last_costing_period_price(@costing_period.costing_date)) if rm.last_costing_period_price(@costing_period.costing_date) %></td>
+  <td><%= rm.last_costing_period_quote_date(@costing_period.costing_date).strftime("%Y-%m") if rm.last_costing_period_quote_date(@costing_period.costing_date) %></td>
+  <td><%= number_to_currency(rm.last_costing_period_quote(@costing_period.costing_date)) if rm.last_costing_period_quote(@costing_period.costing_date) %></td>
+  <td><%= rm.last_costing_period_fg_date(@costing_period.costing_date).strftime("%Y-%m") if rm.last_costing_period_fg_date(@costing_period.costing_date) %></td>
+  <td><%= number_to_currency(rm.last_costing_period_fg(@costing_period.costing_date)) if rm.last_costing_period_fg(@costing_period.costing_date) %></td>
   <td>
-    <%= f.text_field :quote %>
+    <%= f.text_field :quote, :size => 20 %>
   </td>
   <td>
-    <%= f.text_field :fg %>
+    <%= f.text_field :fg, :size => 20 %>
   </td>
 </tr>
