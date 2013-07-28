@@ -182,6 +182,13 @@ class Ability
       { :action => "create", :desc => "Can create a new position"},
       { :action => "update", :desc => "Can update a position"},
       { :action => "delete", :desc => "Can delete a position"}
+    ]},
+    
+    { :subject => "Personnel", :label => "Personnel", :permissions => [
+      { :action => "view", :desc => "Can view personnel"},
+      { :action => "create", :desc => "Can create a new personnel"},
+      { :action => "update", :desc => "Can update a personnel"},
+      { :action => "delete", :desc => "Can delete a personnel"}
     ]}
   ]
 

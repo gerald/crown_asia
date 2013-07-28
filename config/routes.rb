@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :personnels
+
   resources :positions
 
   resources :trucks

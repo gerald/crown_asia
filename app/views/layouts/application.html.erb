@@ -120,6 +120,10 @@
                 <% if can?(:view, Position) %>
                   <li class="<%= selected_menu "positions" %>"><%= link_to "Position", positions_path %></li>
                 <% end %>
+                
+                <% if can?(:view, Personnel) %>
+                  <li class="<%= selected_menu "personnels" %>"><%= link_to "Personnel", personnels_path %></li>
+                <% end %>
               </ul>
             </li>
           <% end %>

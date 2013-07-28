@@ -1,0 +1,35 @@
+<h1>Personnel s</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <label>First Name: </label><%= text_field_tag "first_name", session[:search][:first_name] %> 
+  <label>Last Name: </label><%= text_field_tag "last_name", session[:search][:last_name] %> 
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Personnel ", new_personnel_path, :class => "create_link" if can?(:create, Personnel ) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Position</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @personnels.each do |personnel| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= personnel.name %></td>
+      <td><%= personnel.position.try(:name) %></td>
+      <td>
+        <%= link_to "Edit", edit_personnel_path(personnel ), :class => "edit_link" if can?(:update, Personnel ) %> &nbsp;&nbsp;
+        <%= link_to "Delete", personnel_path(personnel ), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Personnel ) %> <br/>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @personnels %>

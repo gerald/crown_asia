@@ -1,0 +1,21 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :first_name %></dd>
+    <dd><%= f.text_field :first_name %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :last_name %></dd>
+    <dd><%= f.text_field :last_name %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :active %></dd>
+    <dd><%= f.check_box :active %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :position_id, "Position" %></dd>
+    <dd><%= f.select :position_id, [["", ""]] + Position.where("active = 1").order("name").collect{|p| [p.name, p.id]} %></dd>
+  </dl>
+</fieldset>
