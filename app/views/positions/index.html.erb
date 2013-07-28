@@ -1,0 +1,34 @@
+<h1>Positions</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <label>Plate Number: </label><%= text_field_tag "position_name", session[:search][:position_name] %> 
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Position", new_position_path, :class => "create_link" if can?(:create, Position) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Active</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @positions.each do |position| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= position.name %></td>
+      <td><%= position.active ? "Yes" : "No" %></td>
+      <td>
+        <%= link_to "Edit", edit_position_path(position), :class => "edit_link" if can?(:update, Position) %> &nbsp;&nbsp;
+        <%= link_to "Delete", position_path(position), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Position) %> <br/>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @positions %>

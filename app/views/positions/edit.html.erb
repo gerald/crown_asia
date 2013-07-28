@@ -1,0 +1,13 @@
+<h1>Update <%= @position.plate_number %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @position} %>
+
+<%= form_for @position do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$(this).closest('form')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{positions_path}')" %>
+  </p>
+<% end %>

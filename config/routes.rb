@@ -1,4 +1,6 @@
 CrownAsia::Application.routes.draw do
+  resources :positions
+
   resources :trucks
 
   resources :generated_certificate_of_qualities do

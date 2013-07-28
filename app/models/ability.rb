@@ -175,6 +175,13 @@ class Ability
       { :action => "create", :desc => "Can create a new truck"},
       { :action => "update", :desc => "Can update a truck"},
       { :action => "delete", :desc => "Can delete a truck"}
+    ]},
+    
+    { :subject => "Position", :label => "Position", :permissions => [
+      { :action => "view", :desc => "Can view positions"},
+      { :action => "create", :desc => "Can create a new position"},
+      { :action => "update", :desc => "Can update a position"},
+      { :action => "delete", :desc => "Can delete a position"}
     ]}
   ]
 
