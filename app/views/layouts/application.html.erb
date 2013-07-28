@@ -109,6 +109,15 @@
                 <% end %>
               </ul>
             </li>
+            
+            <li>
+              <a href="#">LOGISTICS</a>
+              <ul>
+                <% if can?(:view, Truck) %>
+                  <li class="<%= selected_menu "trucks" %>"><%= link_to "Trucks", trucks_path %></li>
+                <% end %>
+              </ul>
+            </li>
           <% end %>
         </ul>
         <div class="clear"/>

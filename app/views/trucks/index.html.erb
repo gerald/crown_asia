@@ -1,0 +1,36 @@
+<h1>Trucks</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <label>Plate Number: </label><%= text_field_tag "plate_number", session[:search][:plate_number] %> 
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Truck", new_truck_path, :class => "create_link" if can?(:create, Truck) %>
+
+<br class="clear"/><br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plate Number</th>
+      <th>Description</th>
+      <th>Capacity</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @trucks.each do |truck| %>
+    <tr class="<%= cycle("light", "dark") %>">
+      <td><%= truck.plate_number %></td>
+      <td><%= simple_format(truck.description) %></td>
+      <td><%= truck.capacity %></td>
+      <td>
+        <%= link_to "Edit", edit_truck_path(truck), :class => "edit_link" if can?(:update, Truck) %> &nbsp;&nbsp;
+        <%= link_to "Delete", truck_path(truck), :class => "delete_link", :method => :delete, :confirm => "Are you sure?" if can?(:delete, Truck) %> <br/>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @trucks %>

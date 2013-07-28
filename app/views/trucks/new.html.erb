@@ -1,0 +1,13 @@
+<h1>New Truck</h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @truck} %>
+
+<%= form_for @truck do |f| %>
+  <%= render :partial => "form", :locals =>{:f => f} %>
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$('#new_truck')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{trucks_path}')" %>
+  </p>
+<% end %>

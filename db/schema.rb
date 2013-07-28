@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515094431) do
+ActiveRecord::Schema.define(:version => 20130728130748) do
 
   create_table "Batch", :id => false, :force => true do |t|
     t.string  "CtrlNo",    :limit => 10
@@ -191,83 +191,4 @@ ActiveRecord::Schema.define(:version => 20130515094431) do
   add_index "bags", ["finished_good_transaction_item_id"], :name => "index_bags_on_finished_good_transaction_item_id"
   add_index "bags", ["lot_number"], :name => "index_bags_on_lot_number"
   add_index "bags", ["removing_transaction_id"], :name => "index_bags_on_removing_transaction_id"
-
-  create_table "calendar", :primary_key => "calID", :force => true do |t|
-    t.date    "calDate"
-    t.integer "calYear"
-    t.integer "calMonth"
-    t.string  "calMonthShort", :limit => 3
-    t.string  "calMonthLong",  :limit => 15
-  end
-
-  add_index "calendar", ["calDate"], :name => "days", :unique => true
-
-  create_table "certificate_of_qualities", :force => true do |t|
-    t.string   "lot_number"
-    t.integer  "finished_good_transaction_id"
-    t.date     "coq_date"
-    t.date     "production_date"
-    t.integer  "bag_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "finished_good_id"
-  end
-
-  create_table "certificate_of_quality_items", :force => true do |t|
-    t.integer  "certificate_of_quality_id"
-    t.integer  "coq_property_id"
-    t.string   "result"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "coq_properties", :force => true do |t|
-    t.string   "name"
-    t.string   "test_method"
-    t.boolean  "soft",           :default => false
-    t.boolean  "rigid",          :default => false
-    t.integer  "position"
-    t.integer  "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "specifications"
-    t.string   "order"
-  end
-
-  create_table "costing_period_items", :force => true do |t|
-    t.integer  "raw_material_id"
-    t.integer  "costing_period_id"
-    t.decimal  "quote",             :precision => 11, :scale => 2
-    t.decimal  "fg",                :precision => 11, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "costing_period_items", ["costing_period_id"], :name => "index_costing_period_items_on_costing_period_id"
-  add_index "costing_period_items", ["raw_material_id"], :name => "index_costing_period_items_on_raw_material_id"
-
-  create_table "costing_periods", :force => true do |t|
-    t.date     "costing_date"
-    t.decimal  "manufacturing_quote", :precision => 11, :scale => 2
-    t.decimal  "manufacturing_fg",    :precision => 11, :scale => 2
-    t.decimal  "forex_quote",         :precision => 11, :scale => 2
-    t.decimal  "forex_fg",            :precision => 11, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "customers", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-    t.boolean  "active"
-    t.boolean  "applicable_to_rm",                   :default => true
-    t.boolean  "applicable_to_fg",                   :default => true
-    t.boolean  "applicable_to_supplies_oc",          :default => true
-    t.boolean  "applicable_to_supplies_engineering", :default => true
-    t.boolean  "applicable_to_supplies_packaging",   :default => true
-    t.boolean  "applicable_to_supplies_scrap",       :default => true
-  end
 
