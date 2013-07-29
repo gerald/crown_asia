@@ -1,0 +1,48 @@
+<h1>Delivery Schedule</h1>
+
+<%= form_tag "", :method => :get, :id => "search_form" do %>
+  <label class="float_left">Start Date:</label> <%= text_field_tag "delivery_date", session[:search][:delivery_date], :readonly => true %> 
+  
+  <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+<% end %>
+
+<%= link_to "Add Delivery Schedule", new_delivery_schedule_path, :class => "create_link" if can?(:create, DeliverySchedule) %>
+
+<br class="clear"/><br/>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @delivery_schedule} %>
+
+<% if @delivery_schedules %>
+  <table>
+    <thead>
+      <tr>
+        <th>Control #</th>
+        <th>Delivery Date</th>
+        <th>Delivery Time</th>
+        <th>Truck</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @delivery_schedules.each do |delivery_schedule| %>  
+      <tr class="<%= cycle("light", "dark") %>">
+        <td><%= delivery_schedule.control_number %></td>
+        <td><%= delivery_schedule.delivery_date.strftime("%m/%d/%Y") %></td>
+        <td><%= delivery_schedule.delivery_time.strftime("%H:%M") %></td>
+        <td><%= delivery_schedule.truck.plate_number %></td>
+        <td>
+          <%= link_to "Edit", edit_delivery_schedule_path(delivery_schedule), :class => "edit_link" if can?(:update, DeliverySchedule) %>
+          <%= link_to "Cancel", cancel_delivery_schedule_path(delivery_schedule), :class => "delete_link" if can?(:cancel, DeliverySchedule) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  
+  <%= will_paginate @delivery_schedules %>
+<% end %>
+
+<script type="text/javascript">
+  Date.format = 'yyyy-mm-dd';
+  $('#delivery_date').datePicker({clickInput:true, startDate:'2000-01-01'});
+</script>

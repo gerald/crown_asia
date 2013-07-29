@@ -189,7 +189,14 @@ class Ability
       { :action => "create", :desc => "Can create a new personnel"},
       { :action => "update", :desc => "Can update a personnel"},
       { :action => "delete", :desc => "Can delete a personnel"}
-    ]}
+    ]},
+    
+    { :subject => "DeliverySchedule", :label => "Delivery Schedules", :permissions => [
+      { :action => "view", :desc => "Can view delivery schedules"},
+      { :action => "create", :desc => "Can create a new delivery schedule"},
+      { :action => "update", :desc => "Can update a delivery schedule"},
+      { :action => "cancel", :desc => "Can cancel a delivery schedule"}
+    ]},
   ]
 
   def initialize(user)

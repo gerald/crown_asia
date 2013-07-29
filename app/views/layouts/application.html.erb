@@ -124,6 +124,10 @@
                 <% if can?(:view, Personnel) %>
                   <li class="<%= selected_menu "personnels" %>"><%= link_to "Personnel", personnels_path %></li>
                 <% end %>
+                
+                <% if can?(:view, DeliverySchedule) %>
+                  <li class="<%= selected_menu "delivery_schedles" %>"><%= link_to "Delivery Schedule", delivery_schedules_path %></li>
+                <% end %>
               </ul>
             </li>
           <% end %>

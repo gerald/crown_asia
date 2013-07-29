@@ -1,0 +1,75 @@
+<fieldset>
+  <dl>
+    <dd><%= f.label :control_number %></dd>
+    <dd><%= @delivery_schedule.next_control_number %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :delivery_date %></dd>
+    <dd><%= f.text_field :delivery_date %></dd>
+  </dl>
+  
+  <br class="clear"/>
+  
+  <dl>
+    <dd><%= f.label :delivery_time %></dd>
+    <dd><%= f.select :delivery_time, time_options %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :truck_id, "Truck" %></dd>
+    <dd><%= f.select :truck_id, [["", ""]] + Truck.where("active = 1").collect{|t| [t.plate_number, t.id]} %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :driver_id, "Driver" %></dd>
+    <dd><%= f.select :driver_id, [["", ""]] + Position.find_by_name("Driver").personnels.where("active = 1").collect{|p| [p.name, p.id]} %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :delivery_helper_1_id, "Delivery Helper 1" %></dd>
+    <dd><%= f.select :delivery_helper_1_id, [["", ""]] + Position.find_by_name("Delivery Helper").personnels.where("active = 1").collect{|p| [p.name, p.id]} %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :delivery_helper_2_id, "Delivery Helper 2" %></dd>
+    <dd><%= f.select :delivery_helper_2_id, [["", ""]] + Position.find_by_name("Delivery Helper").personnels.where("active = 1").collect{|p| [p.name, p.id]} %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :comments %></dd>
+    <dd><%= f.text_area :comments %></dd>
+  </dl>
+  
+  <dl>
+    <dd>
+      <div id="item_div">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th> 
+              <th>PO</th>
+              <th>SO</th> 
+              <th>FG Item</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @delivery_schedule.delivery_schedule_items.each_with_index do |item, index| %>
+              <%= f.fields_for :delivery_schedule_items, item do |builder| %>
+                <%= render "delivery_schedule_item", :f => builder, :index => index %>
+              <% end %>
+            <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td id="rm_sum"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
+</fieldset>

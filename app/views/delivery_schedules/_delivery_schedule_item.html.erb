@@ -1,0 +1,9 @@
+<tr>
+  <td>
+    <%= f.select :customer_id, [["", ""]] + Customer.where("active = 1").order("name").collect{|c| [c.name, c.id]} %>
+  </td>
+  <td><%= f.text_field :po %></td>
+  <td><%= f.text_field :so %></td>
+  <td><%= f.select :finished_good_id, [["", ""]] + FinishedGood.where("active = 1").order("name").collect{|f| [f.name, f.id]} %></td>
+  <td><%= f.text_field :quantity, :size => 10 %></td>
+</tr>
