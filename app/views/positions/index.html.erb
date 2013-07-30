@@ -1,7 +1,7 @@
 <h1>Positions</h1>
 
 <%= form_tag "", :method => :get, :id => "search_form" do %>
-  <label>Plate Number: </label><%= text_field_tag "position_name", session[:search][:position_name] %> 
+  <label>Position: </label><%= text_field_tag "position_name", session[:search][:position_name] %> 
   <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 

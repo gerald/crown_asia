@@ -3,6 +3,7 @@
 <%= form_tag "", :method => :get, :id => "search_form" do %>
   <label>First Name: </label><%= text_field_tag "first_name", session[:search][:first_name] %> 
   <label>Last Name: </label><%= text_field_tag "last_name", session[:search][:last_name] %> 
+  <label>Position: </label><%= select_tag "position", options_from_collection_for_select(Position.where("active = 1"), "id", "name", session[:search][:position]), :include_blank => true %> 
   <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
 <% end %>
 

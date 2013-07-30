@@ -28,12 +28,12 @@
   
   <dl>
     <dd><%= f.label :delivery_helper_1_id, "Delivery Helper 1" %></dd>
-    <dd><%= f.select :delivery_helper_1_id, [["", ""]] + Position.find_by_name("Delivery Helper").personnels.where("active = 1").collect{|p| [p.name, p.id]} %></dd>
+    <dd><%= f.select :delivery_helper_1_id, [["", ""]] + Personnel.where("active = 1").collect{|p| [p.name, p.id]} %></dd>
   </dl>
   
   <dl>
     <dd><%= f.label :delivery_helper_2_id, "Delivery Helper 2" %></dd>
-    <dd><%= f.select :delivery_helper_2_id, [["", ""]] + Position.find_by_name("Delivery Helper").personnels.where("active = 1").collect{|p| [p.name, p.id]} %></dd>
+    <dd><%= f.select :delivery_helper_2_id, [["", ""]] + Personnel.where("active = 1").collect{|p| [p.name, p.id]} %></dd>
   </dl>
   
   <dl>

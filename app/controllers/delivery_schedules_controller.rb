@@ -33,6 +33,7 @@ class DeliverySchedulesController < ApplicationController
   
   def edit
     @delivery_schedule = DeliverySchedule.find(params[:id])
+    (10 - @delivery_schedule.delivery_schedule_items.count).times {@delivery_schedule.delivery_schedule_items.build}
   end
   
   def update
