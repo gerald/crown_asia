@@ -1,0 +1,18 @@
+<h1>Update <%= @delivery_schedule.control_number %></h1>
+
+<%= render :partial => "shared/error_messages", :locals => {:target => @delivery_schedule} %>
+
+<%= form_for @delivery_schedule, :url => cancel_schedule_delivery_schedule_path(@delivery_schedule), :method => :post do |f| %>
+  <fieldset>
+    <dl>
+      <dd><%= f.label :cancel_reason %></dd>
+      <dd><%= f.text_area :cancel_reason %></dd>
+    </dl>
+  </fieldset>  
+  
+  <p class="buttons">
+    <%= submit_tag "Save" %>
+    <%= button_to_function "Reset", "$(this).closest('form')[0].reset()" %>
+    <%= button_to_function "Cancel", "window.location.replace('#{delivery_schedules_path}')" %>
+  </p>
+<% end %>

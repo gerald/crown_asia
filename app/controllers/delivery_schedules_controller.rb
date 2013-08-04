@@ -27,6 +27,7 @@ class DeliverySchedulesController < ApplicationController
       flash[:notice] = "Delivery has been scheduled"
       redirect_to delivery_schedules_path
     else
+      (10 - @delivery_schedule.delivery_schedule_items.count).times {@delivery_schedule.delivery_schedule_items.build}
       render :action => "new"
     end
   end
@@ -39,11 +40,28 @@ class DeliverySchedulesController < ApplicationController
   def update
     @delivery_schedule = DeliverySchedule.find(params[:id])
     if @delivery_schedule.update_attributes(params[:delivery_schedule])
-      flash[:notice] = "Formula has been issued"
+      flash[:notice] = "Delivery has been updated"
       redirect_to delivery_schedules_path
     else
-      @delivery_schedules = DeliverySchedule.paginate(:per_page => 20, :page => params[:page], :conditions => ["issuance_date = ?", session[:search][:issuance_date]])
-      render :action => "index"
+      (10 - @delivery_schedule.delivery_schedule_items.count).times {@delivery_schedule.delivery_schedule_items.build}
+      render :action => "edit"
+    end
+  end
+  
+  def cancel
+    @delivery_schedule = DeliverySchedule.find(params[:id])
+  end
+  
+  def cancel_schedule
+    @delivery_schedule = DeliverySchedule.find(params[:id])
+    @delivery_schedule.attributes = params[:delivery_schedule]
+    @delivery_schedule.canceled = true
+    
+    if @delivery_schedule.save
+      flash[:notice] = "Delivery has been scheduled"
+      redirect_to delivery_schedules_path
+    else
+      render :action => "cancel"
     end
   end
   

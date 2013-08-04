@@ -10,6 +10,8 @@ class DeliverySchedule < ActiveRecord::Base
   
   validates :delivery_date, :delivery_time, :truck, :driver, :presence => true
   
+  validate :cancel_reason_exists_for_canceled_schedules
+  
   before_create :set_control_number
   
   def next_control_number
@@ -24,5 +26,11 @@ class DeliverySchedule < ActiveRecord::Base
   
     def set_control_number
       self.control_number = self.next_control_number
+    end
+    
+    def cancel_reason_exists_for_canceled_schedules
+      if self.canceled && self.cancel_reason.blank?
+        self.errors.add(:base, "Reason is required when canceling a delivery schedule")
+      end
     end
 end

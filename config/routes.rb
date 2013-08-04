@@ -1,7 +1,7 @@
 CrownAsia::Application.routes.draw do
   resources :delivery_schedules do
     get 'cancel', :on => :member
-    post 'cancel', :on => :member
+    post 'cancel_schedule', :on => :member
   end
 
   resources :personnels
