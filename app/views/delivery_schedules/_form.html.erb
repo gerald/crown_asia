@@ -65,7 +65,7 @@
               <td></td>
               <td></td>
               <td></td>
-              <td id="rm_sum"></td>
+              <td id="quantity_sum"></td>
             </tr>
           </tbody>
         </table>
@@ -73,3 +73,27 @@
     </dd>
   </dl>
 </fieldset>
+
+<%= javascript_tag do %>
+function update_quantity() {
+  var sum = 0;
+  $('.item_quantity').each(function() {
+    if($(this).val() != "") {
+      sum += parseFloat($(this).val());
+    }
+  });
+  $('#quantity_sum').html(sum);
+}
+
+$(document).ready(function() {
+  update_quantity();
+  
+  $('.item_quantity').keyup(function(){
+    update_quantity();
+  });
+  
+  $('.item_quantity').keydown(function(){
+    update_quantity();
+  })
+});
+<% end %>

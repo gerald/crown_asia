@@ -12,6 +12,7 @@ class Customer < ActiveRecord::Base
   before_destroy :check_associations
   
   scope :active_customers, :conditions => {:active => true}, :order => "name"
+  scope :fg_customers, :conditions => {:active => true, :applicable_to_fg => true}, :order => "name"
   
   protected
   
