@@ -4,6 +4,8 @@
   <label class="float_left">Delivery Date:</label> <%= text_field_tag "delivery_date", session[:search][:delivery_date], :readonly => true %> 
   
   <%= link_to_function "Search", "$('#search_form').submit()", :class => "search_link" %>
+  
+  <%= link_to_function "Clear Date", "$('#delivery_date').val('')", :class => "delete_link" %>
 <% end %>
 
 <%= link_to "Add Delivery Schedule", new_delivery_schedule_path, :class => "create_link" if can?(:create, DeliverySchedule) %>
@@ -32,15 +34,16 @@
           <td><%= delivery_schedule.delivery_time.strftime("%H:%M") %></td>
         <% else %>
           <td colspan="2">
-            <p>Canceled:</p>
-            
-            <%= simple_format(delivery_schedule.cancel_reason) %>
+            <p>Canceled: <%= simple_format(delivery_schedule.cancel_reason) %></p>
           </td>
         <% end %>
         <td><%= delivery_schedule.truck.plate_number %></td>
         <td>
           <%= link_to "Edit", edit_delivery_schedule_path(delivery_schedule), :class => "edit_link" if can?(:update, DeliverySchedule) %>
-          <%= link_to "Cancel", cancel_delivery_schedule_path(delivery_schedule), :class => "delete_link" if can?(:cancel, DeliverySchedule) %>
+          
+          <% unless delivery_schedule.canceled %>
+            <%= link_to "Cancel", cancel_delivery_schedule_path(delivery_schedule), :class => "delete_link" if can?(:cancel, DeliverySchedule) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

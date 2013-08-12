@@ -1,5 +1,37 @@
 <fieldset>
   <dl>
+    <dd>
+      <table>
+        <thead>
+          <tr>
+            <th>Ctrl No.</th>
+            <th>Delivery Date</th> 
+            <th>Deivery Time</th>
+            <th>Truck</th>
+            <th>Customer</th>
+            <th>Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @finished_good.valid_delivery_schedules.each do |d| %>
+           <% ds = d.delivery_schedule %>
+            <tr>
+              <td><%= ds.control_number %></td>
+              <td><%= ds.delivery_date.strftime('%m/%d/%Y') %></td>
+              <td><%= ds.delivery_time.strftime('%H:%M') %></td>
+              <td><%= ds.truck.plate_number %></td>
+              <td><%= d.customer.name %></td>
+              <td><%= d.quantity%></td>
+              <td><%= link_to_function "Select", "populate_from_delivery_schedule_item(#{d.id})" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :issue_type %></dd>
     <dd><%= f.select :issue_type, [["Customer", "Customer"], ["Internal", "Internal"]], {}, {:onchange => "update_issued()"} %></dd>
   </dl>
@@ -122,6 +154,16 @@
       data: 'index=' + index + '&lot_number=' + $('#finished_good_transaction_finished_good_transaction_items_attributes_' + index + '_lot_number').val() + '&finished_good_id=<%= @finished_good.id %>',
       beforeSend: function(request){$('#issued_loader').show();},
       complete: function(request){$('#issued_loader').hide()}
+    });
+  }
+  
+  function populate_from_delivery_schedule_item(item_id) {
+    $.ajax({
+      type: 'POST',
+      url: '<%= populate_fields_from_delivery_schedule_items_finished_good_path(@finished_good) %>',
+      data: 'delivery_schedule_item_id=' + item_id,
+      beforeSend: function(request){$('#loader').show();},
+      complete: function(request){$('#loader').hide()}
     });
   }
 

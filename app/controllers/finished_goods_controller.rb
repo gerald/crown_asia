@@ -55,6 +55,11 @@ class FinishedGoodsController < ApplicationController
     @transactions = @finished_good.finished_good_transactions.paginate(:per_page => 20, :page => params[:page], :order => "transaction_date DESC")
   end
   
+  def populate_fields_from_delivery_schedule_items
+    @finished_good = FinishedGood.find(params[:id])
+    @delivery_schedule_item = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
+  end
+  
   protected
   
     def authorize_view

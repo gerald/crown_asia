@@ -68,6 +68,7 @@ CrownAsia::Application.routes.draw do
 
   resources :finished_goods do
     get 'transactions', :on => :member
+    post 'populate_fields_from_delivery_schedule_items', :on => :member
   end
 
   resources :supply_transactions do

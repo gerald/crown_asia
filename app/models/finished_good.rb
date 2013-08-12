@@ -10,6 +10,7 @@ class FinishedGood < ActiveRecord::Base
   has_many :formulas
   has_many :certificate_of_qualities
   has_many :generated_certificate_of_qualities
+  has_many :delivery_schedule_items
   
   validates :name, :unit_of_measure, :customer, :presence => true
   
@@ -71,6 +72,12 @@ class FinishedGood < ActiveRecord::Base
     l = l.limit(10)
     l = l.order("created_at DESC")
     [""] + l.collect{|c| c.lot_number}
+  end
+  
+  def valid_delivery_schedules
+    ds = self.delivery_schedule_items.includes(:delivery_schedule)
+    ds = ds.where("delivery_schedules.delivery_date >= ? AND delivery_schedules.canceled = 0", Date.current)
+    ds
   end
 
 end
