@@ -67,6 +67,11 @@
   <br class="clear"/>
   
   <dl>
+    <dd><%= f.label :quantity_per_bag %></dd>
+    <dd><%= f.select :quantity_per_bag, quantity_per_bag_options, {:include_blank => true} %></dd>
+  </dl>
+  
+  <dl>
     <dd>
       <div id="item_div">
         <table>
