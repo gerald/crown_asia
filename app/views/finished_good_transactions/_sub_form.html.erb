@@ -31,9 +31,11 @@
     </dd>
   </dl>
   
+  <%= text_field_tag "delivery_schedule_item_id" %>
+  
   <dl>
     <dd><%= f.label :issue_type %></dd>
-    <dd><%= f.select :issue_type, [["Customer", "Customer"], ["Internal", "Internal"]], {}, {:onchange => "update_issued()"} %></dd>
+    <dd><%= f.select :issue_type, [["Customer", "Customer"], ["Internal", "Internal"]], {}, {:onchange => "update_issued()", :class => "customer_field"} %></dd>
   </dl>
   
   <dl>
@@ -61,7 +63,7 @@
   
   <dl>
     <dd><%= f.label :transaction_date %></dd>
-    <dd><%= f.text_field :transaction_date %></dd>
+    <dd><%= f.text_field :transaction_date, :class => "customer_field" %></dd>
   </dl>
   
   <br class="clear"/>
@@ -171,6 +173,10 @@
       complete: function(request){$('#loader').hide()}
     });
   }
+  
+  $('.customer_field').change(function(){
+    $('#delivery_schedule_item_id').val('')
+  })
 
   $(document).ready(function() {
     // update_bags();

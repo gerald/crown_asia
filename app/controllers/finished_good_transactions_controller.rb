@@ -22,6 +22,10 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction = FinishedGoodTransaction.new(params[:finished_good_transaction])
     @finished_good_transaction.creator = current_user
     if @finished_good_transaction.save
+      unless params[:delivery_schedule_item_id].blank?
+        d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
+        d.update_attribute(:selected, true)
+      end
       flash[:notice] = "Transaction added for #{@finished_good_transaction.finished_good.name}"
       redirect_to finished_goods_path
     else

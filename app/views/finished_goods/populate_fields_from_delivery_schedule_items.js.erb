@@ -1,3 +1,4 @@
 $('#finished_good_transaction_issue_type').val('Customer');
 $('#finished_good_transaction_issued_to_id').val('<%= @delivery_schedule_item.customer_id %>')
 $('#finished_good_transaction_transaction_date').val('<%= @delivery_schedule_item.delivery_schedule.delivery_date.strftime("%Y-%m-%d") %>')
+$('#delivery_schedule_item_id').val('<%= @delivery_schedule_item.id %>')
