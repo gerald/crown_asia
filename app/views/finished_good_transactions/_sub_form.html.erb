@@ -6,7 +6,7 @@
           <tr>
             <th>Ctrl No.</th>
             <th>Delivery Date</th> 
-            <th>Deivery Time</th>
+            <th>Delivery Time</th>
             <th>Truck</th>
             <th>Customer</th>
             <th>Quantity</th>
@@ -93,6 +93,15 @@
                 <%= render "sub_item_form", :f => builder, :index => index %>
               <% end %>
             <% end %>
+            
+            <tr>
+              <% if !@finished_good_transaction.new_record? %>
+                <td><%= f.check_box :_destroy %></td>
+              <% end %>
+              <td></td>
+              <td></td>
+              <td id="bag_quantity_sum"></td>
+            </tr>
           </tbody>
         </table>
         
@@ -177,10 +186,27 @@
   $('.customer_field').change(function(){
     $('#delivery_schedule_item_id').val('')
   })
+  
+  function update_bag_quantity_sum() {
+    sum = 0
+    for(var i = 0; i < 3; i++) {
+      end = parseFloat($('#finished_good_transaction_finished_good_transaction_items_attributes_' + i + '_end_bag_number').val());
+      start = parseFloat($('#finished_good_transaction_finished_good_transaction_items_attributes_' + i + '_start_bag_number').val());
+      s =  end - start;
+      
+      if(isNaN(s) == false) {
+        sum += parseFloat($('#finished_good_transaction_quantity_per_bag').val()) * s;
+      }
+    }
+    $('#bag_quantity_sum').html(sum);
+  }
 
   $(document).ready(function() {
     // update_bags();
     update_issued();
+    $('.bag_number').keyup(function(){ update_bag_quantity_sum(); })
+    $('.bag_number').keydown(function(){ update_bag_quantity_sum(); })
+    $('#finished_good_transaction_quantity_per_bag').change(function(){ update_bag_quantity_sum(); })
   });
 
 <% end %>

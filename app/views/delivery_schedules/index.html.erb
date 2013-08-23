@@ -34,7 +34,7 @@
           <td><%= delivery_schedule.delivery_time.strftime("%H:%M") %></td>
         <% else %>
           <td colspan="2">
-            <p>Canceled: <%= simple_format(delivery_schedule.cancel_reason) %></p>
+            <p>Canceled: <%= delivery_schedule.cancel_reason %></p>
           </td>
         <% end %>
         <td><%= delivery_schedule.truck.plate_number %></td>
