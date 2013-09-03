@@ -192,7 +192,7 @@
     for(var i = 0; i < 3; i++) {
       end = parseFloat($('#finished_good_transaction_finished_good_transaction_items_attributes_' + i + '_end_bag_number').val());
       start = parseFloat($('#finished_good_transaction_finished_good_transaction_items_attributes_' + i + '_start_bag_number').val());
-      s =  end - start;
+      s =  (end - start) + 1;
       
       if(isNaN(s) == false) {
         sum += parseFloat($('#finished_good_transaction_quantity_per_bag').val()) * s;
