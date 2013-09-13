@@ -1,5 +1,6 @@
 class FinishedGoodTransactionsController < ApplicationController
   before_filter :authorize_create, :only => [:new, :create]
+  before_filter :authorize_update, :only => [:edit, :update]
   
   def new
     @finished_good = FinishedGood.find(params[:finished_good_id])
@@ -24,7 +25,9 @@ class FinishedGoodTransactionsController < ApplicationController
     if @finished_good_transaction.save
       unless params[:delivery_schedule_item_id].blank?
         d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
-        d.update_attribute(:selected, true)
+        d.selected = true
+        d.finished_good_transaction = @finished_good_transaction
+        d.save
       end
       flash[:notice] = "Transaction added for #{@finished_good_transaction.finished_good.name}"
       redirect_to finished_goods_path
@@ -34,22 +37,22 @@ class FinishedGoodTransactionsController < ApplicationController
     end
   end
   
-  # def edit
-    # @finished_good_transaction = FinishedGoodTransaction.find(params[:id])
-    # @finished_good = @finished_good_transaction.finished_good
-  # end
+  def edit
+    @finished_good_transaction = FinishedGoodTransaction.find(params[:id])
+    @finished_good = @finished_good_transaction.finished_good
+  end
   
-  # def update
-    # @finished_good_transaction = FinishedGoodTransaction.find(params[:id])
-    # @finished_good_transaction.updater = current_user
-    # if @finished_good_transaction.update_attributes(params[:finished_good_transaction])
-      # flash[:notice] = "Transaction updated for #{@finished_good_transaction.finished_good.name}"
-      # redirect_to transactions_finished_good_path(@finished_good_transaction.finished_good)
-    # else
-      # @finished_good = @finished_good_transaction.finished_good
-      # render :action => "edit"
-    # end
-  # end
+  def update
+    @finished_good_transaction = FinishedGoodTransaction.find(params[:id])
+    @finished_good_transaction.updater = current_user
+    if @finished_good_transaction.update_attributes(params[:finished_good_transaction])
+      flash[:notice] = "Transaction updated for #{@finished_good_transaction.finished_good.name}"
+      redirect_to transactions_finished_good_path(@finished_good_transaction.finished_good)
+    else
+      @finished_good = @finished_good_transaction.finished_good
+      render :action => "edit"
+    end
+  end
   
   # def destroy
     # @finished_good_transaction = FinishedGoodTransaction.find(params[:id])
@@ -91,6 +94,10 @@ class FinishedGoodTransactionsController < ApplicationController
   
     def authorize_create
       authorize! :create, FinishedGoodTransaction
+    end
+    
+    def authorize_update
+      authorize! :update, FinishedGoodTransaction
     end
     
 end

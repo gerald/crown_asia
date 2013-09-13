@@ -9,6 +9,8 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   has_many :finished_good_transaction_items
   
+  has_one :delivery_schedule_item
+  
   accepts_nested_attributes_for :finished_good_transaction_items, :allow_destroy => true, :reject_if => lambda { |a| (a[:lot_number].blank? && a[:start_bag_number].blank? && a[:end_bag_number].blank? && a[:quantity].blank?) }
   
   validates :transaction_date, :presence => true
@@ -19,15 +21,17 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   validates :issue_type, :issued_to, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   
-  validates :dr_number, :si_number, :mirs_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.issue_type == "Customer" && transaction.transaction_type == "sub" }
+  validates :dr_number, :si_number, :mirs_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.transaction_type == "sub" }
   
-  validates :mirs_number, :presence => true, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
-  validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
+  #validates :dr_number, :si_number, :mirs_number, :format => {:with => /[0-9]+/}, :allow_nil => true, :allow_blank => true, :if => Proc.new { |transaction| transaction.issue_type == "Customer" && transaction.transaction_type == "sub" }
+  
+  # validates :mirs_number, :presence => true, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
+  # validates :mirs_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.issue_type == "Internal" && transaction.transaction_type == "sub" }
   
   validates :transaction_date, :reference_number, :presence => true, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
   validates :reference_number, :format => {:with => /[0-9]+/}, :if => Proc.new { |transaction| transaction.transaction_type == "return" }
   
-  validate :dr_or_si
+  # validate :dr_or_si
   validate :bag_number_values
   validate :taken_bag_range
   validate :released_bag_range

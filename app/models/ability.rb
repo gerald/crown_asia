@@ -95,7 +95,8 @@ class Ability
     ]},
     
     { :subject => "FinishedGoodTransaction", :label => "Finished Good Transactions", :permissions => [
-      { :action => "create", :desc => "Can create a new finished good transaction"}
+      { :action => "create", :desc => "Can create a new finished good transaction"},
+      { :action => "update", :desc => "Can update a finished good transaction"},
     ]},
     
     { :subject => "Bag", :label => "Bags", :permissions => [

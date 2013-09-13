@@ -1,50 +1,62 @@
 <fieldset>
-  <dl>
-    <dd>
-      <table>
-        <thead>
-          <tr>
-            <th>Ctrl No.</th>
-            <th>Delivery Date</th> 
-            <th>Delivery Time</th>
-            <th>Truck</th>
-            <th>Customer</th>
-            <th>Quantity</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @finished_good.valid_delivery_schedules.each do |d| %>
-           <% ds = d.delivery_schedule %>
+  <% if @finished_good_transaction.new_record? || @finished_good_transaction.delivery_schedule_item.blank? %>
+    <dl>
+      <dd>
+        <table>
+          <thead>
             <tr>
-              <td><%= ds.control_number %></td>
-              <td><%= ds.delivery_date.strftime('%m/%d/%Y') %></td>
-              <td><%= ds.delivery_time.strftime('%H:%M') %></td>
-              <td><%= ds.truck.plate_number %></td>
-              <td><%= d.customer.name %></td>
-              <td><%= d.quantity%></td>
-              <td><%= link_to_function "Select", "populate_from_delivery_schedule_item(#{d.id})" %></td>
+              <th>Ctrl No.</th>
+              <th>Delivery Date</th> 
+              <th>Delivery Time</th>
+              <th>Truck</th>
+              <th>Customer</th>
+              <th>Quantity</th>
+              <th></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </dd>
-  </dl>
+          </thead>
+          <tbody>
+              <% @finished_good.valid_delivery_schedules.each do |d| %>
+              <% ds = d.delivery_schedule %>
+              <tr>
+                <td><%= ds.control_number %></td>
+                <td><%= ds.delivery_date.strftime('%m/%d/%Y') %></td>
+                <td><%= ds.delivery_time.strftime('%H:%M') %></td>
+                <td><%= ds.truck.plate_number %></td>
+                <td><%= d.customer.name %></td>
+                <td><%= d.quantity%></td>
+                <td><%= link_to_function "Select", "populate_from_delivery_schedule_item(#{d.id})" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </dd>
+    </dl>
+  <% end %>
   
   <%= hidden_field_tag "delivery_schedule_item_id" %>
   
-  <dl>
-    <dd><%= f.label :issue_type %></dd>
-    <dd><%= f.select :issue_type, [["Customer", "Customer"], ["Internal", "Internal"]], {}, {:onchange => "update_issued()", :class => "customer_field"} %></dd>
-  </dl>
-  
-  <dl>
-    <dd>
-      <%= f.label :issued_to, "Issued To" %>
-      <%= loader("issued_loader") %>
-    </dd>
-    <dd id="sender_select"></dd>
-  </dl>
+  <% if @finished_good_transaction.new_record? || @finished_good_transaction.delivery_schedule_item.blank? %>
+    <dl>
+      <dd><%= f.label :issue_type %></dd>
+      <dd><%= f.select :issue_type, [["Customer", "Customer"], ["Internal", "Internal"]], {}, {:onchange => "update_issued()", :class => "customer_field"} %></dd>
+    </dl>
+    
+    <dl>
+      <dd>
+        <%= f.label :issued_to, "Issued To" %>
+        <%= loader("issued_loader") %>
+      </dd>
+      <dd id="sender_select"></dd>
+    </dl>
+  <% else %>
+    <dl>
+      <dd>
+        <%= f.label :issued_to, "Issued To" %>
+        <%= loader("issued_loader") %>
+      </dd>
+      <dd id="sender_select"><%= @finished_good_transaction.issued_to.try(:name) %></dd>
+    </dl>
+  <% end %>
   
   <dl>
     <dd><%= f.label :dr_number, "DR Number" %></dd>
@@ -61,10 +73,17 @@
     <dd><%= f.text_field :mirs_number %></dd>
   </dl>
   
+  <% if @finished_good_transaction.new_record? || @finished_good_transaction.delivery_schedule_item.blank? %>
+    <dl>
+      <dd><%= f.label :transaction_date %></dd>
+      <dd><%= f.text_field :transaction_date, :class => "customer_field" %></dd>
+    </dl>
+  <% else %>
   <dl>
     <dd><%= f.label :transaction_date %></dd>
-    <dd><%= f.text_field :transaction_date, :class => "customer_field" %></dd>
+    <dd><%= @finished_good_transaction.transaction_date.strftime("%m/%d/%Y") %></dd>
   </dl>
+  <% end %>
   
   <br class="clear"/>
   
@@ -203,7 +222,9 @@
 
   $(document).ready(function() {
     // update_bags();
-    update_issued();
+    <% if @finished_good_transaction.new_record? || @finished_good_transaction.delivery_schedule_item.blank? %>
+      update_issued();
+    <% end %>
     $('.bag_number').keyup(function(){ update_bag_quantity_sum(); })
     $('.bag_number').keydown(function(){ update_bag_quantity_sum(); })
     $('#finished_good_transaction_quantity_per_bag').change(function(){ update_bag_quantity_sum(); })

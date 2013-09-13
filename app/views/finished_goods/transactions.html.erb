@@ -19,6 +19,7 @@
       <th>Issued To</th>
       <th>Creator</th>
       <th>Comments</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -52,6 +53,11 @@
       <td><%= transaction.issued_to.name if transaction.issued_to %></td>
       <td><%= transaction.creator.name if transaction.creator %></td>
       <td><%= simple_format(transaction.comments) %></td>
+      <td>
+        <% if transaction.transaction_type == "sub" %>
+          <%= link_to "Edit", edit_finished_good_transaction_path(transaction), :class => "edit_link" if can?(:update, FinishedGoodTransaction) %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>

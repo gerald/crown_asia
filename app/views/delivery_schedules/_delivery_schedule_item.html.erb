@@ -1,9 +1,19 @@
 <tr>
   <td>
-    <%= f.select :customer_id, [["", ""]] + Customer.fg_customers.collect{|c| [c.name, c.id]} %>
+    <% if f.object.finished_good_transaction.nil?%>
+      <%= f.select :customer_id, [["", ""]] + Customer.fg_customers.collect{|c| [c.name, c.id]} %>
+    <% else %>
+      <%= f.object.customer.name %>
+    <% end %>
   </td>
-  <td><%= f.text_field :po %></td>
-  <td><%= f.text_field :so %></td>
-  <td><%= f.select :finished_good_id, [["", ""]] + FinishedGood.where("active = 1").order("name").collect{|f| [f.name, f.id]} %></td>
-  <td><%= f.text_field :quantity, :size => 10, :class => "item_quantity" %></td>
+  <td><%= f.text_field :po, :readonly => !f.object.finished_good_transaction.nil? %></td>
+  <td><%= f.text_field :so, :readonly => !f.object.finished_good_transaction.nil? %></td>
+  <td>
+    <% if f.object.finished_good_transaction.nil? %>
+      <%= f.select :finished_good_id, [["", ""]] + FinishedGood.where("active = 1").order("name").collect{|f| [f.name, f.id]} %>
+    <% else %>
+      <%= f.object.finished_good.name %>
+    <% end %>
+  </td>
+  <td><%= f.text_field :quantity, :size => 10, :class => "item_quantity", :readonly => !f.object.finished_good_transaction.nil?  %></td>
 </tr>
