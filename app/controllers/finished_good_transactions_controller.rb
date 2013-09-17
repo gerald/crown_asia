@@ -26,9 +26,11 @@ class FinishedGoodTransactionsController < ApplicationController
       unless params[:delivery_schedule_item_id].blank?
         d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
         d.selected = true
-        d.finished_good_transaction = @finished_good_transaction
         d.save
+        
+        @finished_good_transaction.update_attribute(:delivery_schedule_item, d)
       end
+      
       flash[:notice] = "Transaction added for #{@finished_good_transaction.finished_good.name}"
       redirect_to finished_goods_path
     else
@@ -46,6 +48,14 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction = FinishedGoodTransaction.find(params[:id])
     @finished_good_transaction.updater = current_user
     if @finished_good_transaction.update_attributes(params[:finished_good_transaction])
+      unless params[:delivery_schedule_item_id].blank?
+        d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
+        d.selected = true
+        d.save
+        
+        @finished_good_transaction.update_attribute(:delivery_schedule_item, d)
+      end
+      
       flash[:notice] = "Transaction updated for #{@finished_good_transaction.finished_good.name}"
       redirect_to transactions_finished_good_path(@finished_good_transaction.finished_good)
     else

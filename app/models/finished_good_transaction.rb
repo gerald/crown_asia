@@ -9,7 +9,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   has_many :finished_good_transaction_items
   
-  has_one :delivery_schedule_item
+  belongs_to :delivery_schedule_item
   
   accepts_nested_attributes_for :finished_good_transaction_items, :allow_destroy => true, :reject_if => lambda { |a| (a[:lot_number].blank? && a[:start_bag_number].blank? && a[:end_bag_number].blank? && a[:quantity].blank?) }
   
