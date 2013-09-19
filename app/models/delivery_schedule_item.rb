@@ -3,7 +3,7 @@ class DeliveryScheduleItem < ActiveRecord::Base
   belongs_to :customer
   belongs_to :finished_good
   
-  has_one :finished_good_transaction
+  has_many :finished_good_transactions
   
   validates :customer, :finished_good, :quantity, :presence => true
   validates :quantity, :numericality => true
