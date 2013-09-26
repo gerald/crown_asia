@@ -39,10 +39,12 @@
         <% end %>
         <td><%= delivery_schedule.truck.plate_number %></td>
         <td>
-          <%= link_to "Edit", edit_delivery_schedule_path(delivery_schedule), :class => "edit_link" if can?(:update, DeliverySchedule) %>
+          <% if DateTime.current < delivery_schedule.delivery_date_time %>
+            <%= link_to "Edit", edit_delivery_schedule_path(delivery_schedule), :class => "edit_link" if can?(:update, DeliverySchedule) %>
           
-          <% unless delivery_schedule.canceled %>
-            <%= link_to "Cancel", cancel_delivery_schedule_path(delivery_schedule), :class => "delete_link" if can?(:cancel, DeliverySchedule) %>
+            <% unless delivery_schedule.canceled %>
+              <%= link_to "Cancel", cancel_delivery_schedule_path(delivery_schedule), :class => "delete_link" if can?(:cancel, DeliverySchedule) %>
+            <% end %>
           <% end %>
         </td>
       </tr>

@@ -22,6 +22,10 @@ class DeliverySchedule < ActiveRecord::Base
     "#{year}-#{number}"
   end
   
+  def delivery_date_time
+    DateTime.new(self.delivery_date.year, self.delivery_date.month, self.delivery_date.day, self.delivery_time.hour, self.delivery_time.min)
+  end
+  
   protected
   
     def set_control_number

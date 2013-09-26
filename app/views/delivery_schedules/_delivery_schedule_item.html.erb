@@ -1,4 +1,7 @@
 <tr>
+  <% if !@delivery_schedule.new_record? %>
+    <td><%= f.check_box :_destroy %></td>
+  <% end %>
   <td>
     <% if f.object.finished_good_transactions.empty?%>
       <%= f.select :customer_id, [["", ""]] + Customer.fg_customers.collect{|c| [c.name, c.id]} %>

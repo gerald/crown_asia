@@ -1,8 +1,10 @@
 <fieldset>
-  <dl>
-    <dd><%= f.label :control_number %></dd>
-    <dd><%= @delivery_schedule.next_control_number %></dd>
-  </dl>
+  <% if @delivery_schedule.new_record? %>
+    <dl>
+      <dd><%= f.label :control_number %></dd>
+      <dd><%= @delivery_schedule.next_control_number %></dd>
+    </dl>
+  <% end %>
   
   <dl>
     <dd><%= f.label :delivery_date %></dd>
@@ -47,6 +49,9 @@
         <table>
           <thead>
             <tr>
+              <% if !@delivery_schedule.new_record? %>
+                <th>Delete?</th>
+              <% end %>
               <th>Customer</th> 
               <th>PO</th>
               <th>SO</th> 
