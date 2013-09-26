@@ -79,10 +79,10 @@
       <dd><%= f.text_field :transaction_date, :class => "customer_field" %></dd>
     </dl>
   <% else %>
-  <dl>
-    <dd><%= f.label :transaction_date %></dd>
-    <dd><%= @finished_good_transaction.transaction_date.strftime("%m/%d/%Y") %></dd>
-  </dl>
+    <dl>
+      <dd><%= f.label :transaction_date %></dd>
+      <dd><%= @finished_good_transaction.transaction_date.strftime("%m/%d/%Y") %></dd>
+    </dl>
   <% end %>
   
   <br class="clear"/>
@@ -214,7 +214,8 @@
       s =  (end - start) + 1;
       
       if(isNaN(s) == false) {
-        sum += parseFloat($('#finished_good_transaction_quantity_per_bag').val()) * s;
+        // sum += parseFloat($('#finished_good_transaction_quantity_per_bag').val()) * s;
+        sum += 25.0 * s
       }
     }
     $('#bag_quantity_sum').html(sum);
