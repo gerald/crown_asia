@@ -13,9 +13,17 @@
   <td><%= f.text_field :so, :readonly => !f.object.finished_good_transactions.empty? %></td>
   <td>
     <% if f.object.finished_good_transactions.empty? %>
-      <%= f.select :finished_good_id, [["", ""]] + FinishedGood.where("active = 1").order("name").collect{|f| [f.name, f.id]} %>
+      <%= f.select :item_type, [["", ""], ["Finished Good", "FinishedGood"], ["Raw Material", "RawMaterial"], ["Supply", "Supply"]], {}, :onchange => "update_item_selection(#{index})" %>
+      <%= loader("item_loader_#{index}") %>
     <% else %>
-      <%= f.object.finished_good.name %>
+      <%= f.object.item_type.titleize %>
+    <% end %>
+  </td>
+  <td id="item_<%= index %>">
+    <% if f.object.finished_good_transactions.empty? %>
+      <%= f.select :item_id, item_options(f.object.item_type) %>
+    <% else %>
+      <%= f.object.item.name %>
     <% end %>
   </td>
   <td><%= f.text_field :quantity, :size => 10, :class => "item_quantity", :readonly => !f.object.finished_good_transactions.empty?  %></td>

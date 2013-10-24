@@ -6,6 +6,8 @@ class Supply < ActiveRecord::Base
   
   has_many :supply_transaction_items, :dependent => :destroy
   
+  has_many :delivery_schedule_items, :as => :item
+  
   validates :name, :unit_of_measure, :supply_type, :presence => true
   
   acts_as_paranoid

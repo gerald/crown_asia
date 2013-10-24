@@ -1,0 +1,4 @@
+$('#item_<%= @index %>').html('<%= escape_javascript(
+  select_tag("delivery_schedule[delivery_schedule_items_attributes][#{@index}][item_id]", 
+             options_for_select(@item_options), :include_blank => true)) 
+%>')

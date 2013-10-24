@@ -10,7 +10,8 @@ class FinishedGood < ActiveRecord::Base
   has_many :formulas
   has_many :certificate_of_qualities
   has_many :generated_certificate_of_qualities
-  has_many :delivery_schedule_items
+  
+  has_many :delivery_schedule_items, :as => :item
   
   validates :name, :unit_of_measure, :customer, :presence => true
   

@@ -55,7 +55,8 @@
               <th>Customer</th> 
               <th>PO</th>
               <th>SO</th> 
-              <th>FG Item</th>
+              <th>Item Type</th>
+              <th>Item</th>
               <th>Quantity</th>
             </tr>
           </thead>
@@ -66,6 +67,7 @@
               <% end %>
             <% end %>
             <tr>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -88,6 +90,16 @@ function update_quantity() {
     }
   });
   $('#quantity_sum').html(sum);
+}
+
+function update_item_selection(index) {
+  $.ajax({
+    type: 'POST',
+    url: '<%= update_item_selection_delivery_schedules_path %>',
+    data: 'item_type=' + $('#delivery_schedule_delivery_schedule_items_attributes_' + index + '_item_type').val() + '&index=' + index,
+    beforeSend: function(request){$('#loader_' + index).show();},
+    complete: function(request){$('#loader_' + index).hide()}
+  });
 }
 
 $(document).ready(function() {

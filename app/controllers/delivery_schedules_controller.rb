@@ -65,6 +65,12 @@ class DeliverySchedulesController < ApplicationController
     end
   end
   
+  def update_item_selection
+    @index = params[:index]
+    @item_type = params[:item_type]
+    @item_options = Object.const_get(@item_type).where("active = 1").order("name").collect{|f| [f.name, f.id]}
+  end
+  
   protected
   
     def authorize_view

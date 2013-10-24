@@ -39,7 +39,7 @@
         <% end %>
         <td><%= delivery_schedule.truck.plate_number %></td>
         <td>
-          <% if DateTime.current < delivery_schedule.delivery_date_time %>
+          <% if DateTime.current < delivery_schedule.delivery_date_time + 7.days %>
             <%= link_to "Edit", edit_delivery_schedule_path(delivery_schedule), :class => "edit_link" if can?(:update, DeliverySchedule) %>
           
             <% unless delivery_schedule.canceled %>

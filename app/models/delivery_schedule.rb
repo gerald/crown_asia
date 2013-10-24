@@ -6,7 +6,7 @@ class DeliverySchedule < ActiveRecord::Base
   belongs_to :delivery_helper_1, :class_name => "Personnel"
   belongs_to :delivery_helper_2, :class_name => "Personnel"
   
-  accepts_nested_attributes_for :delivery_schedule_items, :allow_destroy => true, :reject_if => lambda { |a| a[:customer_id].blank? && a[:quantity].blank? && a[:finished_good_id].blank? }
+  accepts_nested_attributes_for :delivery_schedule_items, :allow_destroy => true, :reject_if => lambda { |a| a[:customer_id].blank? && a[:quantity].blank? && a[:item_type].blank? && a[:item_id].blank? }
   
   validates :delivery_date, :delivery_time, :truck, :driver, :presence => true
   

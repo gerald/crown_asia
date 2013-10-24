@@ -5,6 +5,8 @@ class RawMaterial < ActiveRecord::Base
   
   has_many :raw_material_transactions, :dependent => :destroy
   
+  has_many :delivery_schedule_items, :as => :item
+  
   validates :name, :code, :raw_material_type, :unit_of_measure, :supplier, :presence => true
   validates :code, :uniqueness => true
   
