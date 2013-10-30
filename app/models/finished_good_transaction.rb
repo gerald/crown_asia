@@ -7,7 +7,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   
   has_many :removed_bags, :foreign_key => "removing_transaction_id", :class_name => "Bag", :dependent => :nullify
   
-  has_many :finished_good_transaction_items
+  has_many :finished_good_transaction_items, :dependent => :destroy
   
   belongs_to :delivery_schedule_item
   
@@ -43,7 +43,7 @@ class FinishedGoodTransaction < ActiveRecord::Base
   after_create :remove_bags
   after_create :return_bags
   
-  acts_as_paranoid
+  # acts_as_paranoid
   
   acts_as_audited :except => [:deleted_at]
 
