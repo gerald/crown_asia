@@ -58,6 +58,12 @@ class DeliverySchedulesController < ApplicationController
     @delivery_schedule.canceled = true
     
     if @delivery_schedule.save
+      @delivery_schedule.delivery_schedule_items.each do |dsi|
+        dsi.finished_good_transactions.each do |fgt|
+          fgt.destroy
+        end
+      end
+      
       flash[:notice] = "Delivery has been scheduled"
       redirect_to delivery_schedules_path
     else

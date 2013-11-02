@@ -26,6 +26,14 @@ class DeliverySchedule < ActiveRecord::Base
     DateTime.new(self.delivery_date.year, self.delivery_date.month, self.delivery_date.day, self.delivery_time.hour, self.delivery_time.min)
   end
   
+  def delivery_time_option
+    self.delivery_time.try("strftime", "%H:%M")
+  end
+  
+  def delivery_time_option=(val)
+    self.delivery_time = val
+  end
+  
   protected
   
     def set_control_number
