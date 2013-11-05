@@ -11,15 +11,13 @@ class DeliveryScheduleItem < ActiveRecord::Base
   validates :quantity, :numericality => true
   validates :po, :so, :length => {:maximum => 30}, :allow_nil => true, :allow_blank => true
   
-  # after_destroy :return_removed_bags
+  after_update :remove_finished_good_transactions
   
   protected
   
-  # def return_removed_bags
-#     self.finished_good_transactions.each do |fgt|
-#       fgt.removed_bags.each do |bag|
-#         bag.return
-#       end
-#     end
-#   end
+  def remove_finished_good_transactions
+    self.finished_good_transactions.each do |fgt|
+      fgt.destroy
+    end
+  end
 end
