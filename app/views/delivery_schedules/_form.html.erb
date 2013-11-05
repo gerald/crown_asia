@@ -15,7 +15,10 @@
   
   <dl>
     <dd><%= f.label :delivery_time_option %></dd>
-    <dd><%= f.select :delivery_time_option, time_options %></dd>
+    <dd>
+      <%# f.select :delivery_time_option, time_options %>
+      <%= select_tag "delivery_schedule[delivery_time]", options_for_select(time_options, @delivery_schedule.delivery_time.try("strftime", "%H:%M")) %>
+    </dd>
   </dl>
   
   <dl>
