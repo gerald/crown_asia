@@ -3,9 +3,7 @@ class AddItemFieldsToDeliveryScheduleItems < ActiveRecord::Migration
     add_column :delivery_schedule_items, :item_type, :string
     rename_column :delivery_schedule_items, :finished_good_id, :item_id
     
-    DeliveryScheduleItem.all.each do |item|
-      item.update_attribute(:item_type, "FinishedGood")
-    end
+    DeliveryScheduleItem.update_all("item_type = 'FinishedGood'")
   end
   
   def down
