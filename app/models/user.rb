@@ -25,4 +25,12 @@ class User < ActiveRecord::Base
   def has_role?(role_name)
     self.roles.count(:conditions => ["code = ?", role_name]) > 0
   end
+  
+  def self.current
+    Thread.current[:user] || nil
+  end
+
+  def self.current= u
+    Thread.current[:user] = u
+  end
 end

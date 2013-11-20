@@ -63,6 +63,7 @@ class CertificateOfQualitiesController < ApplicationController
     authorize! :update, CertificateOfQuality
     
     @coq = CertificateOfQuality.find(params[:id])
+    @finished_good = @coq.finished_good
     
     if @coq.update_attributes(params[:certificate_of_quality])
       flash[:notice] = "COQ was updated successfully"

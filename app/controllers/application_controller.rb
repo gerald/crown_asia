@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   
   before_filter :authenticate_user!
   before_filter { |c| c.set_title }
+  before_filter :set_current_user
   
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = "Access denied."
@@ -30,5 +31,9 @@ class ApplicationController < ActionController::Base
     else
       @title = custom_title
     end
+  end
+  
+  def set_current_user
+    User.current = current_user
   end
 end
