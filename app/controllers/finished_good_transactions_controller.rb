@@ -24,11 +24,8 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction.creator = current_user
     if @finished_good_transaction.save
       unless params[:delivery_schedule_item_id].blank?
-        d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
-        d.selected = true
-        d.save
-        
-        @finished_good_transaction.update_attribute(:delivery_schedule_item, d)
+        # d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
+        @finished_good_transaction.update_attribute(:delivery_schedule_item_id, params[:delivery_schedule_item_id])
       end
       
       flash[:notice] = "Transaction added for #{@finished_good_transaction.finished_good.name}"
@@ -49,11 +46,8 @@ class FinishedGoodTransactionsController < ApplicationController
     @finished_good_transaction.updater = current_user
     if @finished_good_transaction.update_attributes(params[:finished_good_transaction])
       unless params[:delivery_schedule_item_id].blank?
-        d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
-        d.selected = true
-        d.save
-        
-        @finished_good_transaction.update_attribute(:delivery_schedule_item, d)
+        # d = DeliveryScheduleItem.find(params[:delivery_schedule_item_id])
+        @finished_good_transaction.update_attribute(:delivery_schedule_item_id, params[:delivery_schedule_item_id])
       end
       
       flash[:notice] = "Transaction updated for #{@finished_good_transaction.finished_good.name}"

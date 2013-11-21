@@ -64,7 +64,7 @@ class DeliverySchedulesController < ApplicationController
         end
       end
       
-      flash[:notice] = "Delivery has been scheduled"
+      flash[:notice] = "Delivery has been canceled"
       redirect_to delivery_schedules_path
     else
       render :action => "cancel"
