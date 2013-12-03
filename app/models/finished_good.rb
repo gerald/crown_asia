@@ -76,8 +76,8 @@ class FinishedGood < ActiveRecord::Base
   end
   
   def valid_delivery_schedules
-    ds = self.delivery_schedule_items.includes(:delivery_schedule)
-    ds = ds.where("delivery_schedules.canceled = 0 AND delivery_schedules.delivery_date >= ?", Date.current)
+    ds = self.delivery_schedule_items.includes(:delivery_schedule, :finished_good_transactions)
+    ds = ds.where("delivery_schedules.canceled = 0 AND (delivery_schedules.delivery_date >= ? OR finished_good_transactions.id IS NULL)", Date.current)
     ds
   end
 
