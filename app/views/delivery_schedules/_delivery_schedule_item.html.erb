@@ -11,6 +11,7 @@
   </td>
   <td><%= f.text_field :po, :readonly => !f.object.finished_good_transactions.empty? %></td>
   <td><%= f.text_field :so, :readonly => !f.object.finished_good_transactions.empty? %></td>
+  <td><%= f.text_field :si, :readonly => !f.object.finished_good_transactions.empty? %></td>
   <td>
     <% if f.object.finished_good_transactions.empty? %>
       <%= f.select :item_type, [["", ""], ["Finished Good", "FinishedGood"], ["Raw Material", "RawMaterial"], ["Supply", "Supply"]], {}, :onchange => "update_item_selection(#{index})" %>
