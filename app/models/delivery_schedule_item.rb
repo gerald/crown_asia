@@ -9,7 +9,7 @@ class DeliveryScheduleItem < ActiveRecord::Base
   
   validates :customer, :item, :quantity, :presence => true
   validates :quantity, :numericality => true
-  validates :po, :so, :si :length => {:maximum => 30}, :allow_nil => true, :allow_blank => true
+  validates :po, :so, :si, :length => {:maximum => 30}, :allow_nil => true, :allow_blank => true
   
   after_update :remove_finished_good_transactions
   
