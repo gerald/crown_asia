@@ -17,7 +17,10 @@
     <tr>
       <th>Type</th>
       <th>Name</th>
-      <th>Active?</td>
+      <th>Active?</th>
+      <th>Compounds</th>
+      <th>Pipes</th>
+      <th>Corporate</th>
       <th>UOM</th>
       <th>Quantity</th>
       <th>Last Transaction</th>
@@ -31,6 +34,9 @@
       <td><%= supply.supply_type %></td>
       <td><%= supply.name %></td>
       <td><%= supply.active ? "Yes" : "No" %></td>
+      <td><%= supply.compounds ? "Yes" : "No" %></td>
+      <td><%= supply.pipes ? "Yes" : "No" %></td>
+      <td><%= supply.corporate ? "Yes" : "No" %></td>
       <td><%= supply.unit_of_measure.name %></td>
       <td><%= supply.quantity_on_hand %></td>
       <td><%= supply.last_transaction_date.strftime("%m/%d/%Y") if supply.last_transaction_date %></td>

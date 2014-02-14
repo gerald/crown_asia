@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131120061714) do
+ActiveRecord::Schema.define(:version => 20140213062022) do
 
   create_table "Batch", :id => false, :force => true do |t|
     t.string  "CtrlNo",    :limit => 10

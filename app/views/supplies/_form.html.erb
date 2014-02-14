@@ -20,6 +20,21 @@
   </dl>
   
   <dl>
+    <dd><%= f.label :compounds %></dd>
+    <dd><%= f.check_box :compounds %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :pipes %></dd>
+    <dd><%= f.check_box :pipes %></dd>
+  </dl>
+  
+  <dl>
+    <dd><%= f.label :corporate %></dd>
+    <dd><%= f.check_box :corporate %></dd>
+  </dl>
+  
+  <dl>
     <dd><%= f.label :unit_of_measure %></dd>
     <dd><%= f.select :unit_of_measure_id, UnitOfMeasure.all(:order => "code").collect{|u| [u.name, u.id]}, {:include_blank => true} %></dd>
   </dl>
