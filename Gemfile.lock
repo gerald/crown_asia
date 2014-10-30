@@ -64,8 +64,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.0.4)
-    mysql (2.8.1)
-    mysql (2.8.1-x86-mingw32)
+    mysql2 (0.3.16)
     orm_adapter (0.0.5)
     paranoia (1.1.0)
       activerecord (>= 3.0.0)
@@ -132,7 +131,7 @@ DEPENDENCIES
   devise
   jquery-rails
   json
-  mysql
+  mysql2
   paranoia
   rails (= 3.1.0)
   rake (= 10.0.3)
